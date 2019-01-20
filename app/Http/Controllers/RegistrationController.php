@@ -32,7 +32,7 @@ class RegistrationController extends Controller
         $newUser = new User(0, $first, $last, $email, $username, $password, 0);
         
         //Use the business service object to create a new user in the database
-        $bs->createNewUser($newUser);
+        //$bs->createNewUser($newUser);
         
         if($bs->createNewUser($newUser)){
             //Render a response View with success message
