@@ -98,13 +98,13 @@ class UserDataService{
         
         try {
             //use the connection to create a prepared statement
-            $sth = $this->conn->prepare("SELECT * FROM Users WHERE ID = :id LIMIT 1");
+            $stmt = $this->conn->prepare("SELECT * FROM Users WHERE ID = :id LIMIT 1");
             
             //Bind the variables from the user object to the SQL statement
-            $sth->bindParam(':id', $id);
+            $stmt->bindParam(':id', $id);
             
             //execute the SQL statement
-            $sth->execute();
+            $stmt->execute();
             
             //get the results
             $result = $stmt->get_result();
