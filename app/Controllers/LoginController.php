@@ -4,7 +4,7 @@
 //1-19-19
 //Networking Milestone
 //This is my own work.
-//The controller that handles registration for a new user
+//The controller that handles user login 
 
 namespace App\Http\Controllers;
 
@@ -15,9 +15,10 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 use PHPUnit\Exception;
 
+session_start();
 
-class RegistrationController extends Controller
-{
+class LoginController extends Controller
+{  
     public function index(Request $request){
         
         try{
@@ -25,44 +26,55 @@ class RegistrationController extends Controller
             $this->validateForm($request);
             
             //Store the form data
-            $first = $request->input('firstname');
-            $last = $request->input('lastname');
-            $email = $request->input('email');
             $username = $request->input('username');
             $password = $request->input('pass');
-                      
+           
             //Create a new business service
             $bs = new UserBusinessService();
-            
+           
             //Create a new user object with the form data
-            $newUser = new UserModel(0, $first, $last, $email, $username, $password, 0, 0);
+            $newUser = new UserModel(0, null, null, null, $username, $password, null, null);
             
-            //Use the business service object to create a new user in the database
-            if($bs->createNewUser($newUser)){
-                //Render a response View with success message
-                return view('loginView');
+            //Use the business service object to attempt to login a user
+                //If the user information is valid the user will see that they are logged in
+                //If not they will be prompted to try again
+            $userId = $bs->login($user);
+       
+            if($userId != null){ 
+                /*
+                //set session user id
+                $request->session()->put('userid', $userId);
                 
-            }else{                
+                //use user id to find the user role and set a role session variable
+                $id = $bs->findById($userId);
+                $role = $user->getRole();
+                $request->session()->put('role', $role);
+                */
+                
+                //Render a response View with success message
+                return view('userProfileView');
+                        
+            }else{
+                
                 //Render a response View with unsuccessful message
-                return view('unsuccessfulView');               
-            }
+                return view('unsuccessfulView');             
+            }   
         }
         catch(ValidationException $e1) {
             throw $e1;
         }
-        catch (Exception $e){
+        catch (Exception $e){       
             Log::error("Exception ", array("message" => $e->getMessage()));
             $data = ['errorMsg' => $e->getMessage()];
             return view('exception')->with($data);
         }
-                
     }
+    
     private function validateForm(Request $request) {
         //setup data validattion rules
-        $rules = ['firstname' => 'Required | Between: 4,20| Alpha','lastname' => 'Required | Between: 4,20| Alpha', 'email' => 'Required | E-mail', 'username' => 'Required | Between: 4,20| Alpha','pass' => 'Required | Between: 1,20'];
+        $rules = ['username' => 'Required | Between: 4,20| Alpha','pass' => 'Required | Between: 1,20'];
         
         //run data validation rules
         $this->validate($request, $rules);
     }
-    
 }
