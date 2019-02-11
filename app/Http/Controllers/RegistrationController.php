@@ -35,7 +35,7 @@ class RegistrationController extends Controller
             $bs = new UserBusinessService();
             
             //Create a new user object with the form data
-            $newUser = new UserModel(0, $first, $last, $email, $username, $password, 0);
+            $newUser = new UserModel(0, $first, $last, $email, $username, $password, 0, 0);
             
             //Use the business service object to create a new user in the database
             if($bs->createNewUser($newUser)){
@@ -59,7 +59,7 @@ class RegistrationController extends Controller
     }
     private function validateForm(Request $request) {
         //setup data validattion rules
-        $rules = ['firstname' => 'Required | Between: 4,20| Alpha','lastname' => 'Required | Between: 4,20| Alpha', 'email' => 'Required | E-mail', 'username' => 'Required | Between: 4,20| Alpha','pass' => 'Required | Between: 1,20'];
+        $rules = ['firstname' => 'Required | Between: 1,20| Alpha','lastname' => 'Required | Between: 1,20| Alpha', 'email' => 'Required | E-mail', 'username' => 'Required | Between: 1,20| Alpha','pass' => 'Required | Between: 1,20'];
         
         //run data validation rules
         $this->validate($request, $rules);

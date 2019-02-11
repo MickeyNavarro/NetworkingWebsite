@@ -12,10 +12,11 @@ use Illuminate\Support\Facades\Log;
 use \PDO;
 use App\Services\DataServices\UserDataService;
 use App\Models\UserModel;
+use App\User;
 
 class UserBusinessService{
     
-    function createNewUser($user){
+    function createNewUser(UserModel $user){
         Log::info("Entering UserBusinessService.createNewUser()");
         
         //Get credentials for accessing the database

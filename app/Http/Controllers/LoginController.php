@@ -32,7 +32,8 @@ class LoginController extends Controller
             //Create a new business service
             $bs = new UserBusinessService();
            
-            $user = new UserModel(-1, $username, $password);
+            //Create a new user object with the form data
+            $user = new UserModel(0, null, null, null, $username, $password, null, null);
             
             //Use the business service object to attempt to login a user
                 //If the user information is valid the user will see that they are logged in
@@ -40,10 +41,10 @@ class LoginController extends Controller
             $userId = $bs->login($user);
        
             if($userId != null){ 
-                /*
+                
                 //set session user id
                 $request->session()->put('userid', $userId);
-                
+                /*
                 //use user id to find the user role and set a role session variable
                 $id = $bs->findById($userId);
                 $role = $user->getRole();
@@ -71,7 +72,7 @@ class LoginController extends Controller
     
     private function validateForm(Request $request) {
         //setup data validattion rules
-        $rules = ['username' => 'Required | Between: 4,20| Alpha','pass' => 'Required | Between: 1,20'];
+        $rules = ['username' => 'Required | Between: 1,20| Alpha','pass' => 'Required | Between: 1,20'];
         
         //run data validation rules
         $this->validate($request, $rules);

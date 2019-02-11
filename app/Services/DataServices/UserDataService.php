@@ -20,11 +20,11 @@ class UserDataService{
     }
     
     // accepts a user object. Inserts a record into the perons table 
-    function createNewUser($user){
+    function createNewUser(UserModel $user){
         try {
             Log::info("Entering UserDataService.createNewUser()"); 
             //use the connection to create a prepared statement
-            $stmt = $this->conn->prepare("INSERT INTO `Users` (`FIRSTNAME`, `LASTNAME`, `EMAIL`, `USERNAME`, `PASSWORD`) VALUES (:first,:last,:email,:user,:pass);");
+            $stmt = $this->conn->prepare("INSERT INTO `USERS` (`FIRSTNAME`, `LASTNAME`, `EMAIL`, `USERNAME`, `PASSWORD`, `ROLE`, `SUSPEND`) VALUES (:first,:last,:email,:user,:pass, :role, :suspend);");
             
             //Store the information from the user object into variables
             $fn = $user->getFirstName();
@@ -32,6 +32,8 @@ class UserDataService{
             $email = $user->getEmail();
             $username = $user->getUsername();
             $password = $user->getPassword();
+            $role = $user->getRole(); 
+            $suspend = $user->getSuspend(); 
             
             //Bind the variables from the user object to the SQL statement
             $stmt->bindParam(':first', $fn);
@@ -39,6 +41,8 @@ class UserDataService{
             $stmt->bindParam(':email', $email);
             $stmt->bindParam(':user', $username);
             $stmt->bindParam(':pass', $password);
+            $stmt->bindParam(':role', $role);
+            $stmt->bindParam(':suspend', $suspend);
             
             //Excecute the SQL statement
             $stmt->execute();
@@ -58,7 +62,7 @@ class UserDataService{
             throw new DatabaseException("Database Exception: " . $e->getMessage(), 0, $e);
         }
     }
-    
+    //accepts a user object and matches the credential to a user in the database 
     function login(UserModel $user){
         try {
             Log::info("Entering UserDataService.login()");
@@ -92,7 +96,7 @@ class UserDataService{
                 throw new DatabaseException("Database Exception: " . $e->getMessage(), 0, $e);
             }
     }
-    
+    //accepts the id and finds the user in the database with a matching id 
     function findById($id){        
         try {
             Log::info("Entering SecurityDAO.findById()");
@@ -129,7 +133,7 @@ class UserDataService{
             throw new DatabaseException("Database Exception: " . $e->getMessage(), 0, $e);
         }
     }
-    
+    //accepts an id and allows an admin role to suspend the user
     function suspendById($id){
         try {
             Log::info("Entering SecurityDAO.suspendById()");
@@ -157,7 +161,7 @@ class UserDataService{
             throw new DatabaseException("Database Exception: " . $e->getMessage(), 0, $e);
         }
     }
-    
+    //accepts the id and allows an admin to delete the user
     function deleteById($id){
         try {
             Log::info("Entering UserDataService.deleteById()");
