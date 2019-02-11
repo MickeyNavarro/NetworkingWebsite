@@ -100,7 +100,21 @@ class UserModel
     {
         $this->role = $role;
     }
-    
+    /**
+     * @return mixed
+     */
+    public function getSuspend()
+    {
+        return $this->suspend;
+    }
+
+    /**
+     * @param mixed $suspend
+     */
+    public function setSuspend($suspend)
+    {
+        $this->suspend = $suspend;
+    }
     public function jsonSerialize() {
         return get_object_vars($this);
     }
