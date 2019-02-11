@@ -32,7 +32,8 @@ class LoginController extends Controller
             //Create a new business service
             $bs = new UserBusinessService();
            
-            $user = new UserModel(-1, $username, $password);
+            //Create a new user object with the form data
+            $newUser = new UserModel(0, null, null, null, $username, $password, null, null);
             
             //Use the business service object to attempt to login a user
                 //If the user information is valid the user will see that they are logged in
