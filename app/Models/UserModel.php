@@ -20,11 +20,15 @@ class UserModel
     private $suspend; 
     
     //Constuctor
-    public function __construct($id, $username, $password){
-        
+    public function __construct($id, $firstname, $lastname, $email, $username, $password, $role, $suspend){
         $this->id = $id;
+        $this->firstName = $firstname; 
+        $this->lastname = $lastname;
+        $this->email = $email;
         $this->username = $username;
         $this->password = $password;
+        $this->role = $role; 
+        $this->suspend = $suspend; 
     }
     
     public function getId()
@@ -102,4 +106,5 @@ class UserModel
     }
       
 }
+    
     
