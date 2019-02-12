@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 use PHPUnit\Exception;
+use function GuzzleHttp\json_decode;
 
 session_start();
 
@@ -39,17 +40,25 @@ class LoginController extends Controller
                 //If the user information is valid the user will see that they are logged in
                 //If not they will be prompted to try again
             $userId = $bs->login($user);
+            
+            //use the user id to find the user object in which the id belongs to
+            $uo = $bs->findById($userId); 
+            
+            //find out if the user has been suspended
+            $suspend = $uo->getSuspend(); 
        
-            if($userId != null){ 
-                /*
+            //check if the user id was returned and if the user was not suspended
+            if($userId != null && $suspend != 1){ 
+                
                 //set session user id
                 $request->session()->put('userid', $userId);
                 
-                //use user id to find the user role and set a role session variable
-                $id = $bs->findById($userId);
-                $role = $user->getRole();
+                //get the role of the user object
+                $role = $uo->getRole();
+                                
+                //set the role session
                 $request->session()->put('role', $role);
-                */
+                          
                 
                 //Render a response View with success message
                 return view('userProfileView');
@@ -72,7 +81,7 @@ class LoginController extends Controller
     
     private function validateForm(Request $request) {
         //setup data validattion rules
-        $rules = ['username' => 'Required | Between: 4,20| Alpha','pass' => 'Required | Between: 1,20'];
+        $rules = ['username' => 'Required | Between: 1,20| Alpha','pass' => 'Required | Between: 1,20'];
         
         //run data validation rules
         $this->validate($request, $rules);

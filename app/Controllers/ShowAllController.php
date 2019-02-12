@@ -1,5 +1,9 @@
 <?php
-
+//Almicke Navarro
+//2-8-19
+//Networking Milestone
+//This is my own work.
+//The controller that handles adding showing all users
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -16,7 +20,8 @@ class ShowAllController extends Controller
             $bs = new UserBusinessService();
             
             //Use the business service object to show all users in the database
-            if($bs->showAll()){
+            if($users = $bs->showAll()){
+                
                 //Render a response View with success message
                 return view('adminPageView');
                 
