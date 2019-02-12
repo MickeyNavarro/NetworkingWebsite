@@ -37,3 +37,56 @@ Route::get('/login', function(){
 
 //The route is mapped to the '/loginView' and will post the user input from the login view
 Route::post('/loginView', 'LoginController@index'); 
+
+//This route is mapped to the '/profile' URI and will display the user profile page
+Route::get('/viewProfile', function(){
+    
+    return view('userProfileView');
+});
+
+//This route is mapped to the '/addPersonInformationView' URI and will display the page that allows user to enter their personal information
+Route::get('/addPersonalInformation', function(){
+    
+    return view('personalInformationView');
+});
+
+//The route is mapped to the '/personalInformationView' and will post the user input from the login view
+Route::post('/personalInformationView', 'PersonalInformationController@index'); 
+
+//This route is mapped to the '/addEducationView' URI and will display the page that allows the user at enter their education
+Route::get('/addEducationView', function(){
+    
+    return view('educationView');
+});
+
+//The route is mapped to the '/skillsView' and will post the user input from the skills view
+Route::post('/educationView', 'EducationController@index'); 
+
+//This route is mapped to the '/addExperienceView' URI and will display the page that allows the user at enter their experience
+Route::get('/addExperienceView', function(){
+    
+    return view('experienceView');
+});
+
+//The route is mapped to the '/skillsView' and will post the user input from the skills view
+Route::post('/experienceView', 'WorkExperienceController@index'); 
+
+//This route is mapped to the '/addSkillView' URI and will display the page that allows the user at enter their skills
+Route::get('/addSkillView', function(){
+    
+    return view('skillsView');
+});
+
+//The route is mapped to the '/skillsView' and will post the user input from the skills view
+Route::post('/skillsView', 'SkillsController@index'); 
+    
+//This route is mapped to the '/adminPageView' URI and will display the page that allows the admin to perform admin functions
+Route::get('/adminPage', function(){
+    
+    return view('adminPageView');
+});
+
+//this route wil output the session variables
+Route::get('session/get','SessionController@accessSessionData');
+    
+
