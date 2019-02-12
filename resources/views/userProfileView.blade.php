@@ -1,9 +1,11 @@
-<!-- 
+!-- 
 //Mariah Valenzuela and Almicke Navarro
 //2-1-19
 //Networking Milestone
 //This is my own work.
 //The form that allows users to add view, add, and edit their profile
+
+//editted on 2/12/19 by Mickey Navarro to allow the user to view their data that they include 
  -->
  
 @extends('layouts.appmaster')
@@ -11,15 +13,43 @@
   
 @section('content')
 
+@php 
+use App\Services\BusinessServices\UserBusinessService;
+@endphp
 <div class = user-profile>
 	<div id = "user-photo" class="column"> 		
 		<img id = "photo" src="https://cdn3.iconfinder.com/data/icons/business-and-finance-icons/512/Business_Man-512.png" alt="User Photo" >   	
 	</div>
     <div id = "user-personal-information" class = "column">
-    	<h4>First Name and Last Name</h4>
+    
+    <!-- check if the session variable holds the user id -->
+    @if (session()->has('userid'))
+        @php 
+        //get the user id from the session variable 
+        $id = session()->get('userid');
+        
+        //create a new instance of the UserBusinessService class object
+        $bs = new UserBusinessService(); 
+        
+        //find the user attributes by its id 
+        $user = $bs->findById($id); 
+        @endphp
+        
+        
+        <!-- check if a user was returned -->
+        @if ($user != null)
+        
+        <!-- use the id to get the user data from the tables to output onto their member profiles -->
+        <h4>{{$user->getFirstName()}} {{$user->getLastName()}}</h4>
     	<p>Current Position</p>
     	<p>Location</p>
     	<p>Biography</p>
+    	@endif
+    	
+    @else 
+        <!-- TODO: reroute to an exception page  -->
+    @endif
+
     
     	<div id = "contact-information-button">
     		<a href="#">Contact</a>
