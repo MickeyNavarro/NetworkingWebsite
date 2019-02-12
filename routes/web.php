@@ -1,5 +1,3 @@
-<?php
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -63,13 +61,13 @@ Route::get('/addEducationView', function(){
 Route::post('/educationView', 'EducationController@index'); 
 
 //This route is mapped to the '/addExperienceView' URI and will display the page that allows the user at enter their experience
-Route::get('/addExperienceView', function(){
+Route::get('/addWorkExperienceView', function(){
     
-    return view('experienceView');
+    return view('workExperienceView');
 });
 
 //The route is mapped to the '/skillsView' and will post the user input from the skills view
-Route::post('/experienceView', 'WorkExperienceController@index'); 
+Route::post('/workExperienceView', 'WorkExperienceController@index'); 
 
 //This route is mapped to the '/addSkillView' URI and will display the page that allows the user at enter their skills
 Route::get('/addSkillView', function(){
@@ -88,5 +86,13 @@ Route::get('/adminPage', function(){
 
 //this route wil output the session variables
 Route::get('session/get','SessionController@accessSessionData');
-    
+
+//The route is mapped to the '/suspendView' and will get the user id from the admin view to suspend them
+Route::get('/suspendView', 'SuspendController@index'); 
+
+//The route is mapped to the '/suspendView' and will get the user id from the admin view to suspend them
+Route::get('/unsuspendView', 'UnsuspendController@index'); 
+
+//The route is mapped to the '/deleteView' and will get the user id from the admin view to delete them
+Route::get('/deleteView', 'DeleteController@index'); 
 
