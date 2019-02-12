@@ -7,7 +7,7 @@
  -->
  
 @extends('layouts.appmaster')
-@section('title', 'Login Page')
+@section('title', 'Add Personal Information Page')
   
 @section('content')
 
@@ -18,9 +18,9 @@
 			<hr>
 			 <!-- To upload profile picture -->  
 			<label>Photo</label>
-			<form action="upload.php" method="post">
-				<input type="file" name="file" id="file"/>
-			</form>
+			<div>
+			<input type="file" name="file" id="file"/>
+			</div>
 			
             <label>Location</label>
             <input type="text" placeholder="Enter Location" name="location">    
@@ -38,6 +38,7 @@
             <input type="text" placeholder="Enter Phone Number" name="phone">  
             
             <button type="submit" class="loginbtn submit-info-button ">Submit</button>
+            
         
             <!-- Cancel Button -->
             <div class="cancel-button">

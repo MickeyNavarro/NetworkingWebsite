@@ -7,12 +7,12 @@
 -->
 
 @extends('layouts.appmaster')
-@section('title', 'Login Page')
+@section('title', 'Add Skill Page')
   
 @section('content')
 
 <div class = "add-information-form">
-    <form action = "skillView" method = "POST">
+    <form action = "skillsView" method = "POST">
     	<input type = "hidden" name = "_token" value = "<?php  echo csrf_token()?>">
 			<h3 class = "heading1">Add Skill</h3>
 			<hr>

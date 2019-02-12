@@ -1,27 +1,29 @@
-<!-- 
+<!--
 //Mariah Valenzuela and Almicke Navarro
 //2-1-19
 //Networking Milestone
 //This is my own work.
 //The form that allows users to add their education
 -->
-
 @extends('layouts.appmaster')
-@section('title', 'Add Education Page')
+@section('title', 'Add Work Experience Page')
   
 @section('content')
 
 <div class = "add-information-form">
-    <form action = "educationView" method = "POST">
+    <form action = "workExperienceView" method = "POST">
     	<input type = "hidden" name = "_token" value = "<?php  echo csrf_token()?>">
-			<h3 class = "heading1">Add Education</h3>
+			<h3 class = "heading1">Add Experience</h3>
 			<hr>
 			
-            <label>School</label>
-            <input type="text" placeholder="Enter School" name="school">
+            <label>Position Title</label>
+            <input type="text" placeholder="Enter Position Title" name="position">
                           
-            <label>Degree</label>
-            <input type="text" placeholder="Enter Degree" name="degree">  
+            <label>Company</label>
+            <input type="text" placeholder="Enter Company" name="company">  
+            
+            <label>Location</label>
+            <input type="text" placeholder="Enter Location" name="location">  
             
             <label>Start Year</label>
             <input type="text" placeholder="Enter Start Year" name="startYear">    
@@ -37,9 +39,9 @@
             <!-- Cancel Button -->
             <div class="cancel-button">
             <a href="viewProfile">Cancel</a>
-        	</div>     	
-    </form>    
+        	</div>
+    </form>
 </div>
 
 @endsection
-
+        	

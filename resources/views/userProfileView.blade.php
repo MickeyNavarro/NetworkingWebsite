@@ -49,7 +49,7 @@
  	<div id = "user-experience"> 		
  		<h4 class = "heading column">Experience</h4>
  		<div class = "edit-form-button column">
-    		<form class = "add-info-button" action="addExperienceView">
+    		<form class = "add-info-button" action="addWorkExperienceView">
 				<input class = "plus-image" type="image" src="https://static.thenounproject.com/png/617815-200.png" alt="Submit" width="48" height="48">
 			</form>
    		</div>	 	
