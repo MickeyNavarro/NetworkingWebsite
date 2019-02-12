@@ -1,5 +1,9 @@
 <?php
-
+//Almicke Navarro
+//2-8-19
+//Networking Milestone
+//This is my own work.
+//The controller that handles adding user skills 
 namespace App\Http\Controllers;
 
 use App\Models\SkillsModel;
@@ -16,7 +20,11 @@ class SkillsController extends Controller
         try{
             //Store the form data
             $skill_name = $request->input('skill');
-            $userid = $request->session()->get('userid');
+            
+            //check if the userid session variable has been set
+            if ($request->session()->has('userid')) {
+                $userid = $request->session()->get('userid');
+            }
             
             //Create a new business service
             $bs = new MemberProfileBusinessService();

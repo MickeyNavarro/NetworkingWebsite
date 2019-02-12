@@ -1,4 +1,11 @@
 <?php
+
+//Almicke Navarro
+//2-4-19
+//Networking Milestone
+//This is my own work.
+//interacts with the database and the multiple member profile class data
+
 namespace App\Services\BusinessServices;
 
 use App\Models\EducationModel;

@@ -1,5 +1,9 @@
 <?php
-
+//Almicke Navarro
+//2-10-19
+//Networking Milestone
+//This is my own work.
+//The controller that handles the testing of the sessions
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;

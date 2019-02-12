@@ -1,4 +1,11 @@
 <?php
+
+//Almicke Navarro
+//2-2-19
+//Networking Milestone
+//This is my own work.
+//Handles all the information taken from the skills class.
+
 namespace App\Models;
 
 class SkillsModel

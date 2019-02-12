@@ -1,9 +1,9 @@
 <?php
-//Almicke Navarro and Mariah Valenzuela
-//2-09-19
+//Almicke Navarro
+//2-4-19
 //Networking Milestone
 //This is my own work.
-//interacts with the database and the PersonalInformation class data
+//interacts with the database and the multiple member profile class data
 
 namespace App\Services\DataServices; 
 
@@ -67,7 +67,7 @@ class MemberProfileDataService{
         try {
             Log::info("Entering MemberProfileDataService.createNewEducation()");
             //use the connection to create a prepared statement
-            $stmt = $this->conn->prepare("INSERT INTO `USERS_EDUCATION` (`SCHOOL`, `DEGREE`, `START_YEAR`, `END_YEAR`, `ADDITIONAL_INFO`, `USERS_ID`) VALUES (:school, :degree, :start, :end, :info, ':userid')");
+            $stmt = $this->conn->prepare("INSERT INTO `USERS_EDUCATION` (`SCHOOL`, `DEGREE`, `START_YEAR`, `END_YEAR`, `ADDITIONAL_INFO`, `USERS_ID`) VALUES (:school, :degree, :start, :end, :info, :userid)");
             
             //Store the information from the education object into variables
             $school = $edu->getSchool(); 
@@ -106,10 +106,10 @@ class MemberProfileDataService{
     
     // accepts a work experience object. Inserts a record into the work experience table
     function createNewWorkExperience(WorkExperienceModel $work){
-        try {
+        try{
             Log::info("Entering MemberProfileDataService.createNewWorkExperience()");
             //use the connection to create a prepared statement
-            $stmt = $this->conn->prepare("INSERT INTO `USER_WORK_EXPERIENCE` (`POSITION`, `COMPANY`, `LOCATION`, `START_YEAR`, `END_YEAR`, `ADDITIONAL_INFORMATION`, `USERS_ID`) VALUES (:pos, :com, :loc, :start, :end, :info, ':userid')");
+            $stmt = $this->conn->prepare("INSERT INTO `USER_WORK_EXPERIENCE` (`POSITION`, `COMPANY`, `LOCATION`, `START_YEAR`, `END_YEAR`, `ADDITIONAL_INFORMATION`, `USERS_ID`) VALUES (:pos, :com, :loc, :start, :end, :info, :userid)");
             
             //Store the information from the work experience object into variables
             $position = $work->getPosition(); 
@@ -118,7 +118,7 @@ class MemberProfileDataService{
             $start = $work->getStart_year(); 
             $end = $work->getEnd_year(); 
             $info = $work->getAdditional_info(); 
-            $userid = $work->getUserid();
+            $userid = $work->getUserid(); 
             
             //Bind the variables from the work experience object to the SQL statement
             $stmt->bindParam(':pos', $position);
@@ -153,14 +153,14 @@ class MemberProfileDataService{
         try {
             Log::info("Entering MemberProfileDataService.createNewSkills()");
             //use the connection to create a prepared statement
-            $stmt = $this->conn->prepare("INSERT INTO `SKILLS` (`SKILL_NAME`, `USERS_ID`) VALUES (:skill, ':userid')");
+            $stmt = $this->conn->prepare("INSERT INTO `SKILLS` (`SKILL_NAME`, `USERS_ID`) VALUES (:skill, :userid)");
             
             //Store the information from the work experience object into variables
-            $skill = $skill->getSkill_name(); 
-            $userid = $skill->getUserid();
+            $skill_name = $skill->getSkill_name(); 
+            $userid = $skill->getUserid(); 
             
             //Bind the variables from the work experience object to the SQL statement
-            $stmt->bindParam(':skill', $skill);
+            $stmt->bindParam(':skill', $skill_name);
             $stmt->bindParam(':userid', $userid);
             
             //Excecute the SQL statement

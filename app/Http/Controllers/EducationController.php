@@ -1,5 +1,9 @@
 <?php
-
+//Almicke Navarro
+//2-8-19
+//Networking Milestone
+//This is my own work.
+//The controller that handles adding user education
 namespace App\Http\Controllers;
 
 use Http\Client\Exception;
@@ -19,7 +23,11 @@ class EducationController extends Controller
             $start = $request->input('startYear');
             $end = $request->input('endYear');
             $info = $request->input('additionalInfo');
-            $userid = $request->session()->get('userid');
+            
+            //check if the userid session variable has been set
+            if ($request->session()->has('userid')) {
+                $userid = $request->session()->get('userid');
+            }
             
             //Create a new business service
             $bs = new MemberProfileBusinessService(); 

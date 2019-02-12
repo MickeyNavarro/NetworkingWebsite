@@ -1,12 +1,17 @@
 <?php
-
+//Almicke Navarro
+//2-8-19
+//Networking Milestone
+//This is my own work.
+//The controller that handles adding user work experience
 namespace App\Http\Controllers;
 
+
+use App\Services\BusinessServices\MemberProfileBusinessService;
+use App\Models\WorkExperienceModel;
 use Http\Client\Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use App\Services\BusinessServices\MemberProfileBusinessService;
-use App\Models\WorkExperienceModel;
 
 class WorkExperienceController extends Controller
 {
@@ -20,7 +25,11 @@ class WorkExperienceController extends Controller
             $start = $request->input('startYear');
             $end = $request->input('endYear');
             $info = $request->input('additionalInfo'); 
-            $userid = $request->session()->get('userid');
+            
+            //check if the userid session variable has been set
+            if ($request->session()->has('userid')) {
+                $userid = $request->session()->get('userid');
+            }
             
             //Create a new business service
             $bs = new MemberProfileBusinessService();

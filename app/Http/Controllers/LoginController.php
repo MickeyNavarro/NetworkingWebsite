@@ -40,18 +40,22 @@ class LoginController extends Controller
                 //If the user information is valid the user will see that they are logged in
                 //If not they will be prompted to try again
             $userId = $bs->login($user);
+            
+            //use the user id to find the user object in which the id belongs to
+            $uo = $bs->findById($userId); 
+            
+            //find out if the user has been suspended
+            $suspend = $uo->getSuspend(); 
        
-            if($userId != null){ 
+            //check if the user id was returned and if the user was not suspended
+            if($userId != null && $suspend != 1){ 
                 
                 //set session user id
                 $request->session()->put('userid', $userId);
                 
-                //use the user id to find the user object in which the id belongs to 
-                $uo = $bs->findById($userId); 
-                
                 //get the role of the user object
                 $role = $uo->getRole();
-                
+                                
                 //set the role session
                 $request->session()->put('role', $role);
                           

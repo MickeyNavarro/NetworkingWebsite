@@ -1,5 +1,10 @@
 <?php
-namespace Http\Controllers;
+//Almicke Navarro
+//2-8-19
+//Networking Milestone
+//This is my own work.
+//The controller that handles adding personal information education
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -19,7 +24,11 @@ class PersonalInformationController
             $biography = $request->input('bio');
             $contact_email = $request->input('email');
             $phone_number = $request->input('phone');
-            $userid = $request->session()->get('userid');
+            
+            //check if the userid session variable has been set
+            if ($request->session()->has('userid')) {
+                $userid = $request->session()->get('userid');
+            }
             
             //Create a new business service
             $bs = new MemberProfileBusinessService();

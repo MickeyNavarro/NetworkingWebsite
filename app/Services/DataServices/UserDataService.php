@@ -170,6 +170,34 @@ class UserDataService{
             throw new DatabaseException("Database Exception: " . $e->getMessage(), 0, $e);
         }
     }
+    //accepts an id and allows an admin role to unsuspend the user
+    function unsuspendById($id){
+        try {
+            Log::info("Entering SecurityDAO.suspendById()");
+            
+            //use the connection to create a prepared statement
+            $stmt = $this->conn->prepare("UPDATE `USERS` SET `SUSPEND` = '0' WHERE `USERS`.`ID` = :id");
+            
+            //Bind the variables from the user object to the SQL statement
+            $stmt->bindParam(':id', $id);
+            
+            //execute the SQL statement
+            $suspend = $stmt->execute();
+            
+            if($suspend){
+                Log::info("Exiting UserDataService.unsuspendById() with returning true");
+                return true;
+            }
+            else{
+                Log::info("Exiting UserDataService.unsuspendById() with returning false");
+                return false;
+            }
+        }
+        catch (PDOException $e){
+            Log::error("Exception: ", array("message" => $e->getMessage()));
+            throw new DatabaseException("Database Exception: " . $e->getMessage(), 0, $e);
+        }
+    }
     //accepts the id and allows an admin to delete the user
     function deleteById($id){
         try {
@@ -198,5 +226,41 @@ class UserDataService{
             throw new DatabaseException("Database Exception: " . $e->getMessage(), 0, $e);
         }
     }
-        
+    
+    //allows the admin to view all users
+    function showAll(){
+        try{
+            Log::info("Entering UserDataService.showAll()");
+            
+            //use the connection to create a prepared statement
+            $stmt = $this->conn->prepare("SELECT * FROM `USERS`");
+            
+            //execute the SQL statement
+            $stmt->execute();
+            
+            //check is any row was returned
+            if($stmt->rowCount() == 0){
+                Log::info("Exiting UserDataService.showAll() with returning null");
+                return null;
+            }
+            else{ 
+                $user_array = array();
+                
+                while ($user = $stmt->fetch(PDO::FETCH_ASSOC)){
+                    
+                    array_push($user_array, $user);
+                    
+                }
+                
+                return $user_array;
+                                
+                Log::info("Exiting UserDataService.showAll() with an array of users");
+                return $user_array;
+            }
+        }
+        catch (PDOException $e){
+            Log::error("Exception: ", array("message" => $e->getMessage()));
+            throw new DatabaseException("Database Exception: " . $e->getMessage(), 0, $e);
+        }
+    }
 }

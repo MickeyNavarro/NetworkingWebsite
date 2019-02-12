@@ -1,5 +1,9 @@
 <?php
-
+//Almicke Navarro
+//2-9-19
+//Networking Milestone
+//This is my own work.
+//The controller that handles user deletion
 namespace App\Http\Controllers;
 
 use App\Services\BusinessServices\UserBusinessService;

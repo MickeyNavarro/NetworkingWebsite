@@ -3,15 +3,15 @@
 //2-9-19
 //Networking Milestone
 //This is my own work.
-//The controller that handles user suspension
+//The controller that handles user unsuspension
 namespace App\Http\Controllers;
 
+use Http\Client\Exception;
 use Illuminate\Http\Request;
-use App\Services\BusinessServices\UserBusinessService;
 use Illuminate\Support\Facades\Log;
-use PHPUnit\Exception;
+use App\Services\BusinessServices\UserBusinessService;
 
-class SuspendController extends Controller
+class UnsuspendController extends Controller
 {
     public function index(Request $request){
         
@@ -23,7 +23,7 @@ class SuspendController extends Controller
             $bs = new UserBusinessService();
             
             //Use the business service object to suspend a user in the database
-            if($bs->suspendById($id)){
+            if($bs->unsuspendById($id)){
                 //Render a response View with success message
                 return view('adminPageView');
                 
