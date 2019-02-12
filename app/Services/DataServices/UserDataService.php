@@ -13,6 +13,7 @@ use App\Services\Utility\DatabaseException;
 use Illuminate\Support\Facades\Log;
 use PDOException;
 use \PDO; 
+use function GuzzleHttp\json_encode;
 
 class UserDataService{
     public function __construct($conn) {
@@ -62,7 +63,7 @@ class UserDataService{
             throw new DatabaseException("Database Exception: " . $e->getMessage(), 0, $e);
         }
     }
-    //accepts a user object and matches the credential to a user in the database 
+    //accepts a user object and matches the credential to a user in the database; returns a user ID
     function login(UserModel $user){
         try {
             Log::info("Entering UserDataService.login()");
@@ -81,14 +82,17 @@ class UserDataService{
             //Excecute the SQL statement
             $stmt->execute();
             
+            
             //see if user existed and return true if found else return false if not found
                 if ($stmt->rowCount() == 1) {
-                    Log::info("Exiting UserDataService.login() with true");
-                    return true;
+                    $user = $stmt->fetch(PDO::FETCH_ASSOC); 
+                    
+                    Log::info("Exiting UserDataService.login() with user id");
+                    return $user['ID']; 
                 }
                 else {
-                    Log::info("Exiting UserDataService.login() with false");
-                    return false;
+                    Log::info("Exiting UserDataService.login() with null");
+                    return null;
                 }
             }
             catch (PDOException $e){
@@ -102,7 +106,7 @@ class UserDataService{
             Log::info("Entering SecurityDAO.findById()");
         
             //use the connection to create a prepared statement
-            $stmt = $this->conn->prepare("SELECT * FROM Users WHERE ID = :id LIMIT 1");
+            $stmt = $this->conn->prepare("SELECT * FROM `USERS` WHERE ID = :id LIMIT 1");
             
             //Bind the variables from the user object to the SQL statement
             $stmt->bindParam(':id', $id);
@@ -112,20 +116,25 @@ class UserDataService{
             
             //check is a row was returned
             if($stmt->rowCount() == 0){
-                Log::info("Exiting UserDataService.findById() with returning null due to not finding a user");
+                Log::info("Exiting UserDataService.findById() with returning null");
                 return null;
             }
             else{
-                $personArray = array();
+                $user = $stmt->fetch(PDO::FETCH_ASSOC);
                 
-                while ($person = $stmt->fetch(PDO::FETCH_ASSOC)){
-                    array_push($personArray, $person);
-                }
+                $id = $user['ID'];
+                $first = $user['FIRSTNAME'];
+                $last = $user['LASTNAME'];
+                $email = $user['EMAIL'];
+                $username = $user['USERNAME']; 
+                $pass = $user['PASSWORD']; 
+                $role = $user['ROLE'];
+                $suspend = $user['SUSPEND'];
                 
-                $p = new UserModel($personArray[0]['ID'], $personArray[0]['FIRSTNAME'], $personArray[0]['LASTNAME'], $personArray[0]['EMAIL'], $personArray[0]['USERNAME'], $personArray[0]['PASSWORD'], $personArray[0]['ROLE']);
-                
-                Log::info("Exiting UserDataService.findById() with returning an array of the person found");
-                return $p;
+                $uo = new UserModel($id, $first, $last, $email, $username, $pass, $role, $suspend); 
+                 
+                Log::info("Exiting UserDataService.findById() with returning a user object as a string");
+                return $uo;
             }
         }
         catch (PDOException $e){

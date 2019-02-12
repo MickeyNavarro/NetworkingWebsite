@@ -6,7 +6,7 @@ use Http\Client\Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Services\BusinessServices\MemberProfileBusinessService;
-use Models\EducationModel;
+use App\Models\EducationModel;
 
 class EducationController extends Controller
 {
@@ -19,7 +19,7 @@ class EducationController extends Controller
             $start = $request->input('startYear');
             $end = $request->input('endYear');
             $info = $request->input('additionalInfo');
-            $userid = $request->input('userid');
+            $userid = $request->session()->get('userid');
             
             //Create a new business service
             $bs = new MemberProfileBusinessService(); 

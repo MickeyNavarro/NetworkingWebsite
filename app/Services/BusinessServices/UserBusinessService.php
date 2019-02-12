@@ -13,6 +13,7 @@ use \PDO;
 use App\Services\DataServices\UserDataService;
 use App\Models\UserModel;
 use App\User;
+use function GuzzleHttp\json_encode;
 
 class UserBusinessService{
     
@@ -78,8 +79,11 @@ class UserBusinessService{
         $service = new UserDataService($conn);
         $flag = $service->findById($id);
         
+        //make sure to change the $flag variable into a string to allow for logging
+        json_encode($flag);
+        
         //Return the finder results
-        Log::info("Exit UserBusinessService.findById() with " . $flag);
+        Log::info("Exit UserBusinessService.findById() with " . json_encode($flag));
         return $flag;
     }
     

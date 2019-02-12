@@ -8,6 +8,7 @@ use Http\Client\Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
+
 class SkillsController extends Controller
 {
     public function index(Request $request){
@@ -15,7 +16,7 @@ class SkillsController extends Controller
         try{
             //Store the form data
             $skill_name = $request->input('skill');
-            $userid = $request->input('userid');
+            $userid = $request->session()->get('userid');
             
             //Create a new business service
             $bs = new MemberProfileBusinessService();
@@ -24,7 +25,7 @@ class SkillsController extends Controller
             $skill = new SkillsModel(0, $skill_name, $userid);
             
             //Use the business service object to create a new user in the database
-            if($bs->createNewEducation($skill)){
+            if($bs->createNewSkills($skill)){
                 //Render a response View with success message
                 return view('userProfileView');
                 

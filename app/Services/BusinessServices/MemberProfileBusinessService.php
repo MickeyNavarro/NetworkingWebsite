@@ -1,12 +1,13 @@
 <?php
 namespace App\Services\BusinessServices;
 
-use Illuminate\Support\Facades\Log;
-use Models\PersonalInformationModel;
+use App\Models\EducationModel;
+use App\Models\PersonalInformationModel;
+use App\Models\SkillsModel;
+use App\Models\WorkExperienceModel;
 use App\Services\DataServices\MemberProfileDataService;
-use Models\EducationModel;
-use Models\WorkExperienceModel;
-use Models\SkillsModel;
+use Illuminate\Support\Facades\Log;
+use \PDO; 
 
 class MemberProfileBusinessService
 {

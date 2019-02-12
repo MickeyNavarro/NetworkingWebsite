@@ -3,7 +3,7 @@ namespace Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Models\PersonalInformationModel;
+use App\Models\PersonalInformationModel;
 use App\Services\BusinessServices\MemberProfileBusinessService;
 use PHPUnit\Exception;
 
@@ -19,7 +19,7 @@ class PersonalInformationController
             $biography = $request->input('bio');
             $contact_email = $request->input('email');
             $phone_number = $request->input('phone');
-            $userid = $request->input('userid'); 
+            $userid = $request->session()->get('userid');
             
             //Create a new business service
             $bs = new MemberProfileBusinessService();

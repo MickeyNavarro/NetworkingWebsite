@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 use PHPUnit\Exception;
+use function GuzzleHttp\json_decode;
 
 session_start();
 
@@ -44,12 +45,16 @@ class LoginController extends Controller
                 
                 //set session user id
                 $request->session()->put('userid', $userId);
-                /*
-                //use user id to find the user role and set a role session variable
-                $id = $bs->findById($userId);
-                $role = $user->getRole();
+                
+                //use the user id to find the user object in which the id belongs to 
+                $uo = $bs->findById($userId); 
+                
+                //get the role of the user object
+                $role = $uo->getRole();
+                
+                //set the role session
                 $request->session()->put('role', $role);
-                */
+                          
                 
                 //Render a response View with success message
                 return view('userProfileView');

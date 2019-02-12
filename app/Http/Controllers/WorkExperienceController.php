@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Http\Client\Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\Services\BusinessServices\MemberProfileBusinessService;
-use Models\WorkExperienceModel;
+use App\Models\WorkExperienceModel;
 
 class WorkExperienceController extends Controller
 {
@@ -18,7 +20,7 @@ class WorkExperienceController extends Controller
             $start = $request->input('startYear');
             $end = $request->input('endYear');
             $info = $request->input('additionalInfo'); 
-            $userid = $request->input('userid');
+            $userid = $request->session()->get('userid');
             
             //Create a new business service
             $bs = new MemberProfileBusinessService();
@@ -27,7 +29,7 @@ class WorkExperienceController extends Controller
             $newWork = new WorkExperienceModel(0, $pos, $com, $loc, $start, $end, $info, $userid); 
             
             //Use the business service object to create a new user in the database
-            if($bs->createNewWorkExperience($work)){
+            if($bs->createNewWorkExperience($newWork)){
                 //Render a response View with success message
                 return view('userProfileView');
                 

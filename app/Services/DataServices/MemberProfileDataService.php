@@ -7,13 +7,13 @@
 
 namespace App\Services\DataServices; 
 
-use Illuminate\Support\Facades\Log;
+use App\Models\EducationModel;
+use App\Models\PersonalInformationModel;
+use App\Models\SkillsModel;
+use App\Models\WorkExperienceModel;
 use App\Services\Utility\DatabaseException;
+use Illuminate\Support\Facades\Log;
 use PDOException;
-use Models\PersonalInformationModel;
-use Models\EducationModel;
-use Models\WorkExperienceModel;
-use Models\SkillsModel;
 
 class MemberProfileDataService{
     public function __construct($conn) {
