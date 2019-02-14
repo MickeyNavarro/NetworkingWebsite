@@ -1,6 +1,3 @@
-<?php
-use App\Services\BusinessServices\UserBusinessService;
-?>
 <!--
 //Almicke Navarro
 //2-9-19
@@ -10,7 +7,7 @@ use App\Services\BusinessServices\UserBusinessService;
 -->
 
 @extends('layouts.appmaster')
-@section('title', 'Login Page')
+@section('title', 'Admin Page')
   
 @section('content')
 
@@ -32,28 +29,30 @@ use App\Services\BusinessServices\UserBusinessService;
     	<th></th>
     </thead>
     <tbody>
-    <?php
-    $bs = new UserBusinessService(); 
-    $users = $bs->showAll(); 
-    for ($x = 0; $x < count($users); $x++) {
-        echo "<tr>";
-        echo "<td>" . $users[$x]['ID'] . "</td>";
-        echo "<td>" . $users[$x]['FIRSTNAME'] . "</td>";
-        echo "<td>" . $users[$x]['LASTNAME'] . "</td>";
-        echo "<td>" . $users[$x]['USERNAME'] . "</td>";
-        echo "<td>" . $users[$x]['ROLE'] . "</td>";
-        echo "<td>" . $users[$x]['SUSPEND'] . "</td>";
+    @php
+    use App\Services\BusinessServices\UserBusinessService;
+    $bs = new UserBusinessService();
+    $users = $bs->showAll();
+    @endphp
+    <!-- Loop to show all the users from the database -->
+    @for ($x = 0; $x < count($users); $x++) 
+        <tr>
+        <td>{{$users[$x]['ID']}}</td>
+        <td> {{$users[$x]['FIRSTNAME']}} </td>
+        <td> {{$users[$x]['LASTNAME']}} </td>
+        <td> {{$users[$x]['USERNAME']}} </td>
+        <td> {{$users[$x]['ROLE']}} </td>
+        <td> {{$users[$x]['SUSPEND']}} </td>
+     
+        <!-- include buttons for edit, suspend, and delete user -->
+        <!-- <td><form action = '' method = 'POST'><input type = 'hidden' name = 'id' value = ".$users[$x]['ID']."><input type = 'submit' value = 'Edit'></form> </td> -->
+        <td><form action = 'suspendView' method = 'GET'><input type = 'hidden' name = 'id' value = {{$users[$x]['ID']}}><input type = 'submit' value = 'Suspend'></form> </td>
+        <td><form action = 'unsuspendView' method = 'GET'><input type = 'hidden' name = 'id' value = {{$users[$x]['ID']}}><input type = 'submit' value = 'Unsuspend'></form> </td>
+        <td><form action = 'deleteView' method = 'GET'><input type = 'hidden' name = 'id' value = {{$users[$x]['ID']}}><input type = 'submit' value = 'Delete'></form> </td>
         
-        
-        //include buttons for edit, suspend, and delete user
-        //echo "<td><form action = '' method = 'POST'><input type = 'hidden' name = 'id' value = ".$users[$x]['ID']."><input type = 'submit' value = 'Edit'></form> </td>";
-        echo "<td><form action = 'suspendView' method = 'GET'><input type = 'hidden' name = 'id' value = ".$users[$x]['ID']."><input type = 'submit' value = 'Suspend'></form> </td>";
-        echo "<td><form action = 'unsuspendView' method = 'GET'><input type = 'hidden' name = 'id' value = ".$users[$x]['ID']."><input type = 'submit' value = 'Unsuspend'></form> </td>";
-        echo "<td><form action = 'deleteView' method = 'GET'><input type = 'hidden' name = 'id' value = ".$users[$x]['ID']."><input type = 'submit' value = 'Delete'></form> </td>";
-        
-        echo "</tr>";
-    }
-    ?>
+        </tr>
+   
+    @endfor
     </tbody>
 </table>
 <script type="text/javascript">

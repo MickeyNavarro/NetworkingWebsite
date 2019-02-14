@@ -1,3 +1,3 @@
 <div class = "footer">   
-	© 2018 Copyright: Networking.com
+	© 2019 Copyright: Networking.com
 </div>
