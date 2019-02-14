@@ -8,12 +8,11 @@
 
 namespace App\Services\BusinessServices;
 
+use App\Models\UserModel;
+use App\Services\DataServices\UserDataService;
+use function GuzzleHttp\json_encode;
 use Illuminate\Support\Facades\Log;
 use \PDO;
-use App\Services\DataServices\UserDataService;
-use App\Models\UserModel;
-use App\User;
-use function GuzzleHttp\json_encode;
 
 class UserBusinessService{
     

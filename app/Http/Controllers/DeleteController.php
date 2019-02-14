@@ -17,7 +17,6 @@ class DeleteController extends Controller
         
         try{
             //Store the form data
-            //TODO:update on how to get the id
             $id = $request->input('id');
             
             //Create a new business service

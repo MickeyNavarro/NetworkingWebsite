@@ -60,7 +60,7 @@ class LoginController extends Controller
                 $request->session()->put('role', $role);
                           
                 
-                //Render a response View with success message
+                //Render a response view of the user profile 
                 return view('userProfileView');
                         
             }else{
@@ -86,4 +86,6 @@ class LoginController extends Controller
         //run data validation rules
         $this->validate($request, $rules);
     }
+    
+    
 }

@@ -120,8 +120,10 @@ class UserDataService{
                 return null;
             }
             else{
+                //fetch all the user data
                 $user = $stmt->fetch(PDO::FETCH_ASSOC);
                 
+                //create variables to hold the user data 
                 $id = $user['ID'];
                 $first = $user['FIRSTNAME'];
                 $last = $user['LASTNAME'];
@@ -131,6 +133,8 @@ class UserDataService{
                 $role = $user['ROLE'];
                 $suspend = $user['SUSPEND'];
                 
+                
+                //create a new usermodel with the data from above
                 $uo = new UserModel($id, $first, $last, $email, $username, $pass, $role, $suspend); 
                  
                 Log::info("Exiting UserDataService.findById() with returning a user object as a string");
@@ -244,15 +248,16 @@ class UserDataService{
                 return null;
             }
             else{ 
+                //create an user array
                 $user_array = array();
                 
+                //loop to get all the user data to put into the array
                 while ($user = $stmt->fetch(PDO::FETCH_ASSOC)){
                     
                     array_push($user_array, $user);
                     
                 }
                 
-                return $user_array;
                                 
                 Log::info("Exiting UserDataService.showAll() with an array of users");
                 return $user_array;
