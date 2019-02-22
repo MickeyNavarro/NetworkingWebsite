@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Feb 22, 2019 at 05:24 AM
+-- Generation Time: Feb 22, 2019 at 04:49 PM
 -- Server version: 5.7.23
 -- PHP Version: 7.2.10
 
@@ -104,6 +104,18 @@ CREATE TABLE `USERS` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `USER_GROUPS`
+--
+
+CREATE TABLE `USER_GROUPS` (
+  `ID` int(11) NOT NULL,
+  `USERS_ID` int(11) NOT NULL,
+  `GROUPS_ID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `WORK_EXPERIENCE`
 --
 
@@ -160,6 +172,14 @@ ALTER TABLE `SKILLS`
 --
 ALTER TABLE `USERS`
   ADD PRIMARY KEY (`ID`);
+
+--
+-- Indexes for table `USER_GROUPS`
+--
+ALTER TABLE `USER_GROUPS`
+  ADD PRIMARY KEY (`ID`,`USERS_ID`),
+  ADD KEY `fk_USER_GROUPS_GROUPS1_idx` (`GROUPS_ID`),
+  ADD KEY `fk_USER_GROUPS_USERS1_idx` (`USERS_ID`);
 
 --
 -- Indexes for table `WORK_EXPERIENCE`
@@ -235,6 +255,13 @@ ALTER TABLE `PERSONAL_INFORMATION`
 --
 ALTER TABLE `SKILLS`
   ADD CONSTRAINT `fk_SKILLS_USERS1` FOREIGN KEY (`USERS_ID`) REFERENCES `USERS` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `USER_GROUPS`
+--
+ALTER TABLE `USER_GROUPS`
+  ADD CONSTRAINT `fk_USER_GROUPS_GROUPS1` FOREIGN KEY (`GROUPS_ID`) REFERENCES `GROUPS` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_USER_GROUPS_USERS1` FOREIGN KEY (`USERS_ID`) REFERENCES `USERS` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `WORK_EXPERIENCE`
