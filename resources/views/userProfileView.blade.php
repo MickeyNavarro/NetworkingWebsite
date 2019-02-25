@@ -1,82 +1,58 @@
-<?php
-use App\Services\BusinessServices\MemberProfileBusinessService;
-?>
 <!-- 
-//Mariah Valenzuela and Almicke Navarro
+//Almicke Navarro (and Mariah Valenzuela)
 //2-1-19
 //Networking Milestone
 //This is my own work.
 //The form that allows users to add view, add, and edit their profile
-
-//editted on 2/12/19 by Mickey Navarro to allow the user to view their data that they include 
- -->
+-->
  
 @extends('layouts.appmaster')
 @section('title', 'Login Page')
   
 @section('content')
 
-@php 
-use App\Services\BusinessServices\UserBusinessService;
-use App\Services\DataServices\MemberProfileDataService; 
-
-@endphp
+<!-- check if the session variable holds the user id -->
+@if (session()->has('userid'))
 <div class = user-profile>
+
 	<div id = "user-photo" class="column"> 		
 		<img id = "photo" src="https://cdn3.iconfinder.com/data/icons/business-and-finance-icons/512/Business_Man-512.png" alt="User Photo" >   	
 	</div>
     <div id = "user-personal-information" class = "column">
-    
-    <!-- check if the session variable holds the user id -->
-    @if (session()->has('userid'))
-        @php 
-        //get the user id from the session variable 
-        $id = session()->get('userid');
-        
-        //create a new instance of the UserBusinessService class object
-        $bs = new UserBusinessService(); 
-        
-        //find the user attributes by its id 
-        $user = $bs->findById($id); 
-        
-        //create a new instance of the MemberProfileBusinessService 
-        	//there are multiple MemberProfileBusinessService because I plan to change the names of the business services to an entity name
- 		$pbs = new MemberProfileBusinessService(); 
- 		
- 		//find the skills by the user id 
- 		$pi = $pbs->findPersonalInfo($id); 
-        @endphp
+          
+        <!-- check if the first and last name was passed on from the controller -->      
+        @if ($firstname !=null && $lastname != null)
+        <h4>{{$firstname}} {{$lastname}}</h4>
+        @else 
+        <h4>Something went wrong</h4>
+        @endif
         
         
-        <!-- check if a user was returned -->
-        @if ($user != null)
-        
-        <!-- use the id to get the user data from the tables to output onto their member profiles -->
-        <h4>{{$user->getFirstName()}} {{$user->getLastName()}}</h4>
-        
-            @if ($pi != null)
-        	<p>{{$pi->getLocation()}}</p>
-        	<p>{{$pi->getBiography()}}</p>
-        	<div id = "contact-information-button">
-        		<a href="#">{{$pi->getContact_email()}}</a>
-        	</div>
-        	<div id = "contact-information-button">
-        		<a href="#">{{$pi->getPhone_number()}}</a>
-        	</div>
-        	@else 
+        <!-- check if the personal info data was passed on from the controller -->              
+        @if ($pi != null)
+            <p>{{$pi->getCurrent_position()}}</p>
+            <p>{{$pi->getBiography()}}</p>
+            <div id = "contact-information-button">
+            	<a href="#">{{$pi->getContact_email()}}</a>
+            </div>
+            <div id = "contact-information-button">
+            	<a href="#">{{$pi->getPhone_number()}}</a>
+            </div>
+        	        	
+        @else 
         	<p>Click the plus icon to the right to add your information!</p>
-        	@endif
-    	@endif
-    	
-    @else 
-        <!-- TODO: reroute to an error page  -->
-    @endif
+        @endif    	
     	
     </div>
     <div class = "edit-form-button column">
     		 <form class = "add-info-button" action="addPersonalInformation">
 			<input class = "plus-image" type="image" src="https://static.thenounproject.com/png/617815-200.png" alt="Submit" width="48" height="48">
-		</form>
+		
+			</form>
+			@if ($pi != null)
+			<form action = 'updatePersonalInformationView' method = 'GET'><input type = 'hidden' name = 'id' value = {{$pi->getId()}}><input type = 'submit' value = 'Edit'></form>
+            <form action = 'deletePersonalInformationView' method = 'GET'><input type = 'hidden' name = 'id' value = {{$pi->getId()}}><input type = 'submit' value = 'Delete'></form>
+            @endif
     </div>
         
  	<hr>  
@@ -84,14 +60,6 @@ use App\Services\DataServices\MemberProfileDataService;
  	<!-- User Education -->
  	<div id = "user-education"> 		
  		<h4 class = "heading column">Education</h4>
- 		
- 		@php
- 		//create a new instance of the MemberProfileBusinessService 
- 		$ebs = new MemberProfileBusinessService(); 
- 		
- 		//find the skills by the user id 
- 		$edu = $ebs->findEducation($id); 
- 		@endphp
  		
  		 @if ($edu != null)
  		<table id = work class = "darkTable table-hover"> 
@@ -101,6 +69,8 @@ use App\Services\DataServices\MemberProfileDataService;
                <th>Start Year</th>
                <th>End Year</th>
                <th>Additional Info</th>
+               <th></th>
+    		   <th></th>
         	</thead>
     	<tbody>
      		@for ($x = 0; $x < count($edu); $x++) 
@@ -109,7 +79,10 @@ use App\Services\DataServices\MemberProfileDataService;
      		<td>{{$edu[$x]['DEGREE']}}</td>
      		<td>{{$edu[$x]['START_YEAR']}}</td>
      		<td>{{$edu[$x]['END_YEAR']}}</td>
-     		<td>{{$edu[$x]['ADDITIONAL_INFO']}}</td>
+     		<td>{{$edu[$x]['ADDITIONAL_INFORMATION']}}</td>
+     		
+     		<td><form action = 'updateEducationView' method = 'GET'><input type = 'hidden' name = 'id' value = {{$edu[$x]['ID']}}><input type = 'submit' value = 'Edit'></form> </td>
+            <td><form action = 'deleteEducationView' method = 'GET'><input type = 'hidden' name = 'id' value = {{$edu[$x]['ID']}}><input type = 'submit' value = 'Delete'></form> </td>
      		</tr>
      		@endfor 
  		</tbody>
@@ -126,24 +99,15 @@ use App\Services\DataServices\MemberProfileDataService;
  	<br>
  	<hr>  
    	 	
- 	<!-- User Experience -->
+ 	<!-- User Work Experience -->
  	<div id = "user-experience"> 		
  		<h4 class = "heading column">Experience</h4>
  		
- 		@php
- 		//create a new instance of the MemberProfileBusinessService 
- 		$wbs = new MemberProfileBusinessService(); 
- 		
- 		//find the skills by the user id 
- 		$work = $wbs->findWork($id); 
- 		@endphp
- 		
- 		 @if ($work != null)
+ 		@if ($work != null)
  		<table id = work class = "darkTable table-hover"> 
         	<thead>	
                <th>Position</th>
                <th>Company</th>
-               <th>Location</th>
                <th>Start Year</th>
                <th>End Year</th>
                <th>Additional Info</th>
@@ -153,10 +117,12 @@ use App\Services\DataServices\MemberProfileDataService;
      		<tr>
      		<td>{{$work[$x]['POSITION']}}</td>
      		<td>{{$work[$x]['COMPANY']}}</td>
-     		<td>{{$work[$x]['LOCATION']}}</td>
      		<td>{{$work[$x]['START_YEAR']}}</td>
      		<td>{{$work[$x]['END_YEAR']}}</td>
      		<td>{{$work[$x]['ADDITIONAL_INFORMATION']}}</td>
+     		
+     		<td><form action = 'updateWorkExperienceView' method = 'GET'><input type = 'hidden' name = 'id' value = {{$work[$x]['ID']}}><input type = 'submit' value = 'Edit'></form> </td>
+            <td><form action = 'deleteWorkExperienceView' method = 'GET'><input type = 'hidden' name = 'id' value = {{$work[$x]['ID']}}><input type = 'submit' value = 'Delete'></form> </td>
      		</tr>
      		@endfor 
  		</tbody>
@@ -177,14 +143,6 @@ use App\Services\DataServices\MemberProfileDataService;
  	<div id = "user-skills"> 	
  		<h4 class = "heading column">Skills</h4>
  		
- 		@php
- 		//create a new instance of the MemberProfileBusinessService 
- 		$sbs = new MemberProfileBusinessService(); 
- 		
- 		//find the skills by the user id 
- 		$skills = $sbs->findSkill($id); 
- 		@endphp
- 		
  		 @if ($skills != null)
  		<table id = skills class = "darkTable table-hover"> 
         	<thead>	
@@ -192,18 +150,23 @@ use App\Services\DataServices\MemberProfileDataService;
         	</thead>
     	<tbody>
      		@for ($x = 0; $x < count($skills); $x++) 
-     		<tr><td>{{$skills[$x]['SKILL_NAME']}}</td></tr>
+     		<tr>
+     		<td>{{$skills[$x]['SKILLS_NAME']}}</td>
+     		
+     		<td><form action = 'updateSkillsView' method = 'GET'><input type = 'hidden' name = 'id' value = {{$skills[$x]['ID']}}><input type = 'submit' value = 'Edit'></form> </td>
+            <td><form action = 'deleteSkillsView' method = 'GET'><input type = 'hidden' name = 'id' value = {{$skills[$x]['ID']}}><input type = 'submit' value = 'Delete'></form> </td>
+     		</tr>
      		@endfor 
  		</tbody>
  		</table>
  		@endif 
  		
  		<div class = "edit-form-button column">
-    		<form class = "add-info-button" action="addSkillView">
+    		<form class = "add-info-button" action="addSkillsView">
 				<input class = "plus-image" type="image" src="https://static.thenounproject.com/png/617815-200.png" alt="Submit" width="48" height="48">
 			</form>
    		</div>	 	
  	</div>   	 		
  </div>
- 
+ @endif
  @endsection

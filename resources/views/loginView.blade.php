@@ -21,7 +21,7 @@
             <input type="text" placeholder="Enter Username" name="username">
                           
             <label>Password</label>
-            <input type="password" placeholder="Enter Password" name="pass">    
+            <input type="password" placeholder="Enter Password" name="password">    
             
             <button type="submit" class="loginbtn">Log In</button>
 
@@ -30,5 +30,10 @@
         	</div>
     </form>
 </div>
-
+<!-- Output list of errors, if any-->
+	@if($errors->count() != 0)
+		@foreach($errors->all() as $message)
+			{{$message}} <br/> 
+		@endforeach 
+	@endif
 @endsection

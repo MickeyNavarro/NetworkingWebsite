@@ -7,7 +7,7 @@
  -->
  
 @extends('layouts.appmaster')
-@section('title', 'Login Page')
+@section('title', 'Registration Page')
   
 @section('content')
 <div class = form>
@@ -31,7 +31,7 @@
             
             
             <label>Password</label>
-            <input type="password" placeholder="Enter Password" name="pass">    
+            <input type="password" placeholder="Enter Password" name="password">    
             
             <button type="submit" class="registerbtn">Register</button>    
             
@@ -40,5 +40,10 @@
         </div>
     </form>
 </div>
-
+<!-- Output list of errors, if any-->
+	@if($errors->count() != 0)
+		@foreach($errors->all() as $message)
+			{{$message}} <br/> 
+		@endforeach 
+	@endif
 @endsection
