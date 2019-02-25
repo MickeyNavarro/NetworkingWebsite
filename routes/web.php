@@ -1,3 +1,5 @@
+<?php
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,6 +15,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+//-------------------------------------------------------------------------------------
+    
+//ROUTES RELATING TO LOGIN AND REGISTRATION
+
 //The route is mapped to the '/login' URI and will display the login form 
 Route::get('/login', function(){
     return view('loginView');
@@ -25,7 +32,7 @@ Route::get('/registration', function(){
 });
 
 //The route is mapped to the '/registrationView' and will post the user input from the registration view
-Route::post('/registrationView', 'RegistrationController@index'); 
+Route::post('/registrationView', 'UserController@create'); 
 
 //This route is mapped to the '/login' URI and will display the login form
 Route::get('/login', function(){
@@ -34,65 +41,162 @@ Route::get('/login', function(){
 });
 
 //The route is mapped to the '/loginView' and will post the user input from the login view
-Route::post('/loginView', 'LoginController@index'); 
+Route::post('/loginView', 'UserController@readByCredentials'); 
+
+//-------------------------------------------------------------------------------------
+
+
+//ROUTES RELATED TO THE USER PROFILE 
 
 //This route is mapped to the '/profile' URI and will display the user profile page
-Route::get('/viewProfile', function(){
+Route::get('/viewProfile', 'UserProfileController@index');
+
+
+
+//-------------------------------------------------------------------------------------
     
-    return view('userProfileView');
-});
+
+//ROUTES RELATED TO THE PERSONAL INFORMATION 
 
 //This route is mapped to the '/addPersonInformationView' URI and will display the page that allows user to enter their personal information
 Route::get('/addPersonalInformation', function(){
     
-    return view('personalInformationView');
+    return view('addPersonalInformationView');
 });
 
-//The route is mapped to the '/personalInformationView' and will post the user input from the login view
-Route::post('/personalInformationView', 'PersonalInformationController@index'); 
+//The route is mapped to the '/addPersonalInformationView' and will post the user input from the personal info view
+Route::post('/addPersonalInformationView', 'PersonalInformationController@create');
+
+//This route is mapped to the '/updatePersonalInformationView' URI and will read the personal info data
+Route::get('/updatePersonalInformationView', 'PersonalInformationController@readByPersonalInfoID');
+
+//The route is mapped to the '/updatedPersonalInformationView' and will update the personal info data
+Route::post('/updatedPersonalInformationView', 'PersonalInformationController@update');
+
+//The route is mapped to the '/deletePersonalInformationView' and will get the personal info id from the user profile view to delete them
+Route::get('/deletePersonalInformationView', 'PersonalInformationController@delete'); 
+
+
+
+//-------------------------------------------------------------------------------------
+
+//ROUTES RELATED TO THE EDUCATION 
 
 //This route is mapped to the '/addEducationView' URI and will display the page that allows the user at enter their education
 Route::get('/addEducationView', function(){
     
-    return view('educationView');
+    return view('addEducationView');
 });
 
-//The route is mapped to the '/skillsView' and will post the user input from the skills view
-Route::post('/educationView', 'EducationController@index'); 
+//The route is mapped to the '/addedEducationView' and will post the user input from the education view
+Route::post('/addedEducationView', 'EducationController@create'); 
 
-//This route is mapped to the '/addExperienceView' URI and will display the page that allows the user at enter their experience
+//This route is mapped to the '/updateEducationView' URI and will read the education data
+Route::get('/updateEducationView', 'EducationController@readByEduID');
+
+ //The route is mapped to the '/updatedEducationView' and will update the education data
+Route::post('/updatedEducationView', 'EducationController@update');
+
+//The route is mapped to the '/deleteView' and will get the education id from the user profile view to delete them
+Route::get('/deleteEducationView', 'EducationController@delete'); 
+
+//-------------------------------------------------------------------------------------
+
+//ROUTES RELATED TO THE WORK EXPERIENCE 
+
+//This route is mapped to the '/addExperienceView' URI and will display the page that allows the user at enter their work experience
 Route::get('/addWorkExperienceView', function(){
     
-    return view('workExperienceView');
+    return view('addWorkExperienceView');
 });
 
-//The route is mapped to the '/skillsView' and will post the user input from the skills view
-Route::post('/workExperienceView', 'WorkExperienceController@index'); 
+//The route is mapped to the '/addedWorkExperienceView' and will post the user input from the work experience view
+Route::post('/addedWorkExperienceView', 'WorkExperienceController@create');
+
+//This route is mapped to the '/updateWorkExperienceView' URI and will read the work experience data
+Route::get('/updateWorkExperienceView', 'WorkExperienceController@readByWorkID');
+
+//The route is mapped to the '/updatedWorkExperienceView' and will update the work experience data
+Route::post('/updatedWorkExperienceView', 'WorkExperienceController@update');
+
+//The route is mapped to the '/deleteWorkExperienceView' and will get the work experience id from the user profile view to delete them
+Route::get('/deleteWorkExperienceView', 'WorkExperienceController@delete'); 
+
+//-------------------------------------------------------------------------------------
+
+//ROUTES RELATED TO THE SKILLS
 
 //This route is mapped to the '/addSkillView' URI and will display the page that allows the user at enter their skills
-Route::get('/addSkillView', function(){
+Route::get('/addSkillsView', function(){
     
-    return view('skillsView');
+    return view('addSkillsView');
 });
 
-//The route is mapped to the '/skillsView' and will post the user input from the skills view
-Route::post('/skillsView', 'SkillsController@index'); 
+//The route is mapped to the '/addedSkillsView' and will post the user input from the skill view
+Route::post('/addedSkillsView', 'SkillsController@create');
     
-//This route is mapped to the '/adminPageView' URI and will display the page that allows the admin to perform admin functions
-Route::get('/adminPage', function(){
+//This route is mapped to the '/updateSkillsView' URI and will read the skill data
+Route::get('/updateSkillsView', 'SkillsController@readBySkillID');
     
-    return view('adminPageView');
+//The route is mapped to the '/updatedSkillsView' and will update the skill data
+Route::post('/updatedSkillsView', 'SkillsController@update');
+    
+//The route is mapped to the '/deleteSkillsView' and will get the skill id from the user profile view to delete them
+Route::get('/deleteSkillsView', 'SkillsController@delete'); 
+    
+
+//-------------------------------------------------------------------------------------
+
+//ROUTES RELATED TO THE USER ADMIN PAGE
+
+//This route is mapped to the '/adminPageOfUsersView' URI and will display the page that allows the admin to perform admin functions
+Route::get('/adminPageOfUsersView', 'UserController@readAll');
+
+//The route is mapped to the '/suspendView' and will get the user id from the admin view to suspend them
+Route::get('/suspendView', 'UserController@suspendById');
+    
+//The route is mapped to the '/suspendView' and will get the user id from the admin view to unsuspend them
+Route::get('/unsuspendView', 'UserController@unsuspendById');
+    
+//The route is mapped to the '/deleteView' and will get the user id from the admin view to delete them
+Route::get('/deleteView', 'UserController@delete'); 
+
+//-------------------------------------------------------------------------------------
+    
+//ROUTES RELATED TO THE JOB POSTINGS (BOTH USER AND ADMIN INTERACTIONS)
+
+//This route is mapped to the '/jobPostingsView' URI and will display the page for a individual job posting
+Route::get('/jobPostingsView','JobPostingsProfileController@index'); 
+    
+//This route is mapped to the '/adminPageOfJobsView' URI and will display the page that allows the admin to perform admin functions
+Route::get('/adminPageOfJobsView', 'JobPostingsController@readAll');
+
+//This route is mapped to the '/addJobPostingsView' URI and will display the page that allows the admins at enter job postings
+Route::get('/addJobPostingsView', function(){
+    
+    return view('addJobPostingsView');
 });
+    
+//The route is mapped to the '/addedJobPostingsView' and will post the admin input from the job postings view
+Route::post('/addedJobPostingsView', 'JobPostingsController@create');
+    
+//This route is mapped to the '/updateJobPostingsView' URI and will read the job postings data
+Route::get('/updateJobPostingsView', 'JobPostingsController@readByJobID');
+    
+//The route is mapped to the '/updatedSkillsView' and will update the skill data
+Route::post('/updatedJobPostingsView', 'JobPostingsController@update');
+    
+//The route is mapped to the '/deleteJobPostingsView' and will get the job id to delete them
+Route::get('/deleteJobPostingsView', 'JobPostingsController@delete'); 
+
+//-------------------------------------------------------------------------------------
 
 //this route wil output the session variables
 Route::get('session/get','SessionController@accessSessionData');
 
-//The route is mapped to the '/suspendView' and will get the user id from the admin view to suspend them
-Route::get('/suspendView', 'SuspendController@index'); 
 
-//The route is mapped to the '/suspendView' and will get the user id from the admin view to suspend them
-Route::get('/unsuspendView', 'UnsuspendController@index'); 
+//-------------------------------------------------------------------------------------
 
-//The route is mapped to the '/deleteView' and will get the user id from the admin view to delete them
-Route::get('/deleteView', 'DeleteController@index'); 
+
+
 
