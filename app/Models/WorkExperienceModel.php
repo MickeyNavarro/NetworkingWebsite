@@ -2,7 +2,7 @@
 
 //Almicke Navarro
 //2-2-19
-//Networking Milestone
+//Networking Website
 //This is my own work.
 //Handles all the information taken from the Work Experience class.
 
@@ -13,18 +13,16 @@ class WorkExperienceModel
     private $id;
     private $position;
     private $company;
-    private $location; 
     private $start_year;
     private $end_year;
     private $additional_info;
     private $userid; 
     
     //Constuctor
-    public function __construct($id, $position, $company, $location, $start_year, $end_year, $additional_info, $userid){
+    public function __construct($id, $position, $company, $start_year, $end_year, $additional_info, $userid){
         $this->id = $id;
         $this->position = $position;
         $this->company = $company;
-        $this->location = $location; 
         $this->start_year = $start_year;
         $this->end_year = $end_year;
         $this->additional_info = $additional_info;
@@ -143,22 +141,5 @@ class WorkExperienceModel
     /**
      * @return mixed
      */
-    public function getLocation()
-    {
-        return $this->location;
-    }
 
-    /**
-     * @param mixed $location
-     */
-    public function setLocation($location)
-    {
-        $this->location = $location;
-    }
-
-
-
-    
-    
 }
-

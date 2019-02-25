@@ -8,20 +8,19 @@
 
 namespace App\Services\DataServices;
 
-use App\Models\UserModel;
+use App\Models\UsersModel;
 use App\Services\Utility\DatabaseException;
 use Illuminate\Support\Facades\Log;
 use PDOException;
 use \PDO; 
-use function GuzzleHttp\json_encode;
 
 class UserDataService{
     public function __construct($conn) {
         $this->conn = $conn;
     }
     
-    // accepts a user object. Inserts a record into the perons table 
-    function createNewUser(UserModel $user){
+    // accepts a user object. Inserts a record into the users table 
+    function create(UsersModel $user){
         try {
             Log::info("Entering UserDataService.createNewUser()"); 
             //use the connection to create a prepared statement
@@ -64,16 +63,16 @@ class UserDataService{
         }
     }
     //accepts a user object and matches the credential to a user in the database; returns a user ID
-    function login(UserModel $user){
+    function readByCredentials(UsersModel $user){
         try {
-            Log::info("Entering UserDataService.login()");
+            Log::info("Entering UserDataService.readByCredentials()");
             
             //Select username and password and see if this row exists
             $username = $user->getUsername();
             $password = $user->getPassword(); 
             
             //use the connection to create a prepared statement
-            $stmt = $this->conn->prepare("SELECT * FROM `Users` WHERE `USERNAME` = :user AND `PASSWORD` = :pass LIMIT 1");
+            $stmt = $this->conn->prepare("SELECT * FROM `USERS` WHERE `USERNAME` = :user AND `PASSWORD` = :pass LIMIT 1");
             
             //Bind the variables from the user object to the SQL statement
             $stmt->bindParam(':user', $username);
@@ -82,16 +81,15 @@ class UserDataService{
             //Excecute the SQL statement
             $stmt->execute();
             
-            
-            //see if user existed and return true if found else return false if not found
+            //see if user existed and return user id if found, else return false if not found
                 if ($stmt->rowCount() == 1) {
-                    $user = $stmt->fetch(PDO::FETCH_ASSOC); 
+                    $user_ob = $stmt->fetch(PDO::FETCH_ASSOC); 
                     
-                    Log::info("Exiting UserDataService.login() with user id");
-                    return $user['ID']; 
+                    Log::info("Exiting UserDataService.readByCredentials() with user id");
+                    return $user_ob['ID']; 
                 }
                 else {
-                    Log::info("Exiting UserDataService.login() with null");
+                    Log::info("Exiting UserDataService.readByCredentials() with null");
                     return null;
                 }
             }
@@ -101,7 +99,7 @@ class UserDataService{
             }
     }
     //accepts the id and finds the user in the database with a matching id 
-    function findById($id){        
+    function readByUserId($id){        
         try {
             Log::info("Entering SecurityDAO.findById()");
         
@@ -116,7 +114,7 @@ class UserDataService{
             
             //check is a row was returned
             if($stmt->rowCount() == 0){
-                Log::info("Exiting UserDataService.findById() with returning null");
+                Log::info("Exiting UserDataService.readByUserId() with returning null");
                 return null;
             }
             else{
@@ -133,11 +131,10 @@ class UserDataService{
                 $role = $user['ROLE'];
                 $suspend = $user['SUSPEND'];
                 
-                
                 //create a new usermodel with the data from above
-                $uo = new UserModel($id, $first, $last, $email, $username, $pass, $role, $suspend); 
+                $uo = new UsersModel($id, $first, $last, $email, $username, $pass, $role, $suspend); 
                  
-                Log::info("Exiting UserDataService.findById() with returning a user object as a string");
+                Log::info("Exiting UserDataService.readByUserId() with returning a user object as a string");
                 return $uo;
             }
         }
@@ -146,6 +143,45 @@ class UserDataService{
             throw new DatabaseException("Database Exception: " . $e->getMessage(), 0, $e);
         }
     }
+    
+    //allows the admin to view all users
+    function readAll(){
+        try{
+            Log::info("Entering UserDataService.readAll()");
+            
+            //use the connection to create a prepared statement
+            $stmt = $this->conn->prepare("SELECT * FROM `USERS`");
+            
+            //execute the SQL statement
+            $stmt->execute();
+            
+            //check is any row was returned
+            if($stmt->rowCount() == 0){
+                Log::info("Exiting UserDataService.readAll() with returning null");
+                return null;
+            }
+            else{
+                //create an user array
+                $user_array = array();
+                
+                //loop to get all the user data to put into the array
+                while ($user = $stmt->fetch(PDO::FETCH_ASSOC)){
+                    
+                    array_push($user_array, $user);
+                    
+                }
+                
+                
+                Log::info("Exiting UserDataService.readAll() with an array of users");
+                return $user_array;
+            }
+        }
+        catch (PDOException $e){
+            Log::error("Exception: ", array("message" => $e->getMessage()));
+            throw new DatabaseException("Database Exception: " . $e->getMessage(), 0, $e);
+        }
+    }
+    
     //accepts an id and allows an admin role to suspend the user
     function suspendById($id){
         try {
@@ -202,10 +238,11 @@ class UserDataService{
             throw new DatabaseException("Database Exception: " . $e->getMessage(), 0, $e);
         }
     }
+    
     //accepts the id and allows an admin to delete the user
-    function deleteById($id){
+    function delete($id){
         try {
-            Log::info("Entering UserDataService.deleteById()");
+            Log::info("Entering UserDataService.delete()");
             
             //use the connection to create a prepared statement
             $stmt = $this->conn->prepare("DELETE FROM `USERS` WHERE `USERS`.`ID` = :id");
@@ -217,11 +254,11 @@ class UserDataService{
             $delete = $stmt->execute();
             
             if($delete){
-                Log::info("Exiting UserDataService.deleteById() with returning true");
+                Log::info("Exiting UserDataService.delete() with returning true");
                 return true;
             }
             else{
-                Log::info("Exiting UserDataService.deleteById() with returning false");
+                Log::info("Exiting UserDataService.delete() with returning false");
                 return false;
             }
         }
@@ -231,41 +268,5 @@ class UserDataService{
         }
     }
     
-    //allows the admin to view all users
-    function showAll(){
-        try{
-            Log::info("Entering UserDataService.showAll()");
-            
-            //use the connection to create a prepared statement
-            $stmt = $this->conn->prepare("SELECT * FROM `USERS`");
-            
-            //execute the SQL statement
-            $stmt->execute();
-            
-            //check is any row was returned
-            if($stmt->rowCount() == 0){
-                Log::info("Exiting UserDataService.showAll() with returning null");
-                return null;
-            }
-            else{ 
-                //create an user array
-                $user_array = array();
-                
-                //loop to get all the user data to put into the array
-                while ($user = $stmt->fetch(PDO::FETCH_ASSOC)){
-                    
-                    array_push($user_array, $user);
-                    
-                }
-                
-                                
-                Log::info("Exiting UserDataService.showAll() with an array of users");
-                return $user_array;
-            }
-        }
-        catch (PDOException $e){
-            Log::error("Exception: ", array("message" => $e->getMessage()));
-            throw new DatabaseException("Database Exception: " . $e->getMessage(), 0, $e);
-        }
-    }
+    
 }

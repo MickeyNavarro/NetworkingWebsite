@@ -2,7 +2,7 @@
 
 //Almicke Navarro
 //2-2-19
-//Networking Milestone
+//Networking Website 
 //This is my own work.
 //Handles all the information taken from the education class.
 

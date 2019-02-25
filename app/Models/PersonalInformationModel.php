@@ -2,7 +2,7 @@
 
 //Almicke Navarro
 //2-2-19
-//Networking Milestone
+//Networking Website
 //This is my own work.
 //Handles all the information taken from the Personal Information class.
 namespace App\Models;
@@ -10,22 +10,24 @@ namespace App\Models;
 class PersonalInformationModel
 {
     private $id; 
-    private $photo; 
-    private $location; 
-    private $biography; 
+    private $biography;
+    private $current_position; 
     private $contact_email; 
     private $phone_number;
+    private $photo;
     private $userid; 
+    //private $addresses_id; 
     
     //Constuctor
-    public function __construct($id, $photo, $location, $biography, $contact_email, $phone_number, $userid){
+    public function __construct($id, $biography, $current_position, $contact_email, $phone_number, $photo, $userid){
         $this->id = $id;
-        $this->photo = $photo;
-        $this->location = $location;
         $this->biography = $biography;
+        $this->current_position = $current_position; 
         $this->contact_email = $contact_email;
         $this->phone_number = $phone_number;
+        $this->photo = $photo;
         $this->userid = $userid; 
+        //$this->addresses_id = $addresses_id; 
     }
     /**
      * @return mixed
@@ -38,25 +40,17 @@ class PersonalInformationModel
     /**
      * @return mixed
      */
-    public function getPhoto()
-    {
-        return $this->photo;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getLocation()
-    {
-        return $this->location;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getBiography()
     {
         return $this->biography;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCurrent_position()
+    {
+        return $this->current_position;
     }
 
     /**
@@ -76,6 +70,22 @@ class PersonalInformationModel
     }
 
     /**
+     * @return mixed
+     */
+    public function getPhoto()
+    {
+        return $this->photo;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUserid()
+    {
+        return $this->userid;
+    }
+
+    /**
      * @param mixed $id
      */
     public function setId($id)
@@ -84,27 +94,19 @@ class PersonalInformationModel
     }
 
     /**
-     * @param mixed $photo
-     */
-    public function setPhoto($photo)
-    {
-        $this->photo = $photo;
-    }
-
-    /**
-     * @param mixed $location
-     */
-    public function setLocation($location)
-    {
-        $this->location = $location;
-    }
-
-    /**
      * @param mixed $biography
      */
     public function setBiography($biography)
     {
         $this->biography = $biography;
+    }
+
+    /**
+     * @param mixed $current_position
+     */
+    public function setCurrent_position($current_position)
+    {
+        $this->current_position = $current_position;
     }
 
     /**
@@ -122,12 +124,13 @@ class PersonalInformationModel
     {
         $this->phone_number = $phone_number;
     }
+
     /**
-     * @return mixed
+     * @param mixed $photo
      */
-    public function getUserid()
+    public function setPhoto($photo)
     {
-        return $this->userid;
+        $this->photo = $photo;
     }
 
     /**
@@ -142,4 +145,3 @@ class PersonalInformationModel
     
     
 }
-

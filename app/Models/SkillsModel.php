@@ -11,13 +11,13 @@ namespace App\Models;
 class SkillsModel
 {
     private $id;
-    private $skill_name;
+    private $skills_name;
     private $userid; 
     
     //Constuctor
-    public function __construct($id, $skill_name, $userid){
+    public function __construct($id, $skills_name, $userid){
         $this->id = $id;
-        $this->skill_name = $skill_name;
+        $this->skills_name = $skills_name;
         $this->userid = $userid; 
     }
     /**
@@ -31,9 +31,9 @@ class SkillsModel
     /**
      * @return mixed
      */
-    public function getSkill_name()
+    public function getSkills_name()
     {
-        return $this->skill_name;
+        return $this->skills_name;
     }
 
     /**
@@ -47,7 +47,7 @@ class SkillsModel
     /**
      * @param mixed $skill_name
      */
-    public function setSkill_name($skill_name)
+    public function setSkills_name($skill_name)
     {
         $this->skill_name = $skill_name;
     }
