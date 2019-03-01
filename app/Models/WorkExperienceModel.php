@@ -77,53 +77,6 @@ class WorkExperienceModel
     }
 
     /**
-     * @param mixed $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @param mixed $position
-     */
-    public function setPosition($position)
-    {
-        $this->position = $position;
-    }
-
-    /**
-     * @param mixed $company
-     */
-    public function setCompany($company)
-    {
-        $this->company = $company;
-    }
-
-    /**
-     * @param mixed $start_year
-     */
-    public function setStart_year($start_year)
-    {
-        $this->start_year = $start_year;
-    }
-
-    /**
-     * @param mixed $end_year
-     */
-    public function setEnd_year($end_year)
-    {
-        $this->end_year = $end_year;
-    }
-
-    /**
-     * @param mixed $additional_info
-     */
-    public function setAdditional_info($additional_info)
-    {
-        $this->additional_info = $additional_info;
-    }
-    /**
      * @return mixed
      */
     public function getUserid()
@@ -131,15 +84,5 @@ class WorkExperienceModel
         return $this->userid;
     }
 
-    /**
-     * @param mixed $userid
-     */
-    public function setUserid($userid)
-    {
-        $this->userid = $userid;
-    }
-    /**
-     * @return mixed
-     */
 
 }

@@ -42,29 +42,6 @@ class UsersGroupsModel
         return $this->groups_id;
     }
 
-    /**
-     * @param mixed $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @param mixed $user_id
-     */
-    public function setUser_id($user_id)
-    {
-        $this->user_id = $user_id;
-    }
-
-    /**
-     * @param mixed $groups_id
-     */
-    public function setGroups_id($groups_id)
-    {
-        $this->groups_id = $groups_id;
-    }
 
     
     

@@ -12,10 +12,12 @@ class GroupsModel
 {
     private $id;
     private $group_name;
+    private $description; 
     
-    public function __construct($id, $group_name) { 
+    public function __construct($id, $group_name,$description) { 
         $this->id = $id; 
         $this->group_name = $group_name; 
+        $this->description = $description; 
     }
     
     /**
@@ -33,24 +35,12 @@ class GroupsModel
     {
         return $this->group_name;
     }
-
     /**
-     * @param mixed $id
+     * @return mixed
      */
-    public function setId($id)
+    public function getDescription()
     {
-        $this->id = $id;
-    }
-
-    /**
-     * @param mixed $group_name
-     */
-    public function setGroup_name($group_name)
-    {
-        $this->group_name = $group_name;
-    }
-
-    
-    
+        return $this->description;
+    }    
  
 }

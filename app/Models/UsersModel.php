@@ -30,77 +30,62 @@ class UsersModel
         $this->role = $role; 
         $this->suspend = $suspend; 
     }
-    
+    /**
+     * @return mixed
+     */
     public function getId()
     {
         return $this->id;
     }
-    
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-    
+
+    /**
+     * @return mixed
+     */
     public function getFirstName()
     {
         return $this->firstName;
     }
-    
-    public function setFirstName($firstName)
-    {
-        $this->firstName = $firstName;
-    }
-    
+
+    /**
+     * @return mixed
+     */
     public function getLastname()
     {
         return $this->lastname;
-    }     
-    
-    public function setLastname($lastname)
-    {
-        $this->lastname = $lastname;
     }
-    
+
+    /**
+     * @return mixed
+     */
     public function getEmail()
     {
         return $this->email;
     }
-    
-    public function setEmail($email)
-    {
-        $this->email = $email;
-    }
 
+    /**
+     * @return mixed
+     */
     public function getUsername()
     {
         return $this->username;
     }
-    
-    public function setUsername($username)
-    {
-        $this->username = $username;
-    }
-    
+
+    /**
+     * @return mixed
+     */
     public function getPassword()
     {
         return $this->password;
-    } 
-    
-    public function setPassword($password)
-    {
-        $this->password = $password;
     }
-     
+
+    /**
+     * @return mixed
+     */
     public function getRole()
     {
         return $this->role;
     }
-    
-    public function setRole($role)
-    {
-        $this->role = $role;
-    }
-    
+
     /**
      * @return mixed
      */
@@ -109,17 +94,8 @@ class UsersModel
         return $this->suspend;
     }
 
-    /**
-     * @param mixed $suspend
-     */
-    public function setSuspend($suspend)
-    {
-        $this->suspend = $suspend;
-    }
+    
 
-    public function jsonSerialize() {
-        return get_object_vars($this);
-    }
-      
+
 }
     
