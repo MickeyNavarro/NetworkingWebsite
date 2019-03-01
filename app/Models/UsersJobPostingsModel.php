@@ -12,7 +12,6 @@ class UsersJobPostingsModel
     private $id;
     private $save; 
     private $apply; 
-    private $users_id;
     private $job_postings_id;
     
     public function _construct($id, $save, $apply, $users_id, $job_postings_id){
