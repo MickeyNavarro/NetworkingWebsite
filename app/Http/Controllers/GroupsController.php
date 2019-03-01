@@ -1,22 +1,17 @@
 <?php
-//Almicke Navarro
-//2-8-19
-//Networking Milestone
-//This is my own work.
-//The controller that handles adding user skills 
+
 namespace App\Http\Controllers;
 
-use App\Models\SkillsModel;
 use Http\Client\Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
-use App\Services\BusinessServices\SkillsBusinessService;
+use App\Services\BusinessServices\GroupsBusinessService;
+use App\Models\GroupsModel;
 
-
-class SkillsController extends Controller
+class GroupsController extends Controller
 {
-    //accepts the request from the web browser to create a new record of skills
+    //accepts the request from the web browser to create a new record of group
     public function create(Request $request){
         
         try{
@@ -24,21 +19,16 @@ class SkillsController extends Controller
             $this->validateForm($request);
             
             //Store the form data
-            $skill_name = $request->input('skill');
-            
-            //check if the userid session variable has been set
-            if ($request->session()->has('userid')) {
-                $userid = $request->session()->get('userid');
-            }
+            $name = $request->input('name');
             
             //Create a new business service
-            $sbs = new SkillsBusinessService(); 
+            $gbs = new GroupsBusinessService(); 
             
-            //Create a new skills object with the form data
-            $skill = new SkillsModel(0, $skill_name, $userid);
+            //Create a new groups object with the form data
+            $group = new GroupsModel(0, $name); 
             
-            //Use the business service object to create a new skill in the database
-            if($sbs->create($skill)){
+            //Use the business service object to create a new group in the database
+            if($gbs->create($group)){
                 //Render a response View
                 return redirect()->action('UserProfileController@index');
                 
@@ -58,24 +48,24 @@ class SkillsController extends Controller
         
     }
     
-    //accepts the request from the web browser to show an existing record of skills
-    public function readBySkillID(Request $request){
+    //accepts the request from the web browser to show an existing record of group
+    public function read(Request $request){
         
         try{
             //Store the form data
             $id = $request->input('id');
             
             //Create a new business service
-            $sbs = new SkillsBusinessService();
+            $gbs = new GroupsBusinessService();
             
-            //create a variable to hold the skills stuff
-            $skills = $sbs->readBySkillID($id);
+            //create a variable to hold the groups stuff
+            $group = $gbs->read($id); 
             
-            //check if the the business service object returned an skills object
-            if($skills !=null){
+            //check if the the business service object returned an groups object
+            if($group !=null){
                 
-                //compress the skill array to be sent to the view
-                $data = ['skills' => $skills];
+                //compress the group array to be sent to the view
+                $data = ['group' => $group];
                 
                 //Render a response View with success message
                 return view('updateSkillsView')->with($data);
@@ -92,7 +82,7 @@ class SkillsController extends Controller
         }
         
     }
-    //accepts the request from the web browser to update an existing record of skill
+    //accepts the request from the web browser to update an existing record of group
     public function update(Request $request){
         
         try{
@@ -100,17 +90,17 @@ class SkillsController extends Controller
             $this->validateForm($request);
             
             //Store the form data
-            $id = $request->input('id'); 
-            $skills_name = $request->input('skill');
+            $id = $request->input('id');
+            $group_name = $request->input('name');
             
             //Create a new business service
-            $sbs = new SkillsBusinessService();
+            $gbs = new GroupsBusinessService();
             
-            //Create a new skill object with the form data
-            $skill = new SkillsModel($id, $skills_name, null); 
+            //Create a new group object with the form data
+            $group = new GroupsModel($id, $group_name);
             
             //Use the business service object to update a new skill in the database
-            if($sbs->update($skill)){
+            if($gbs->update($group)){
                 //Render a response View with success message
                 return redirect()->action('UserProfileController@index');
                 
@@ -130,17 +120,17 @@ class SkillsController extends Controller
         
     }
     
-    //accepts the request from the web browser to delete an existing record of skill
+    //accepts the request from the web browser to delete an existing record of group
     public function delete(Request $request){
         try{
             //Store the form data
             $id = $request->input('id');
             
             //Create a new business service
-            $sbs = new SkillsBusinessService();
+            $gbs = new GroupsBusinessService();
             
-            //Use the business service object to delete the record of skill in the database
-            if($sbs->delete($id)){
+            //Use the business service object to delete the record of group in the database
+            if($gbs->delete($id)){
                 //Render a response View
                 return redirect()->action('UserProfileController@index');
                 
@@ -159,7 +149,7 @@ class SkillsController extends Controller
     //validates the form and its data for consistency
     private function validateForm(Request $request) {
         //setup data validattion rules
-        $rules = ['skill' => 'Required | Alpha | Between: 1,20'];
+        $rules = ['name' => 'Required | Between: 1,40'];
         
         //run data validation rules
         $this->validate($request, $rules);

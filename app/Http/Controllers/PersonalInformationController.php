@@ -165,7 +165,7 @@ class PersonalInformationController
     //validates the form and its data for consistency
     private function validateForm(Request $request) {
         //setup data validattion rules
-        $rules = ['bio' => 'Required','pos' => 'Required | Alpha', 'email' => 'Required | E-Mail', 'phone' => 'Required | Numeric'];
+        $rules = ['bio' => 'Required','pos' => 'Required | Alpha', 'email' => 'Required | E-Mail', 'phone' => 'Required | Numeric | Between: 1,15'];
         
         //run data validation rules
         $this->validate($request, $rules);

@@ -191,7 +191,7 @@ class JobPostingsController extends Controller
     //validates the form and its data for consistency
     private function validateForm(Request $request) {
         //setup data validattion rules
-        $rules = ['name' => 'Required | Alpha','company' => 'Required | Alpha', 'pay' => 'Required', 'description' => 'Required'];
+        $rules = ['name' => 'Required | Alpha | Between: 1,30','company' => 'Required | Alpha ', 'pay' => 'Required', 'description' => 'Required'];
         
         //run data validation rules
         $this->validate($request, $rules);

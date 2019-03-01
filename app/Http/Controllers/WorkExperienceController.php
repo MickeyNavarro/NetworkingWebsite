@@ -167,7 +167,7 @@ class WorkExperienceController extends Controller
     //validates the form and its data for consistency
     private function validateForm(Request $request) {
         //setup data validattion rules
-        $rules = ['position' => 'Required | Alpha','company' => 'Required | Alpha', 'startYear' => 'Required | Numeric', 'endYear' => 'Required | Numeric','additionalInfo' => 'Required'];
+        $rules = ['position' => 'Required | Alpha','company' => 'Required | Alpha', 'startYear' => 'Required | Numeric | Between: 1,4', 'endYear' => 'Required | Numeric | Between: 1,4','additionalInfo' => 'Required'];
         
         //run data validation rules
         $this->validate($request, $rules);
