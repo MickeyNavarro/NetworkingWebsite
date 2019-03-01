@@ -22,27 +22,40 @@
                 </li>
                 
                 <!-- Will Check to see if the user is logged in. If so the navbar will have a link to the user profile -->
-                <?php 
+                @php
                 if(session()->has('userid')){
-                ?>
+                @endphp
                     <li class="nav-item active">
                     <a class="nav-link" href="viewProfile">Profile <span class="sr-only">(current)</span></a>
                     </li>
                     
                     <!-- Will Check to see if the user that is logged in is a admin and will ad an admin tab if they are -->
-                   <?php 
+                   @php 
                    if(session()->has('role')){
                         
                        if(session('role') == 1){
-                        ?>
-						<li class="nav-item active">
-                        <a class="nav-link" href="adminPage">Admin <span class="sr-only">(current)</span></a>
-                        </li>                       
-                        <?php 
+                        @endphp
+						
+                        <li class="nav-item dropdown">
+                			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  			Admin
+                			</a>
+                    		<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    			<a class="dropdown-item" href="adminPageOfUsersView">User(s)</a>
+                    			<a class="dropdown-item" href="adminPageOfJobsView">Job(s)</a>
+                    			<a class="dropdown-item" href="adminPageOfGroupsView">Group(s)</a>
+                    			
+                    			<hr> 
+                    			<a class="dropdown-item" href="addJobPostingsView">Add Job Posting</a>
+                    			<a class="dropdown-item" href="addGroupsView">Add Group</a>
+                    		</div>
+                		</li>
+                                              
+                        @php 
                         }
                     }
                 }
-                ?>                
+                @endphp                
                 
             </ul>
         </div>
