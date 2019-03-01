@@ -191,12 +191,40 @@ Route::get('/deleteJobPostingsView', 'JobPostingsController@delete');
 
 //-------------------------------------------------------------------------------------
 
+//ROUTES RELATED TO TESTING THE SESSION VARIABLES 
+
 //this route wil output the session variables
 Route::get('session/get','SessionController@accessSessionData');
 
 
 //-------------------------------------------------------------------------------------
 
+//ROUTES RELATED TO THE GROUPS (BOTH USER AND ADMIN INTERACTIONS)
+
+//This route is mapped to the '/groupsView' URI and will display the page for a individual group
+Route::get('/groupsView','GroupsController@index');
+
+//This route is mapped to the '/adminPageOfGroupsView' URI and will display the page that allows the admin to perform admin functions
+Route::get('/adminPageOfGroupsView', 'GroupsController@readAll');
+
+//This route is mapped to the '/addGroupsView' URI and will display the page that allows the admins at enter new groups
+Route::get('/addGroupsView', function(){
+    return view('addGroupsView');
+});
+    
+//The route is mapped to the '/addedGroupsView' and will post the admin input from the groups view
+Route::post('/addedGroupsView', 'GroupsController@create');
+    
+//This route is mapped to the '/updateGroupsView' URI and will read the job postings data
+Route::get('/updateGroupsView', 'GroupsController@readByGroupId');
+    
+//The route is mapped to the '/updatedGroupsView' and will update the skill data
+Route::post('/updatedGroupsView', 'GroupsController@update');
+    
+//The route is mapped to the '/deleteGroupsView' and will get the job id to delete them
+Route::get('/deleteGroupsView', 'GroupsController@delete');
+    
+//-------------------------------------------------------------------------------------
 
 
 
