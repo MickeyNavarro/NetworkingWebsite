@@ -14,6 +14,7 @@ use App\Services\BusinessServices\WorkExperienceBusinessService;
 use App\Services\BusinessServices\SkillsBusinessService;
 use App\Services\BusinessServices\PersonalInformationBusinessService;
 use App\Services\BusinessServices\UserBusinessService;
+use App\Services\BusinessServices\UsersGroupsBusinessService;
 
 class UserProfileController extends Controller
 {
@@ -57,6 +58,12 @@ class UserProfileController extends Controller
             //find the user's first and last name
             $firstname = $user->getFirstName(); 
             $lastname = $user->getLastname(); 
+            
+            //Create a new business service
+            $ugbs = new UsersGroupsBusinessService(); 
+            
+            //create a variable to hold the user groups stuff
+            $usergroups = $ugbs->readByUserID($id);
                        
             //compress all the user data into a single array
             $Data = [
@@ -65,7 +72,8 @@ class UserProfileController extends Controller
                 'work' => $work, 
                 'skills' => $skills, 
                 'firstname' => $firstname, 
-                'lastname' => $lastname
+                'lastname' => $lastname, 
+                'usergroups' => $usergroups
             ];
             
             //Render a response view of the user profile and pass on the array of user profile data
