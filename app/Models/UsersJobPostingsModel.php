@@ -14,7 +14,7 @@ class UsersJobPostingsModel
     private $apply; 
     private $job_postings_id;
     
-    public function _construct($id, $save, $apply, $users_id, $job_postings_id){
+    public function __construct($id, $save, $apply, $users_id, $job_postings_id){
         $this->id = $id;
         $this->save = $save; 
         $this->apply = $apply; 

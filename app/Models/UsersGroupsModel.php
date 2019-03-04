@@ -13,10 +13,12 @@ class UsersGroupsModel
     private $user_id; 
     private $groups_id; 
     
-    public function _construct($id, $user_id, $groups_id){
+    //constructor
+    public function  __construct($id, $user_id, $groups_id) {
         $this->id = $id; 
         $this->user_id = $user_id; 
         $this->groups_id = $groups_id; 
+        
     }
     /**
      * @return mixed
@@ -42,8 +44,6 @@ class UsersGroupsModel
         return $this->groups_id;
     }
 
-
-    
-    
+        
 }
 
