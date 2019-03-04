@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Feb 23, 2019 at 09:32 PM
+-- Generation Time: Mar 04, 2019 at 11:51 AM
 -- Server version: 5.7.23
 -- PHP Version: 7.2.10
 
@@ -22,10 +22,9 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `ADDRESSES` (
   `ID` int(11) NOT NULL,
-  `STREET_ADDRESS` varchar(45) DEFAULT NULL,
   `CITY` varchar(45) DEFAULT NULL,
   `STATE` varchar(45) DEFAULT NULL,
-  `ZIP_CODE` int(11) DEFAULT NULL
+  `COUNTRY` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -44,6 +43,14 @@ CREATE TABLE `EDUCATION` (
   `USERS_ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `EDUCATION`
+--
+
+INSERT INTO `EDUCATION` (`ID`, `SCHOOL`, `DEGREE`, `START_YEAR`, `END_YEAR`, `ADDITIONAL_INFORMATION`, `USERS_ID`) VALUES
+(1, 'Pinnacle High School', 'High School Degree', '2013', '2017', 'None', 1),
+(2, 'Grand Canyon University', 'Bachelor\'s', '2017', 'Present', 'None', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -52,8 +59,19 @@ CREATE TABLE `EDUCATION` (
 
 CREATE TABLE `GROUPS` (
   `ID` int(11) NOT NULL,
-  `GROUP_NAME` varchar(45) DEFAULT NULL
+  `GROUP_NAME` varchar(45) DEFAULT NULL,
+  `DESCRIPTION` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `GROUPS`
+--
+
+INSERT INTO `GROUPS` (`ID`, `GROUP_NAME`, `DESCRIPTION`) VALUES
+(1, 'Coders', 'Wow you code!!!!!!!'),
+(3, 'Lopes Up', 'Went to GCU!'),
+(4, 'DBAZ', 'You work at Dutch Bros in Arizona'),
+(6, 'Something', 'Some group about something');
 
 -- --------------------------------------------------------
 
@@ -69,6 +87,14 @@ CREATE TABLE `JOB_POSTINGS` (
   `DESCRIPTION` text,
   `ADDRESSES_ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `JOB_POSTINGS`
+--
+
+INSERT INTO `JOB_POSTINGS` (`ID`, `NAME`, `COMPANY`, `PAY`, `DESCRIPTION`, `ADDRESSES_ID`) VALUES
+(1, 'Barista', 'Ducth Bros', '$11/hr', 'Make coffee', 0),
+(8, 'Cashier', 'Target', '$11/hr', 'Ring people up', 0);
 
 -- --------------------------------------------------------
 
@@ -87,6 +113,13 @@ CREATE TABLE `PERSONAL_INFORMATION` (
   `ADDRESSES_ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `PERSONAL_INFORMATION`
+--
+
+INSERT INTO `PERSONAL_INFORMATION` (`ID`, `BIOGRAPHY`, `CURRENT_POSITION`, `CONTACT_EMAIL`, `PHONE_NUMBER`, `PHOTO`, `USERS_ID`, `ADDRESSES_ID`) VALUES
+(3, 'None', 'Student', 'almicke@yahoo.com', '123123123', 'IMG_9622.JPG', 1, 0);
+
 -- --------------------------------------------------------
 
 --
@@ -98,6 +131,14 @@ CREATE TABLE `SKILLS` (
   `SKILLS_NAME` varchar(45) DEFAULT NULL,
   `USERS_ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `SKILLS`
+--
+
+INSERT INTO `SKILLS` (`ID`, `SKILLS_NAME`, `USERS_ID`) VALUES
+(3, 'Sing', 1),
+(4, 'Coding', 1);
 
 -- --------------------------------------------------------
 
@@ -116,6 +157,17 @@ CREATE TABLE `USERS` (
   `SUSPEND` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `USERS`
+--
+
+INSERT INTO `USERS` (`ID`, `FIRSTNAME`, `LASTNAME`, `EMAIL`, `USERNAME`, `PASSWORD`, `ROLE`, `SUSPEND`) VALUES
+(1, 'Mickey', 'Navarro', 'almicke@yahoo.com', 'Mick', 'mick', 1, 0),
+(2, 'Mickey', 'Mouse', 'Mickey@disney.com', 'Mickey', 'mickey101', 0, 0),
+(15, 'Minnie', 'Mouse', 'minnie@disney.com', 'Minnie', 'minnie', 0, 0),
+(16, 'Finn', 'theHuman', 'finn@adventuretime.com', 'Finn', 'mathematical', 0, 0),
+(17, 'Donald', 'Duck', 'donald@duck.com', 'Donald', 'duck', 0, 0);
+
 -- --------------------------------------------------------
 
 --
@@ -127,6 +179,15 @@ CREATE TABLE `USERS_GROUPS` (
   `USERS_ID` int(11) NOT NULL,
   `GROUPS_ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `USERS_GROUPS`
+--
+
+INSERT INTO `USERS_GROUPS` (`ID`, `USERS_ID`, `GROUPS_ID`) VALUES
+(2, 1, 3),
+(10, 16, 3),
+(8, 1, 4);
 
 -- --------------------------------------------------------
 
@@ -155,8 +216,16 @@ CREATE TABLE `WORK_EXPERIENCE` (
   `START_YEAR` varchar(45) DEFAULT NULL,
   `END_YEAR` varchar(45) DEFAULT NULL,
   `ADDITIONAL_INFORMATION` varchar(45) DEFAULT NULL,
-  `USERS_ID` int(11) NOT NULL
+  `USERS_ID` int(11) NOT NULL,
+  `ADDRESSES_ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `WORK_EXPERIENCE`
+--
+
+INSERT INTO `WORK_EXPERIENCE` (`ID`, `POSITION`, `COMPANY`, `START_YEAR`, `END_YEAR`, `ADDITIONAL_INFORMATION`, `USERS_ID`, `ADDRESSES_ID`) VALUES
+(1, 'Brosita', 'Dutch Bros', '2017', '2019', 'none', 1, 0);
 
 --
 -- Indexes for dumped tables
@@ -230,7 +299,8 @@ ALTER TABLE `USERS_JOB_POSTINGS`
 --
 ALTER TABLE `WORK_EXPERIENCE`
   ADD PRIMARY KEY (`ID`,`USERS_ID`),
-  ADD KEY `fk_WORK_EXPERIENCE_USERS1_idx` (`USERS_ID`);
+  ADD KEY `fk_WORK_EXPERIENCE_USERS1_idx` (`USERS_ID`),
+  ADD KEY `fk_WORK_EXPERIENCE_ADDRESSES1_idx` (`ADDRESSES_ID`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -246,43 +316,43 @@ ALTER TABLE `ADDRESSES`
 -- AUTO_INCREMENT for table `EDUCATION`
 --
 ALTER TABLE `EDUCATION`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `GROUPS`
 --
 ALTER TABLE `GROUPS`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `JOB_POSTINGS`
 --
 ALTER TABLE `JOB_POSTINGS`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `PERSONAL_INFORMATION`
 --
 ALTER TABLE `PERSONAL_INFORMATION`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `SKILLS`
 --
 ALTER TABLE `SKILLS`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `USERS`
 --
 ALTER TABLE `USERS`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `USERS_GROUPS`
 --
 ALTER TABLE `USERS_GROUPS`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `USERS_JOB_POSTINGS`
@@ -294,7 +364,7 @@ ALTER TABLE `USERS_JOB_POSTINGS`
 -- AUTO_INCREMENT for table `WORK_EXPERIENCE`
 --
 ALTER TABLE `WORK_EXPERIENCE`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
@@ -343,4 +413,5 @@ ALTER TABLE `USERS_JOB_POSTINGS`
 -- Constraints for table `WORK_EXPERIENCE`
 --
 ALTER TABLE `WORK_EXPERIENCE`
+  ADD CONSTRAINT `fk_WORK_EXPERIENCE_ADDRESSES1` FOREIGN KEY (`ADDRESSES_ID`) REFERENCES `ADDRESSES` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_WORK_EXPERIENCE_USERS1` FOREIGN KEY (`USERS_ID`) REFERENCES `USERS` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
