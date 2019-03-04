@@ -6,7 +6,10 @@
 //The controller that handles any actions relating to user groups
 namespace App\Http\Controllers;
 
+use Http\Client\Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\ValidationException;
 use App\Services\BusinessServices\UsersGroupsBusinessService;
 use App\Models\UsersGroupsModel;
 
@@ -16,11 +19,9 @@ class UsersGroupsController extends Controller
     public function create(Request $request){
         
         try{
-            //validate the form data
-            $this->validateForm($request);
             
             //Store the form data
-            $groups_id = $request->input('groupid');
+            $groups_id = $request->input('id');
             
             //check if the userid session variable has been set
             if ($request->session()->has('userid')) {
@@ -35,8 +36,9 @@ class UsersGroupsController extends Controller
             
             //Use the business service object to create a new user group in the database
             if($ugbs->create($usergroup)){
+                
                 //Render a response View
-                return redirect('/adminPageOfGroupsView');
+                return redirect()->action('UserProfileController@index');
                 
             }else{
                 //Render a response View with unsuccessful message
@@ -86,7 +88,7 @@ class UsersGroupsController extends Controller
             return view('exception')->with($data);
         }
         
-    }
+    } 
     
     //accepts the request from the web browser to delete an existing record of a user within a group (basically the user leaves the group)
     public function delete(Request $request){
@@ -95,12 +97,12 @@ class UsersGroupsController extends Controller
             $id = $request->input('id');
             
             //Create a new business service
-            $gbs = new GroupsBusinessService();
+            $ugbs = new UsersGroupsBusinessService();
             
             //Use the business service object to delete the record of user  in the database
-            if($gbs->delete($id)){
+            if($ugbs->delete($id)){
                 //Render a response View
-                return redirect('/adminPageOfGroupsView');
+                return redirect()->action('UserProfileController@index');
                 
             }else{
                 //Render a response View with unsuccessful message
@@ -112,15 +114,6 @@ class UsersGroupsController extends Controller
             $data = ['errorMsg' => $e->getMessage()];
             return view('exception')->with($data);
         }
-    }
-    
-    //validates the form and its data for consistency
-    private function validateForm(Request $request) {
-        //setup data validattion rules
-        $rules = ['name' => 'Required | Between: 1,40'];
-        
-        //run data validation rules
-        $this->validate($request, $rules);
     }
     
 }
