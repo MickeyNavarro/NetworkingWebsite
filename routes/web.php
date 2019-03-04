@@ -16,14 +16,21 @@ Route::get('/', function () {
 });
 
 
+Route::get('/home', function () {
+    return view('homeView');
+});
+
 //-------------------------------------------------------------------------------------
     
-//ROUTES RELATING TO LOGIN AND REGISTRATION
+//ROUTES RELATING TO LOGIN, REGISTRATION, AND LOGOUT
 
 //The route is mapped to the '/login' URI and will display the login form 
 Route::get('/login', function(){
     return view('loginView');
 });
+
+//The route is mapped to the '/loginView' and will post the user input from the login view
+Route::post('/loginView', 'UserController@readByCredentials'); 
 
 //This route is mapped to the '/registraion' URI and will display the registration form 
 Route::get('/registration', function(){
@@ -34,21 +41,18 @@ Route::get('/registration', function(){
 //The route is mapped to the '/registrationView' and will post the user input from the registration view
 Route::post('/registrationView', 'UserController@create'); 
 
-//This route is mapped to the '/login' URI and will display the login form
-Route::get('/login', function(){
-    
-    return view('loginView');
+//The route is mapped to the '/logout' URI and will display the home page
+Route::get('/logout', function(){
+    return view('homeView');
 });
-
-//The route is mapped to the '/loginView' and will post the user input from the login view
-Route::post('/loginView', 'UserController@readByCredentials'); 
+    
 
 //-------------------------------------------------------------------------------------
 
 
 //ROUTES RELATED TO THE USER PROFILE 
 
-//This route is mapped to the '/profile' URI and will display the user profile page
+//This route is mapped to the '/viewProfile' URI and will display the user profile page
 Route::get('/viewProfile', 'UserProfileController@index');
 
 
@@ -199,7 +203,7 @@ Route::get('session/get','SessionController@accessSessionData');
 
 //-------------------------------------------------------------------------------------
 
-//ROUTES RELATED TO THE GROUPS (BOTH USER AND ADMIN INTERACTIONS)
+//ROUTES RELATED TO THE GROUPS (ADMIN INTERACTIONS)
 
 //This route is mapped to the '/groupsView' URI and will display the page for a individual group
 Route::get('/groupsView','GroupsController@index');
@@ -226,5 +230,27 @@ Route::get('/deleteGroupsView', 'GroupsController@delete');
     
 //-------------------------------------------------------------------------------------
 
+//ROUTES RELATED TO THE GROUPS (USER INTERACTIONS)
 
+    //This route is mapped to the '/adminPageOfGroupsView' URI and will display the page that allows the admin to perform admin functions
+    Route::get('/adminPageOfGroupsView', 'GroupsController@readAll');
+
+    //This route is mapped to the '/addGroupsView' URI and will display the page that allows the admins at enter new groups
+    Route::get('/addGroupsView', function(){
+    return view('addGroupsView');
+    });
+    
+    //The route is mapped to the '/addedGroupsView' and will post the admin input from the groups view
+    Route::post('/addedGroupsView', 'GroupsController@create');
+    
+    //This route is mapped to the '/updateGroupsView' URI and will read the job postings data
+    Route::get('/updateGroupsView', 'GroupsController@readByGroupId');
+    
+    //The route is mapped to the '/updatedGroupsView' and will update the skill data
+    Route::post('/updatedGroupsView', 'GroupsController@update');
+    
+    //The route is mapped to the '/deleteGroupsView' and will get the job id to delete them
+    Route::get('/deleteGroupsView', 'GroupsController@delete');
+    
+    //-------------------------------------------------------------------------------------
 
