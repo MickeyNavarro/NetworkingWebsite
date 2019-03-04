@@ -38,8 +38,6 @@
     @endfor
     </tbody>
 	</table>
-	@else 
-	<h4>Sorry, there are no groups!</h4>
 	@endif
 @else 
 <h4>Sorry, you must login to view this page!</h4>

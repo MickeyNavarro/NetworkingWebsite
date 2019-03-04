@@ -12,31 +12,31 @@
 @section('content')
 
 @if(session()->has('role'))
-    @if ($groupdata != null)
+@if ($groupdata != null)
 <div class = "group-profile">
-    <h2 class = "heading1"></h2>
-    <hr> 
+    <h2 class = "heading1">{{$groupdata[0]['GROUP_NAME']}}</h2>
+   	<h5>{{$groupdata[0]['DESCRIPTION']}}</h5>
+   	<td><form action = 'joinGroupView' method = 'GET'><input type = 'hidden' name = 'id' value = {{$groupdata[0]['GROUPS_ID']}}><input type = 'submit' value = 'Join'></form> </td>
+   	
+    <hr>
+    
     <table id = groups class = "darkTable table-hover"> 
     <thead>	
         <th>Members</th>
     </thead>
     <tbody>
 
-    <!-- Loop to show all the groups from the database -->
-        <tr>
-        <td>{{$groupdata['ID']}}</td>
-        <td> {{$groupdata['GROUP_NAME']}} </td>
-        <td> {{$groupdata['DESCRIPTION']}} </td>
-        
-        </tr>
+    <!-- Loop to show all the users from the database -->
+    @for ($x = 0; $x < count($groupdata); $x++)        
+    <tr>
+    <td> {{$groupdata[$x]['USERNAME']}} </td>
+	</tr>
    
+   	@endfor
     </tbody>
 	</table>
-	@else 
-	<h4>Sorry, there are no groups!</h4>
-	@endif
 </div>
-
+@endif
 @else 
 <h4>Sorry, you must login to view this page!</h4>
 @endif 
@@ -45,6 +45,5 @@ $(document).ready( function () {
     $('#groups').DataTable();
 } );
 </script>
-            	
 
 @endsection
