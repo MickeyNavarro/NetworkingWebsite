@@ -56,6 +56,41 @@ class UsersGroupsController extends Controller
         
     }
     
+    //accepts the request from the web browser to show all the users that belong to a single group
+    public function readByGroupId(Request $request){
+        
+        try{
+            //Store the form data
+            $groups_id = $request->input('id');
+            
+            //Create a new business service
+            $ugbs = new UsersGroupsBusinessService();
+            
+            //create a variable to hold the user groups stuff
+            $groupdata = $ugbs->readByGroupID($groups_id); 
+                        
+            //check if the the business service object returned an user groups object
+            if($groupdata !=null){
+                
+                //compress all the user data into a single array
+                $data = ['groupdata' => $groupdata];
+                
+                //compress the user groups array to be sent to the view
+                return view('groupView')->with($data);
+                
+            }else{
+                //Render a response View with unsuccessful message
+                return view('unsuccessfulView');
+            }
+        }
+        catch (Exception $e){
+            Log::error("Exception ", array("message" => $e->getMessage()));
+            $data = ['errorMsg' => $e->getMessage()];
+            return view('exception')->with($data);
+        }
+        
+    } 
+    
     //accepts the request from the web browser to show all the groups a user is in by their id 
     public function readByUserId(Request $request){
         
