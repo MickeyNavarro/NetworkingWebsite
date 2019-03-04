@@ -16,12 +16,15 @@
     </head> 
     <body>
     	@include('layouts.sidepanel')
+        @if (session()->has('userid'))
         	  
         <div class = "content">
         	@yield('content')	
         </div>
-        
+  
         <div class="push"></div>
-    	
+    	@else 
+		<h4>Sorry, you must login to view this page!</h4>
+		@endif 
     </body>
 </html>
