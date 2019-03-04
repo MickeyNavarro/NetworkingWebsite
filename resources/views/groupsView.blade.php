@@ -31,6 +31,7 @@
         <td> {{$groups[$x]['GROUP_NAME']}} </td>
         <td> {{$groups[$x]['DESCRIPTION']}} </td>
         <td><form action = 'joinGroupView' method = 'GET'><input type = 'hidden' name = 'id' value = {{$groups[$x]['ID']}}><input type = 'submit' value = 'Join'></form> </td>
+        <td><form action = 'groupView' method = 'GET'><input type = 'hidden' name = 'id' value = {{$groups[$x]['ID']}}><input type = 'submit' value = 'View Members'></form> </td>
         
         </tr>
    
