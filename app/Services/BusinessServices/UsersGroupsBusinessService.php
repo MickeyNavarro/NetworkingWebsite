@@ -62,6 +62,29 @@ class UsersGroupsBusinessService
         return $flag;
     }
     
+    // accepts a group id; creates a connection; returns data from the users groups class
+    function readByGroupID($id){
+        Log::info("Entering UsersGroupsBusinessService.readByGroupID()");
+        
+        //Get credentials for accessing the database
+        $servername = config("database.connections.mysql.host");
+        $username = config("database.connections.mysql.username");
+        $password = config("database.connections.mysql.password");
+        $dbname = config("database.connections.mysql.database");
+        
+        //create connection
+        $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        
+        //Create a UsersGroupsDataService with this connection
+        $service = new UsersGroupsDataService($conn);
+        $flag = $service->readByGroupID($id); 
+        
+        //Return the finder results
+        Log::info("Exit UsersGroupsBusinessService.readByGroupID() with " . json_encode($flag));
+        return $flag;
+    }
+    
     
     // accepts a user id; creates a connection; deletes a record from the users groups table 
     function delete($id) { 
