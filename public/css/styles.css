@@ -1,0 +1,277 @@
+/* All pages */
+* {
+    font-family: 'Noto Serif SC', serif;
+    box-sizing: border-box
+}
+
+/* All body content */
+.content{
+	padding: 20px;
+ 	margin: 0 auto -50px;
+ 	min-height: calc(100vh - 70px);
+  	padding: 40px 40px 40px 40px;
+  	margin-top: 100px;
+  	z-index: 100;
+}
+
+.column {
+  float: left;
+}
+
+hr {
+    border: 1px solid #f1f1f1;
+    margin-bottom: 0;
+    clear: both;    
+}
+
+a {
+    color: #a85a3e;   	
+}
+
+h1{
+	font-size: 35px;
+}
+
+label{
+	margin: 10px;
+	margin-bottom: 0px;
+}
+
+/* All forms */
+.form{
+    background-color: #e1e8ea; 
+    color: #474d52; 
+    width: 500px;  
+    margin: auto; 
+    margin-top: 10px;
+    padding: 15px; 
+}
+
+input[type=text], input[type=password] {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 5px 0;
+    display: inline-block;
+    border: none;
+    background: #f1f1f1;
+}
+
+input[type=text]:focus, input[type=password]:focus {
+    background-color: #ddd;
+    outline: none;
+}
+
+::placeholder {
+    color: #ca6342;
+    opacity: 0.5;
+    font-size: 15px;
+}
+
+/* Form buttons */
+.loginbtn, .registerbtn {
+    background-color: #ca6342;
+    color: white;
+    padding: 16px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+    font-size: 15px;
+}
+
+/* Alternative link buttons */
+.noaccount, .signin {
+    background-color: #f1f1f1;
+    padding: 16px 20px;
+    text-align: center;
+    width: 100%;
+    margin: auto; 
+    font-size: 15px;     
+}
+
+/* Navbar */
+.navbar{	
+	background-color:  #626b71 !important;
+	height: 100px;
+	z-index: 1;
+	position: fixed; /* Set the navbar to fixed position */
+  	top: 0; /* Position the navbar at the top of the page */
+  	width: 100%; /* Full width */
+  	margin-bottom: 50px; 	
+}
+
+.navbar-light .navbar-brand {
+    color: #e1e8ea;
+}
+
+/* Footer */
+.footer{		
+	color: white;
+	bottom:0;
+}
+
+/* User profile page */
+.user-profile {
+    background-color: #e1e8ea; 
+    color: #474d52; 
+    margin: auto; 
+    padding: 20px;   
+  	overflow: auto;
+  	position: relative;
+  	display: inline-block;
+  	length:100px; 
+}
+
+.groups {
+    background-color: #e1e8ea; 
+    color: #474d52; 
+    margin: auto; 
+    padding: 20px;   
+  	overflow: auto;
+  	position: relative;
+  	display: inline-block;
+  	length:100px; 
+  	
+}
+
+.home { 
+	background-color: #e1e8ea; 
+    color: #474d52; 
+    margin: auto; 
+    padding: 20px;   
+  	overflow: auto;
+  	position: relative;
+  	display: inline-block;
+  	length:90%; 
+}
+
+#user-photo{
+	float: left;
+	border: 2px solid ;
+	margin: 20px;
+}
+
+.plus-image{
+	height: 20px;
+	width: 20px;
+	margin-left: 20px;
+}
+
+.edit-form-button{
+	padding: 20px;
+	right: 0;
+	position: absolute;
+	margin-right:20px;
+}
+
+#user-personal-information{
+	padding: 20px;	
+}
+
+.heading{
+	padding: 20px;
+	margin: 0;
+}
+
+.heading1{
+	padding: 20px;
+	margin: 0;
+	padding-left: 0;
+}
+
+
+#photo{
+	height: 180px;
+	width: 180px;
+}
+
+/* Add user information form */
+.add-information-form{
+	background-color: #e1e8ea; 
+    color: #474d52; 
+    width: 700px; 
+    margin: auto; 
+    margin-top: 40px;
+    padding: 20px;   
+  	overflow: auto;
+  	position: relative;
+}
+
+.submit-info-button{
+	background-color: #ca6342;
+    color: white;
+    padding: 16px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 50%;
+    opacity: 0.9;
+    font-size: 15px;
+}
+
+.cancel-button{
+	background-color: #f1f1f1;
+    color: #474d52;
+    padding: 16px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 50%;
+    opacity: 0.9;
+    font-size: 15px;
+    float: right;
+    text-align: center;
+}      	
+
+/* The sidepanel menu */
+.sidepanel {
+  height: 100%; 
+  width: 0; /* 0 width - change this with JavaScript */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Stay on top */
+  top: 0;
+  left: 0;
+  background-color: #111; /* Black*/
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 60px; /* Place content 60px from the top */
+  transition: 0.5s; /* 0.5 second transition effect to slide in the sidepanel */
+}
+
+/* The sidepanel links */
+.sidepanel a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidepanel a:hover {
+  color: #f1f1f1;
+}
+
+/* Position and style the close button (top right corner) */
+.sidepanel .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+/* Style the button that is used to open the sidepanel */
+.openbtn {
+  font-size: 20px;
+  cursor: pointer;
+  background-color: #111;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+}
+
+.openbtn:hover {
+  background-color: #444;
+}
