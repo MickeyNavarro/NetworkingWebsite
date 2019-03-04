@@ -22,10 +22,18 @@
                     </div>
                 </li>
                 
-                <!-- Will Check to see if the user is logged in. If so the navbar will have a link to the user profile -->
+                <!-- Will Check to see if the user is logged in. If so, the sidebar will have a link to the user functionalities-->
                 @if(session()->has('userid'))
                     <li class="nav-item active">
-                    <a class="nav-link" href="viewProfile">Profile <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="viewProfile">Profile<span class="sr-only"></span></a>
+                    </li>
+                    
+                    <li class="nav-item active">
+                    <a class="nav-link" href="viewJobs">Job(s)<span class="sr-only"></span></a>
+                    </li>
+                    
+                    <li class="nav-item active">
+                    <a class="nav-link" href="allGroupsView">Group(s)<span class="sr-only"></span></a>
                     </li>
                     
                     <!-- Will Check to see if the user that is logged in is a admin and will ad an admin tab if they are -->
