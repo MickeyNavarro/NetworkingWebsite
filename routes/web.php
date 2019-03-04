@@ -233,11 +233,14 @@ Route::get('/deleteGroupsView', 'GroupsController@delete');
 //This route is mapped to the '/allGroupsView' URI and will display the page for all the groups
 Route::get('/allGroupsView','GroupsController@userReadAll');
     
-//The route is mapped to the '/addToGroupView' and will add a user to a group
+//The route is mapped to the '/joinGroupView' and will add a user to a group
 Route::get('/joinGroupView', 'UsersGroupsController@create');
     
 //The route is mapped to the '/leaveGroupView' and will delete a user from a group 
 Route::get('/leaveGroupView', 'UsersGroupsController@delete');
+
+//The route is mapped to the '/groupMembersView' and will display the group page with all the members
+Route::get('/groupView', 'UsersGroupsController@readByGroupId');
     
 //-------------------------------------------------------------------------------------
 
