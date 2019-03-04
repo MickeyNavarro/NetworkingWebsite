@@ -55,8 +55,6 @@ Route::get('/logout', function(){
 //This route is mapped to the '/viewProfile' URI and will display the user profile page
 Route::get('/viewProfile', 'UserProfileController@index');
 
-
-
 //-------------------------------------------------------------------------------------
     
 
@@ -206,7 +204,7 @@ Route::get('session/get','SessionController@accessSessionData');
 //ROUTES RELATED TO THE GROUPS (ADMIN INTERACTIONS)
 
 //This route is mapped to the '/groupsView' URI and will display the page for a individual group
-Route::get('/groupsView','GroupsController@index');
+//Route::get('/groupsView','GroupsController@index');
 
 //This route is mapped to the '/adminPageOfGroupsView' URI and will display the page that allows the admin to perform admin functions
 Route::get('/adminPageOfGroupsView', 'GroupsController@readAll');
@@ -232,25 +230,14 @@ Route::get('/deleteGroupsView', 'GroupsController@delete');
 
 //ROUTES RELATED TO THE GROUPS (USER INTERACTIONS)
 
-    //This route is mapped to the '/adminPageOfGroupsView' URI and will display the page that allows the admin to perform admin functions
-    Route::get('/adminPageOfGroupsView', 'GroupsController@readAll');
-
-    //This route is mapped to the '/addGroupsView' URI and will display the page that allows the admins at enter new groups
-    Route::get('/addGroupsView', function(){
-    return view('addGroupsView');
-    });
+//This route is mapped to the '/allGroupsView' URI and will display the page for all the groups
+Route::get('/allGroupsView','GroupsController@userReadAll');
     
-    //The route is mapped to the '/addedGroupsView' and will post the admin input from the groups view
-    Route::post('/addedGroupsView', 'GroupsController@create');
+//The route is mapped to the '/addToGroupView' and will add a user to a group
+Route::get('/joinGroupView', 'UsersGroupsController@create');
     
-    //This route is mapped to the '/updateGroupsView' URI and will read the job postings data
-    Route::get('/updateGroupsView', 'GroupsController@readByGroupId');
+//The route is mapped to the '/leaveGroupView' and will delete a user from a group 
+Route::get('/leaveGroupView', 'UsersGroupsController@delete');
     
-    //The route is mapped to the '/updatedGroupsView' and will update the skill data
-    Route::post('/updatedGroupsView', 'GroupsController@update');
-    
-    //The route is mapped to the '/deleteGroupsView' and will get the job id to delete them
-    Route::get('/deleteGroupsView', 'GroupsController@delete');
-    
-    //-------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------
 
