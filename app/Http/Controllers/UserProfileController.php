@@ -15,7 +15,6 @@ use App\Services\BusinessServices\SkillsBusinessService;
 use App\Services\BusinessServices\PersonalInformationBusinessService;
 use App\Services\BusinessServices\UserBusinessService;
 use App\Services\BusinessServices\UsersGroupsBusinessService;
-use App\Services\BusinessServices\GroupsBusinessService;
 
 class UserProfileController extends Controller
 {
@@ -64,28 +63,7 @@ class UserProfileController extends Controller
             $ugbs = new UsersGroupsBusinessService();
             
             //create a variable to hold the user groups stuff
-            $usergroup_ids = $ugbs->readByUserID($id);
-            
-            //Create a new business service
-            $gbs = new GroupsBusinessService();
-            
-            //create an array of groups the user belongs to
-            $usergroups = array();
-            
-            //loop to get the group ids & find the groups each id belongs to
-            for ($x = 0; $x < count($usergroup_ids); $x++){
-                //get the group id
-                $group_id = $usergroup_ids[$x];
-                
-                //find the group data by its id
-                $group =$gbs->readByGroupId($group_id);
-                
-                //get the group name
-                $group_name = $group->getGroup_name();
-                
-                //put the group name into the array
-                array_push($usergroups, $group_name);
-            }
+            $usergroups = $ugbs->readByUserID($id);
                        
             //compress all the user data into a single array
             $Data = [
