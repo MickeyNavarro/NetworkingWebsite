@@ -17,9 +17,8 @@
     	<tbody>
      		@for ($x = 0; $x < count($usergroups); $x++) 
      		<tr>
-     		<td>{{$usergroups[$x]['GROUPS_NAME']}}</td>
+     		<td>{{$usergroups[$x]}}</td>
      		
-            <td><form action = 'leaveGroupsView' method = 'GET'><input type = 'hidden' name = 'id' value = {{$usergroups[$x]['ID']}}><input type = 'submit' value = 'Leave'></form> </td>
      		</tr>
      		@endfor 
  		</tbody>
