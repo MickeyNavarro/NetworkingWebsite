@@ -1,6 +1,3 @@
-<?php
-use App\Models\JobPostingsModel;
-?>
 <!--
 //Almicke Navarro
 //2-22-19

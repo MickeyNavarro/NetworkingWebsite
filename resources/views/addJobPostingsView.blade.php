@@ -3,7 +3,7 @@
 //2-22-19
 //Networking Milestone
 //This is my own work.
-//The form that allows users to add their job postings
+//The form that allows admins to add a new job postings
 -->
 @extends('layouts.appmaster')
 @section('title', 'Add Job Posting Page')

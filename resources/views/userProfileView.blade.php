@@ -7,13 +7,12 @@
 -->
  
 @extends('layouts.appmaster')
-@section('title', 'Login Page')
+@section('title', 'User Profile')
   
 @section('content')
 
 <!-- check if the session variable holds the user id -->
 @if (session()->has('userid'))
-<div class = user-profile>
 
 	<div id = "user-photo" class="column"> 		
 		<img id = "photo" src="https://cdn3.iconfinder.com/data/icons/business-and-finance-icons/512/Business_Man-512.png" alt="User Photo" >   	
@@ -22,7 +21,7 @@
           
         <!-- check if the first and last name was passed on from the controller -->      
         @if ($firstname !=null && $lastname != null)
-        <h4>{{$firstname}} {{$lastname}}</h4>
+        <h3>{{$firstname}} {{$lastname}}</h3>
         @else 
         <h4>Something went wrong</h4>
         @endif
@@ -60,6 +59,17 @@
  	<!-- User Education -->
  	<div id = "user-education"> 		
  		<h4 class = "heading column">Education</h4>
+ 		<br>
+ 		<br>
+ 		<br>
+ 		@for ($x = 0; $x < count($edu); $x++) 
+ 		<div class= "section">
+ 		<h5>{{$edu[$x]['SCHOOL']}}</h5> <form action = 'updateEducationView' method = 'GET'><input type = 'hidden' name = 'id' value = {{$edu[$x]['ID']}}><input type = 'submit' value = 'Edit'></form><form action = 'deleteEducationView' method = 'GET'><input type = 'hidden' name = 'id' value = {{$edu[$x]['ID']}}><input type = 'submit' value = 'Delete'></form>
+ 		<p>{{$edu[$x]['DEGREE']}}</p>
+ 		<p>{{$edu[$x]['START_YEAR']}} - {{$edu[$x]['END_YEAR']}} </p>
+ 		<p>Additional Info: {{$edu[$x]['ADDITIONAL_INFORMATION']}} </p>
+ 		</div>
+ 		@endfor
  		
  		 @if ($edu != null)
  		<table id = work class = "darkTable table-hover"> 
@@ -167,7 +177,6 @@
 			</form>
    		</div>	 	
  	</div>   	 		
- </div>
 @include('userGroupsView')
  @endif
  @endsection
