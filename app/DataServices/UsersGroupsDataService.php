@@ -47,13 +47,13 @@ class UsersGroupsDataService{
 
     }
     
-    //accepts an user id; finds the user groups in the database with a matching id
-    function readByUserID($id){
+    //accepts a group id; finds the group with all its data, especially its users, in the database with a matching id
+    function readByGroupID($id){
         try {
-            Log::info("Entering UsersGroupsDataService.readByUserID()");
+            Log::info("Entering UsersGroupsDataService.readByGroupID()");
             
             //use the connection to create a prepared statement
-            $stmt = $this->conn->prepare("SELECT * FROM `USERS_GROUPS` WHERE USERS_ID = :id");
+            $stmt = $this->conn->prepare("SELECT `USERS_GROUPS`.`ID`, `GROUPS_ID`, `GROUPS`.`GROUP_NAME`, `GROUPS`.`DESCRIPTION`, `USERS`.`USERNAME` FROM `USERS_GROUPS` JOIN `USERS` ON `USERS_GROUPS`.`USERS_ID` = `USERS`.`ID` JOIN `GROUPS` ON `USERS_GROUPS`.`GROUPS_ID` = `GROUPS`.`ID` WHERE `GROUPS_ID` = :id");
             
             //Bind the variables from the user object to the SQL statement
             $stmt->bindParam(':id', $id);
@@ -63,7 +63,7 @@ class UsersGroupsDataService{
             
             //check is a row was returned
             if($stmt->rowCount() == 0){
-                Log::info("Exiting UsersGroupsDataService.readByUserID() with returning null");
+                Log::info("Exiting UsersGroupsDataService.readByGroupID() with returning null");
                 return null;
             }
             else{
@@ -72,13 +72,11 @@ class UsersGroupsDataService{
                 
                 //loop to get all the users groups data to put into the array
                 while ($ug = $stmt->fetch(PDO::FETCH_ASSOC)){
-                    
                     array_push($ug_arr, $ug);
-                    
                 }
-                              
-                Log::info("Exiting UsersGroupsDataService.readByUserID() with returning a skill object");
-                return $ug_arr;            
+                                
+                Log::info("Exiting UsersGroupsDataService.readByGroupID() with returning all the groups that the user belongs to");
+                return $ug_arr;
             }
         }
         catch (PDOException $e){
@@ -87,13 +85,51 @@ class UsersGroupsDataService{
         }
     }
     
-    //accepts the user id; deletes the user groups in the database with a matching id
+    //accepts an user id term; finds the groups a user belongs to in the database
+    function readByUserId($id){
+        try {
+            Log::info("Entering UsersGroupsDataService.readByUserId()");
+            
+            //use the connection to create a prepared statement
+            $stmt = $this->conn->prepare("SELECT `USERS_GROUPS`.`ID`,`USERS_ID`,`GROUPS_ID`, `GROUPS`.`GROUP_NAME`, `GROUPS`.`DESCRIPTION` FROM `GROUPS` JOIN `USERS_GROUPS` ON `USERS_GROUPS`.`GROUPS_ID` = `GROUPS`.`ID` WHERE USERS_ID = :id ");
+            
+            //Bind the variables to the SQL statement
+            $stmt->bindParam(':id', $id);
+            
+            //execute the SQL statement
+            $stmt->execute();
+            
+            //check is a row was returned
+            if($stmt->rowCount() == 0){
+                Log::info("Exiting UsersGroupsDataService.readByUserId() with returning null");
+                return null;
+            }
+            else{
+                //create an user groups array
+                $ug_arr = array();
+                
+                //loop to get all the users groups data to put into the array
+                while ($ug = $stmt->fetch(PDO::FETCH_ASSOC)){
+                    array_push($ug_arr, $ug);
+                }
+                
+                Log::info("Exiting UsersGroupsDataService.readByUserId() with returning an array of groups");
+                return $ug_arr;
+            }
+        }
+        catch (PDOException $e){
+            Log::error("Exception: ", array("message" => $e->getMessage()));
+            throw new DatabaseException("Database Exception: " . $e->getMessage(), 0, $e);
+        }
+    }
+    
+    //accepts the id; deletes the user groups in the database with a matching id
     function delete($id){
         try {
             Log::info("Entering SkillsDataService.delete()");
             
             //use the connection to create a prepared statement
-            $stmt = $this->conn->prepare("DELETE FROM `USERS_GROUPS` WHERE `USERS_ID` = :id");
+            $stmt = $this->conn->prepare("DELETE FROM `USERS_GROUPS` WHERE `ID` = :id");
             
             //Bind the variables to the SQL statement
             $stmt->bindParam(':id', $id);
