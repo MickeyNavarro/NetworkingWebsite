@@ -39,8 +39,8 @@ class GroupsBusinessService
     }
     
     // accepts an id; creates a connection; returns data from the groups class
-    function read($id){
-        Log::info("Entering GroupsBusinessService.readByUserID()");
+    function readByGroupId($id){
+        Log::info("Entering GroupsBusinessService.readByGroupId()");
         
         //Get credentials for accessing the database
         $servername = config("database.connections.mysql.host");
@@ -54,10 +54,33 @@ class GroupsBusinessService
         
         //Create a GroupsDataService with this connection
         $service = new GroupsDataService($conn);
-        $flag = $service->readByUserID($id);  
+        $flag = $service->readByGroupId($id); 
         
         //Return the finder results
-        Log::info("Exit GroupsBusinessService.readByUserID() with " . json_encode($flag));
+        Log::info("Exit GroupsBusinessService.readByGroupId() with " . json_encode($flag));
+        return $flag;
+    }
+    
+    // accepts an id; creates a connection; returns all the groups from the groups class
+    function readAll(){
+        Log::info("Entering GroupsBusinessService.readByGroupId()");
+        
+        //Get credentials for accessing the database
+        $servername = config("database.connections.mysql.host");
+        $username = config("database.connections.mysql.username");
+        $password = config("database.connections.mysql.password");
+        $dbname = config("database.connections.mysql.database");
+        
+        //create connection
+        $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        
+        //Create a GroupsDataService with this connection
+        $service = new GroupsDataService($conn);
+        $flag = $service->readAll(); 
+        
+        //Return the finder results
+        Log::info("Exit GroupsBusinessService.readByGroupId() with " . json_encode($flag));
         return $flag;
     }
     
