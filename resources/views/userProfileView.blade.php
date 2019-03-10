@@ -62,6 +62,7 @@
  		<br>
  		<br>
  		<br>
+		@if ($edu != null)
  		@for ($x = 0; $x < count($edu); $x++) 
  		<div class= "section">
  		<h5>{{$edu[$x]['SCHOOL']}}</h5> <form action = 'updateEducationView' method = 'GET'><input type = 'hidden' name = 'id' value = {{$edu[$x]['ID']}}><input type = 'submit' value = 'Edit'></form><form action = 'deleteEducationView' method = 'GET'><input type = 'hidden' name = 'id' value = {{$edu[$x]['ID']}}><input type = 'submit' value = 'Delete'></form>
@@ -71,7 +72,6 @@
  		</div>
  		@endfor
  		
- 		 @if ($edu != null)
  		<table id = work class = "darkTable table-hover"> 
         	<thead>	
                <th>School</th>
