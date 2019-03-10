@@ -75,7 +75,7 @@ class UsersGroupsDataService{
                     array_push($ug_arr, $ug);
                 }
                                 
-                Log::info("Exiting UsersGroupsDataService.readByGroupID() with returning all the group ids that the user belongs to");
+                Log::info("Exiting UsersGroupsDataService.readByGroupID() with returning all the groups that the user belongs to");
                 return $ug_arr;
             }
         }

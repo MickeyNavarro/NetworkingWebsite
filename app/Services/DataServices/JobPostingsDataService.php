@@ -88,7 +88,7 @@ class JobPostingsDataService{
                 //create a new instance of an job postings model
                 $job_ob = new JobPostingsModel($id, $name, $company, $pay, $description); 
                 
-                Log::info("Exiting JobPostingsDataService.readByJobID() with returning a work experience object");
+                Log::info("Exiting JobPostingsDataService.readByJobID() with returning a job postings object");
                 return $job_ob;
             }
         }
