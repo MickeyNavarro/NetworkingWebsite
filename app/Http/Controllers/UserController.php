@@ -241,4 +241,28 @@ class UserController extends Controller
             return view('exception')->with($data);
         }
     }
+    
+    //simply breaks the session variable; logs out the user
+    public function logout(Request $request){
+        
+        try{
+            //destroy the session 
+            $request->session()->flush(); 
+             
+            if(!$request->session()->has('userid') && !$request->session()->has('role')) { 
+                
+                //Render a response view of the admin page of users and pass on the array of users
+                return view('homeView');    
+                                
+            }else{
+                //Render a response View with unsuccessful message
+                return view('unsuccessfulView');
+            }
+        }
+        catch (Exception $e){
+            Log::error("Exception ", array("message" => $e->getMessage()));
+            $data = ['errorMsg' => $e->getMessage()];
+            return view('exception')->with($data);
+        }
+    }
 }

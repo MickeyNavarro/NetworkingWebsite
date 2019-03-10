@@ -12,8 +12,8 @@ class SessionController extends Controller
 {
     public function accessSessionData(Request $request) {
         if($request->session()->has('userid')) {
-            echo $request->session()->get('userid');
-            echo $request->session()->get('role');
+            echo "User ID:" . $request->session()->get('userid') . "<br>";
+            echo "Role: ". $request->session()->get('role'). "<br>";
             
         }
         else {
