@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 use App\Services\BusinessServices\UsersGroupsBusinessService;
 use App\Models\UsersGroupsModel;
+use App\Services\BusinessServices\GroupsBusinessService;
 
 class UsersGroupsController extends Controller
 {
@@ -63,17 +64,20 @@ class UsersGroupsController extends Controller
             //Store the form data
             $groups_id = $request->input('id');
             
-            //Create a new business service
+            //Create new business services
             $ugbs = new UsersGroupsBusinessService();
+            $gbs = new GroupsBusinessService(); 
             
             //create a variable to hold the user groups stuff
-            $groupdata = $ugbs->readByGroupID($groups_id); 
+            $groupusers = $ugbs->readByGroupID($groups_id); 
+            $groupdata = $gbs->readByGroupId($groups_id);
+            
                         
             //check if the the business service object returned an user groups object
             if($groupdata !=null){
-                
+
                 //compress all the user data into a single array
-                $data = ['groupdata' => $groupdata];
+                $data = ['groupdata' => $groupdata, 'groupusers' => $groupusers];
                 
                 //compress the user groups array to be sent to the view
                 return view('groupView')->with($data);
