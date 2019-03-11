@@ -14,27 +14,33 @@
 @if(session()->has('role'))
 @if ($groupdata != null)
 <div class = "group-profile">
-    <h2 class = "heading1">{{$groupdata[0]['GROUP_NAME']}}</h2>
-   	<h5>{{$groupdata[0]['DESCRIPTION']}}</h5>
-   	<td><form action = 'joinGroupView' method = 'GET'><input type = 'hidden' name = 'id' value = {{$groupdata[0]['GROUPS_ID']}}><input type = 'submit' value = 'Join'></form> </td>
+    <h2 class = "heading1">{{$groupdata->getGroup_name()}}</h2>
+   	<h5>Description: {{$groupdata->getDescription()}}</h5>
+   	<td><form action = 'joinGroupView' method = 'GET'><input type = 'hidden' name = 'id' value = {{$groupdata->getId()}}><input type = 'submit' value = 'Join'></form> </td>
    	
     <hr>
     
+    <h5>Members</h5>
     <table id = groups class = "darkTable table-hover"> 
     <thead>	
-        <th>Members</th>
     </thead>
     <tbody>
 
+	@if ($groupusers != null)
+
     <!-- Loop to show all the users from the database -->
-    @for ($x = 0; $x < count($groupdata); $x++)        
+    @for ($x = 0; $x < count($groupusers); $x++)        
     <tr>
-    <td> {{$groupdata[$x]['USERNAME']}} </td>
+    <td> {{$groupusers[$x]['USERNAME']}} </td>
 	</tr>
    
    	@endfor
+   	@else 
+   	<p>There are no members in this group!</p>
+   	@endif
     </tbody>
 	</table>
+	
 </div>
 @endif
 @else 
