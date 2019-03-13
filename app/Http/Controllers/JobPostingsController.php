@@ -89,6 +89,40 @@ class JobPostingsController extends Controller
         }
     }
     
+    //accepts the request from the web browser to show a single existing record of job posting
+    public function showIndJob(Request $request){
+        
+        try{
+            //Store the form data
+            $id = $request->input('id');
+            
+            //Create a new business service
+            $jbs = new JobPostingsBusinessService();
+            
+            //create a variable to hold the job posting stuff
+            $job = $jbs->readByJobID($id);
+            
+            //check if a job posting was returned
+            if($job !=null){
+                
+                //compress the job posting array to be sent to the view
+                $data = ['job' => $job];
+                
+                //Render a response View with success message
+                return view('jobView')->with($data);
+                
+            }else{
+                //Render a response view with unsuccessful message
+                return view('unsuccessfulView');
+            }
+        }
+        catch (Exception $e){
+            Log::error("Exception ", array("message" => $e->getMessage()));
+            $data = ['errorMsg' => $e->getMessage()];
+            return view('exception')->with($data);
+        }
+    }
+    
     //simply returns all of the job postings in an array 
     public function readAll(){
         
