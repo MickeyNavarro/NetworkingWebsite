@@ -17,9 +17,9 @@
     @if ($groups != null)
     <table id = groups class = "darkTable table-hover"> 
     <thead>	
-        <th>ID</th>
         <th>Name </th>
         <th>Description</th>
+    	<th></th>
     	<th></th>
     </thead>
     <tbody>
@@ -27,7 +27,6 @@
     <!-- Loop to show all the groups from the database -->
     @for ($x = 0; $x < count($groups); $x++) 
         <tr>
-        <td>{{$groups[$x]['ID']}}</td>
         <td> {{$groups[$x]['GROUP_NAME']}} </td>
         <td> {{$groups[$x]['DESCRIPTION']}} </td>
         <td><form action = 'joinGroupView' method = 'GET'><input type = 'hidden' name = 'id' value = {{$groups[$x]['ID']}}><input type = 'submit' value = 'Join'></form> </td>
