@@ -17,8 +17,9 @@
 			
 <p>Pay: {{$job->getPay()}}</p>
             
-<hr> 
-            
 <p>Description: {{$job->getDescription()}}</p>
+
+<form action = 'saveJobView' method = 'GET'><input type = 'hidden' name = 'id' value = {{$job->getId()}}><input type = 'submit' value = 'Save'></form>
+<form action = 'applyJobView' method = 'GET'><input type = 'hidden' name = 'id' value = {{$job->getId()}}><input type = 'submit' value = 'Apply'></form>
 
 @endsection
