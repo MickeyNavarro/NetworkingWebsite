@@ -199,13 +199,13 @@ Route::get('/deleteJobPostingsView', 'JobPostingsController@delete');
 Route::get('/allJobsView','JobPostingsController@showAll');
 
 //The route is mapped to the '/applyJobView' and will allow the user to apply to the job
-Route::get('/applyJobView', 'UsersGroupsController@apply');
+Route::get('/applyJobView', 'JobPostingsController@apply');
 
 //The route is mapped to the '/saveJobView' and will allow a user to save a job
-Route::get('/saveJobView', 'UsersGroupsController@save');
+Route::get('/saveJobView', 'JobPostingsController@save');
 
-//The route is mapped to the '/groupMembersView' and will display the group page with all the members
-Route::get('/jobView', 'UsersGroupsController@readByJobId');
+//The route is mapped to the '/jobView' and will display the group page with all the members
+Route::get('/jobView', 'JobPostingsController@showIndJob');
 
 //-------------------------------------------------------------------------------------
 
