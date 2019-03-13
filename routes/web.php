@@ -165,7 +165,7 @@ Route::get('/deleteView', 'UserController@delete');
 
 //-------------------------------------------------------------------------------------
     
-//ROUTES RELATED TO THE JOB POSTINGS (BOTH USER AND ADMIN INTERACTIONS)
+//ROUTES RELATED TO THE JOB POSTINGS (ADMIN INTERACTIONS)
 
 //This route is mapped to the '/jobPostingsView' URI and will display the page for a individual job posting
 Route::get('/jobPostingsView','JobPostingsProfileController@index'); 
@@ -192,6 +192,23 @@ Route::post('/updatedJobPostingsView', 'JobPostingsController@update');
 Route::get('/deleteJobPostingsView', 'JobPostingsController@delete'); 
 
 //-------------------------------------------------------------------------------------
+
+//ROUTES RELATED TO THE JOB POSTINGS (USER INTERACTIONS)
+
+//This route is mapped to the '/allJobsView' URI and will display the page for all the jobs
+Route::get('/allJobsView','JobPostingsController@showAll');
+
+//The route is mapped to the '/applyJobView' and will allow the user to apply to the job
+Route::get('/applyJobView', 'UsersGroupsController@apply');
+
+//The route is mapped to the '/saveJobView' and will allow a user to save a job
+Route::get('/saveJobView', 'UsersGroupsController@save');
+
+//The route is mapped to the '/groupMembersView' and will display the group page with all the members
+Route::get('/jobView', 'UsersGroupsController@readByJobId');
+
+//-------------------------------------------------------------------------------------
+
 
 //ROUTES RELATED TO TESTING THE SESSION VARIABLES 
 
