@@ -17,11 +17,10 @@
     <table id = jobs class = "darkTable table-hover"> 
     <thead>	
         <th>ID</th>
-        <th>Name </th>
+        <th>Position </th>
         <th>Company</th>
         <th>Pay</th>
         <th>Description</th>
-    	<th></th>
     	<th></th>
     	<th></th>
     </thead>
