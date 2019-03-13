@@ -59,7 +59,7 @@ class UserController extends Controller
     //validates the form and its data for consistency 
     private function validateRegistrationForm(Request $request) {
         //setup data validattion rules
-        $rules = ['firstname' => 'Required | Between: 1,20| Alpha','lastname' => 'Required | Between: 1,20| Alpha', 'email' => 'Required | E-mail', 'username' => 'Required | Between: 1,20| Alpha','password' => 'Required | Between: 4,20'];
+        $rules = ['firstname' => 'Required | Between: 1,20| alpha ','lastname' => 'Required | Between: 1,20| alpha_dash | regex:/^[\pL\s\-]+$/u', 'email' => 'Required | E-mail', 'username' => 'Required | Between: 1,20| alpha_dash','password' => 'Required | Between: 4,20'];
         
         //run data validation rules
         $this->validate($request, $rules);
@@ -248,7 +248,8 @@ class UserController extends Controller
         try{
             //destroy the session 
             $request->session()->flush(); 
-             
+            $request->session()->save(); 
+            
             if(!$request->session()->has('userid') && !$request->session()->has('role')) { 
                 
                 //Render a response view of the admin page of users and pass on the array of users
