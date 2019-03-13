@@ -42,9 +42,7 @@ Route::get('/registration', function(){
 Route::post('/registrationView', 'UserController@create'); 
 
 //The route is mapped to the '/logout' URI and will display the home page
-Route::get('/logout', function(){
-    return view('homeView');
-});
+Route::get('/logout','UserController@logout' );
     
 
 //-------------------------------------------------------------------------------------
