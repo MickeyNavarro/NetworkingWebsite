@@ -34,7 +34,7 @@
                     </li>
                     
                     <li class="nav-item active">
-                    <a class="nav-link" href="viewJobs">  Job(s)<span class="sr-only"></span></a>
+                    <a class="nav-link" href="allJobsView">  Job(s)<span class="sr-only"></span></a>
                     </li>
                     
                     <li class="nav-item active">
