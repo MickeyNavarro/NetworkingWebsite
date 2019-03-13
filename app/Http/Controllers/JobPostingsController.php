@@ -117,6 +117,34 @@ class JobPostingsController extends Controller
         }
     }
     
+    //simply returns all of the job postings in an array
+    public function showAll(){
+        
+        try{
+            //Create a new business service
+            $jbs = new JobPostingsBusinessService();
+            
+            //Use the business service object to show all users in the database
+            if($jobs = $jbs->readAll()){
+                
+                //compress all the users into a single array
+                $Data = [ 'jobs' => $jobs ];
+                
+                //Render a response view of the admin page of jobs and pass on the array of jobs
+                return view('jobsView')->with($Data);
+                
+            }else{
+                //Render a response View with unsuccessful message
+                return view('unsuccessfulView');
+            }
+        }
+        catch (Exception $e){
+            Log::error("Exception ", array("message" => $e->getMessage()));
+            $data = ['errorMsg' => $e->getMessage()];
+            return view('exception')->with($data);
+        }
+    }
+    
     //accepts the request from the web browser to update an existing record of job posting
     public function update(Request $request){
         
