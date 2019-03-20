@@ -174,7 +174,7 @@ class UserController extends Controller
             //Use the business service object to suspend a user in the database
             if($bs->suspendById($id)){
                 //Render a response View with success message
-                return view('adminPageView');
+                return view('adminPageOfUsersView');
                 
             }else{
                 //Render a response View with unsuccessful message
@@ -201,7 +201,7 @@ class UserController extends Controller
             //Use the business service object to suspend a user in the database
             if($bs->unsuspendById($id)){
                 //Render a response View with success message
-                return view('adminPageView');
+                return view('adminPageOfUsersView');
                 
             }else{
                 //Render a response View with unsuccessful message
@@ -228,7 +228,7 @@ class UserController extends Controller
             //Use the business service object to delete a user in the database
             if($bs->delete($id)){
                 //Render a response View with success message
-                return view('adminPageView');
+                return view('adminPageOfUsersView');
                 
             }else{
                 //Render a response View with unsuccessful message
