@@ -39,8 +39,8 @@ class UsersJobPostingsBusinessService
     }
     
     // accepts an user id; creates a connection; returns data from the users groups class
-    function readByUserID($id){
-        Log::info("Entering UsersJobPostingsBusinessService.readByUserID()");
+    function readSaved($id){
+        Log::info("Entering UsersJobPostingsBusinessService.readSaved()");
         
         //Get credentials for accessing the database
         $servername = config("database.connections.mysql.host");
@@ -54,10 +54,33 @@ class UsersJobPostingsBusinessService
         
         //Create a UsersJobPostingsDataService with this connection
         $service = new UsersJobPostingsDataService($conn);
-        $flag = $service->readByUserID($id); 
+        $flag = $service->readSaved($id);
         
         //Return the finder results
-        Log::info("Exit UsersJobPostingsBusinessService.readByUserID() with " . json_encode($flag));
+        Log::info("Exit UsersJobPostingsBusinessService.readSaved() with " . json_encode($flag));
+        return $flag;
+    }
+    
+    // accepts an user id; creates a connection; returns data from the users groups class
+    function readApplied($id){
+        Log::info("Entering UsersJobPostingsBusinessService.readApplied()");
+        
+        //Get credentials for accessing the database
+        $servername = config("database.connections.mysql.host");
+        $username = config("database.connections.mysql.username");
+        $password = config("database.connections.mysql.password");
+        $dbname = config("database.connections.mysql.database");
+        
+        //create connection
+        $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        
+        //Create a UsersJobPostingsDataService with this connection
+        $service = new UsersJobPostingsDataService($conn);
+        $flag = $service->readApplied($id); 
+        
+        //Return the finder results
+        Log::info("Exit UsersJobPostingsBusinessService.readApplied() with " . json_encode($flag));
         return $flag;
     }
     
