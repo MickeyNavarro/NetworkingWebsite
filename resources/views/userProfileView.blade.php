@@ -178,7 +178,7 @@
    		</div>	 	
  	</div>   	 		
 @include('userGroupsView')
-<div>
+<div class ="groups">
 <h5>Job(s)</h5>
 @include('userSavedJobsView')
 @include('userAppliedJobsView')
