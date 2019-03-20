@@ -21,7 +21,7 @@
           
         <!-- check if the first and last name was passed on from the controller -->      
         @if ($firstname !=null && $lastname != null)
-        <h3>{{$firstname}} {{$lastname}}</h3>
+        <h1>{{$firstname}} {{$lastname}}</h1>
         @else 
         <h4>Something went wrong</h4>
         @endif
@@ -62,7 +62,7 @@
  		<br>
  		<br>
  		<br>
-		@if ($edu != null)
+ 		@if ($edu != null)
  		@for ($x = 0; $x < count($edu); $x++) 
  		<div class= "section">
  		<h5>{{$edu[$x]['SCHOOL']}}</h5> <form action = 'updateEducationView' method = 'GET'><input type = 'hidden' name = 'id' value = {{$edu[$x]['ID']}}><input type = 'submit' value = 'Edit'></form><form action = 'deleteEducationView' method = 'GET'><input type = 'hidden' name = 'id' value = {{$edu[$x]['ID']}}><input type = 'submit' value = 'Delete'></form>
@@ -178,5 +178,12 @@
    		</div>	 	
  	</div>   	 		
 @include('userGroupsView')
+<div>
+<h5>Job(s)</h5>
+@include('userSavedJobsView')
+@include('userAppliedJobsView')
+</div>
+
+
  @endif
  @endsection
