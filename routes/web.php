@@ -202,6 +202,9 @@ Route::get('/applyJobView', 'UsersJobPostingsController@apply');
 //The route is mapped to the '/saveJobView' and will allow a user to save a job
 Route::get('/saveJobView', 'UsersJobPostingsController@save');
 
+//The route is mapped to the '/saveJobView' and will allow a user to save a job
+Route::get('/unsaveJobView', 'UsersJobPostingsController@unsave');
+
 //The route is mapped to the '/jobView' and will display the group page with all the members
 Route::get('/jobView', 'JobPostingsController@showIndJob');
 
