@@ -84,6 +84,29 @@ class JobPostingsBusinessService
         return $flag;
     }
     
+    // creates a connection; returns all job postings from database based on user data
+    function readMatches($id){
+        Log::info("Entering JobPostingsBusinessService.readMatches()");
+        
+        //Get credentials for accessing the database
+        $servername = config("database.connections.mysql.host");
+        $username = config("database.connections.mysql.username");
+        $password = config("database.connections.mysql.password");
+        $dbname = config("database.connections.mysql.database");
+        
+        //create connection
+        $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        
+        //Create a JobPostingsDataService with this connection and find all the job postings
+        $service = new JobPostingsDataService($conn);
+        $flag = $service->readMatches($id);
+        
+        //Return the finder results
+        Log::info("Exit JobPostingsBusinessService.readMatches() with " . json_encode($flag));
+        return $flag;
+    }
+    
     // accepts a job postings object; creates a connection; updates a record in the job postings table 
     function update(JobPostingsModel $job) { 
         Log::info("Entering JobPostingsBusinessService.update()");
