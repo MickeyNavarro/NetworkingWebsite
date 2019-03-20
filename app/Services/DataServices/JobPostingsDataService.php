@@ -5,6 +5,8 @@
 //This is my own work.
 //interacts with the database and the job postings class data
 
+//references: https://owlcation.com/stem/How-to-search-for-multiple-keywords-and-long-text-in-MySql-Table-using-PHP 
+
 namespace App\Services\DataServices; 
 
 use App\Services\Utility\DatabaseException;
@@ -12,6 +14,7 @@ use Illuminate\Support\Facades\Log;
 use PDOException;
 use \PDO; 
 use App\Models\JobPostingsModel;
+use function GuzzleHttp\json_encode;
 
 class JobPostingsDataService{
     public function __construct($conn) {
@@ -134,6 +137,86 @@ class JobPostingsDataService{
             throw new DatabaseException("Database Exception: " . $e->getMessage(), 0, $e);
         }
     }
+    
+    //allows the user to view all job postings that they are matched to 
+    function readMatches($id){
+        try{
+            Log::info("Entering JobPostingsDataService.readMatches()");
+            
+            //use the connection to create a prepared statement
+            $skill_stmt = $this->conn->prepare("SELECT `SKILLS`.`SKILLS_NAME` FROM `USERS` JOIN `SKILLS` ON `SKILLS`.`USERS_ID` = `USERS`.`ID` WHERE `USERS`.`ID` = :id");
+            /* $degree_stmt = $this->conn->prepare("SELECT `EDUCATION`.`DEGREE` FROM `USERS` JOIN `EDUCATION` ON `EDUCATION`.`USERS_ID` = `USERS`.`ID` WHERE `USERS`.`ID` = :id"); 
+            $pi_stmt = $this->conn->prepare("SELECT `PERSONAL_INFORMATION`.`BIOGRAPHY`, `PERSONAL_INFORMATION`.`CURRENT_POSITION` FROM `USERS` JOIN `PERSONAL_INFORMATION` ON `PERSONAL_INFORMATION`.`USERS_ID` = `USERS`.`ID` WHERE `USERS`.`ID` = :id"); 
+            $work_stmt = $this->conn->prepare("SELECT `WORK_EXPERIENCE`.`POSITION`, `WORK_EXPERIENCE`.`COMPANY` FROM `USERS` JOIN `WORK_EXPERIENCE` ON `WORK_EXPERIENCE`.`USERS_ID` = `USERS`.`ID` WHERE `USERS`.`ID` = :id");  */
+            
+            //Bind the variables to the SQL statement
+            $skill_stmt->bindParam(':id', $id);
+            /* degree_stmt->bindParam(':id', $id);
+            $pi_stmt->bindParam(':id', $id);
+            $work_stmt->bindParam(':id', $id); */
+            
+            //execute the SQL statement
+            $skill_stmt->execute(); 
+            /* $degree_stmt->execute(); 
+            $pi_stmt->execute(); 
+            $work_stmt->execute();  */
+        
+            //create an keyword array
+            $keywords_arr = array();
+             
+            /* //loop to get all the degree to put into the keywords array
+            if ($degree_stmt->rowCount() != 0){
+                while ($degree = $degree_stmt->fetch(PDO::FETCH_ASSOC)){
+                    array_push($keywords_arr, $degree);
+                }
+            } */
+            
+            //loop to get all the skills to put into the keywords array
+            if ($skill_stmt->rowCount() != 0){ 
+                while ($skill = $skill_stmt->fetch(PDO::FETCH_ASSOC)){
+                    array_push($keywords_arr, $skill);
+                }
+            }
+                      
+            //compare the user data to each job posting 
+            $query = "SELECT * FROM `JOB_POSTINGS` WHERE `NAME` LIKE '%" . $keywords_arr[0]['SKILLS_NAME'] . "%' OR `DESCRIPTION` LIKE '%".$keywords_arr[0]['SKILLS_NAME']."%'";
+            
+            for($i = 1; $i < count($keywords_arr); $i++) {
+                if(!empty($keywords_arr[$i])) {
+                    $query .= " OR `NAME` LIKE '%".$keywords_arr[$i]['SKILLS_NAME']."%' OR `DESCRIPTION` LIKE '%".$keywords_arr[$i]['SKILLS_NAME']."%'";
+                }
+            }
+            
+            $job_stmt = $this->conn->prepare($query);
+            
+            $job_stmt->execute();
+            
+            //check is any row was returned
+            if($job_stmt->rowCount() == 0){
+                Log::info("Exiting JobPostingsDataService.readMatches() with returning null");
+                return null;
+            }
+            else{
+                //create an jobs array
+                $jobs_array = array();
+                
+                //loop to get all the user data to put into the array
+                while ($jobs = $job_stmt->fetch(PDO::FETCH_ASSOC)){
+                    
+                    array_push($jobs_array, $jobs);
+                    
+                }
+                
+                Log::info("Exiting JobPostingsDataService.readMatches() with an array of users");
+                return $jobs_array;
+            }
+        }
+        catch (PDOException $e){
+            Log::error("Exception: ", array("message" => $e->getMessage()));
+            throw new DatabaseException("Database Exception: " . $e->getMessage(), 0, $e);
+        }
+    }
+    
     
     //accepts a job posting model; updates the job postings model in the database based on id
     function update(JobPostingsModel $job) {
