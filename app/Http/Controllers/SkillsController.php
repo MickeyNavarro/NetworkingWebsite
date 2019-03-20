@@ -159,7 +159,7 @@ class SkillsController extends Controller
     //validates the form and its data for consistency
     private function validateForm(Request $request) {
         //setup data validattion rules
-        $rules = ['skill' => 'Required | Alpha | Between: 1,20'];
+        $rules = ['skill' => 'Required'];
         
         //run data validation rules
         $this->validate($request, $rules);
