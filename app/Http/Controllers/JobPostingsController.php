@@ -155,11 +155,14 @@ class JobPostingsController extends Controller
     public function showAll(){
         
         try{
+            //get the user id from the session variable
+            $id = session()->get('userid');
+            
             //Create a new business service
             $jbs = new JobPostingsBusinessService();
             
-            //Use the business service object to show all users in the database
-            if($jobs = $jbs->readAll()){
+            //Use the business service object to show all matched jobs in the database
+            if($jobs = $jbs->readMatches($id)){
                 
                 //compress all the users into a single array
                 $Data = [ 'jobs' => $jobs ];
@@ -167,6 +170,15 @@ class JobPostingsController extends Controller
                 //Render a response view of the admin page of jobs and pass on the array of jobs
                 return view('jobsView')->with($Data);
                 
+            //Use the business service object to show all the jobs in the database
+            }else if($jobs = $jbs->readAll()){
+                
+                //compress all the users into a single array
+                $Data = [ 'jobs' => $jobs ];
+                
+                //Render a response view of the admin page of jobs and pass on the array of jobs
+                return view('jobsView')->with($Data);
+            
             }else{
                 //Render a response View with unsuccessful message
                 return view('unsuccessfulView');
