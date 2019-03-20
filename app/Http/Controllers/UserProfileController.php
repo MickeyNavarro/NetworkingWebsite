@@ -15,6 +15,7 @@ use App\Services\BusinessServices\SkillsBusinessService;
 use App\Services\BusinessServices\PersonalInformationBusinessService;
 use App\Services\BusinessServices\UserBusinessService;
 use App\Services\BusinessServices\UsersGroupsBusinessService;
+use App\Services\BusinessServices\UsersJobPostingsBusinessService;
 
 class UserProfileController extends Controller
 {
@@ -64,6 +65,13 @@ class UserProfileController extends Controller
             
             //create a variable to hold the user groups stuff
             $usergroups = $ugbs->readByUserID($id);
+            
+            //create new jobs business services 
+            $ujbs = new UsersJobPostingsBusinessService(); 
+            
+            //create variables to hold the saved and applied jobs
+            $savedjobs = $ujbs->readSaved($id); 
+            $appliedjobs = $ujbs->readApplied($id);
                        
             //compress all the user data into a single array
             $Data = [
@@ -73,7 +81,9 @@ class UserProfileController extends Controller
                 'skills' => $skills, 
                 'firstname' => $firstname, 
                 'lastname' => $lastname, 
-                'usergroups' => $usergroups
+                'usergroups' => $usergroups, 
+                'savedjobs' => $savedjobs, 
+                'appliedjobs' => $appliedjobs
             ];
             
             //Render a response view of the user profile and pass on the array of user profile data
