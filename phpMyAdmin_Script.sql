@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Mar 04, 2019 at 11:51 AM
+-- Generation Time: Mar 20, 2019 at 11:38 AM
 -- Server version: 5.7.23
 -- PHP Version: 7.2.10
 
@@ -71,7 +71,7 @@ INSERT INTO `GROUPS` (`ID`, `GROUP_NAME`, `DESCRIPTION`) VALUES
 (1, 'Coders', 'Wow you code!!!!!!!'),
 (3, 'Lopes Up', 'Went to GCU!'),
 (4, 'DBAZ', 'You work at Dutch Bros in Arizona'),
-(6, 'Something', 'Some group about something');
+(7, 'Disney', 'You love Disney!!!!');
 
 -- --------------------------------------------------------
 
@@ -85,7 +85,7 @@ CREATE TABLE `JOB_POSTINGS` (
   `COMPANY` varchar(45) DEFAULT NULL,
   `PAY` varchar(45) DEFAULT NULL,
   `DESCRIPTION` text,
-  `ADDRESSES_ID` int(11) NOT NULL
+  `ADDRESSES_ID` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -94,7 +94,11 @@ CREATE TABLE `JOB_POSTINGS` (
 
 INSERT INTO `JOB_POSTINGS` (`ID`, `NAME`, `COMPANY`, `PAY`, `DESCRIPTION`, `ADDRESSES_ID`) VALUES
 (1, 'Barista', 'Ducth Bros', '$11/hr', 'Make coffee', 0),
-(8, 'Cashier', 'Target', '$11/hr', 'Ring people up', 0);
+(8, 'Cashier', 'Target', '$11/hr', 'Must have basic math skills and experience in customer service', 0),
+(9, 'Performer', 'Disneyland', '$15/hr', 'Must be able to sing and dance', NULL),
+(10, 'Programmer', 'Soundcloud', '$15/hr', 'Must be able to code in PHP, C#, or Java', NULL),
+(11, 'Programmer', 'Flo', '$14/hr', 'Must be able to code in PHP, C#, or Java', NULL),
+(12, 'Something', 'Something', '$11/hr', 'Something', NULL);
 
 -- --------------------------------------------------------
 
@@ -138,7 +142,8 @@ CREATE TABLE `SKILLS` (
 
 INSERT INTO `SKILLS` (`ID`, `SKILLS_NAME`, `USERS_ID`) VALUES
 (3, 'Sing', 1),
-(4, 'Coding', 1);
+(4, 'Coding', 1),
+(5, 'Something', 1);
 
 -- --------------------------------------------------------
 
@@ -166,7 +171,8 @@ INSERT INTO `USERS` (`ID`, `FIRSTNAME`, `LASTNAME`, `EMAIL`, `USERNAME`, `PASSWO
 (2, 'Mickey', 'Mouse', 'Mickey@disney.com', 'Mickey', 'mickey101', 0, 0),
 (15, 'Minnie', 'Mouse', 'minnie@disney.com', 'Minnie', 'minnie', 0, 0),
 (16, 'Finn', 'theHuman', 'finn@adventuretime.com', 'Finn', 'mathematical', 0, 0),
-(17, 'Donald', 'Duck', 'donald@duck.com', 'Donald', 'duck', 0, 0);
+(17, 'Donald', 'Duck', 'donald@duck.com', 'Donald', 'duck', 0, 0),
+(18, 'Chael', 'Navarro', 'chael@yahoo.com', 'chael', 'chael', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -197,11 +203,19 @@ INSERT INTO `USERS_GROUPS` (`ID`, `USERS_ID`, `GROUPS_ID`) VALUES
 
 CREATE TABLE `USERS_JOB_POSTINGS` (
   `ID` int(11) NOT NULL,
-  `SAVE` tinyint(4) DEFAULT NULL,
-  `APPLY` tinyint(4) DEFAULT NULL,
+  `SAVE` int(11) DEFAULT NULL,
+  `APPLY` int(11) DEFAULT NULL,
   `USERS_ID` int(11) NOT NULL,
   `JOB_POSTINGS_ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `USERS_JOB_POSTINGS`
+--
+
+INSERT INTO `USERS_JOB_POSTINGS` (`ID`, `SAVE`, `APPLY`, `USERS_ID`, `JOB_POSTINGS_ID`) VALUES
+(4, 1, NULL, 1, 9),
+(5, NULL, 1, 1, 12);
 
 -- --------------------------------------------------------
 
@@ -322,13 +336,13 @@ ALTER TABLE `EDUCATION`
 -- AUTO_INCREMENT for table `GROUPS`
 --
 ALTER TABLE `GROUPS`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `JOB_POSTINGS`
 --
 ALTER TABLE `JOB_POSTINGS`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `PERSONAL_INFORMATION`
@@ -340,25 +354,25 @@ ALTER TABLE `PERSONAL_INFORMATION`
 -- AUTO_INCREMENT for table `SKILLS`
 --
 ALTER TABLE `SKILLS`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `USERS`
 --
 ALTER TABLE `USERS`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `USERS_GROUPS`
 --
 ALTER TABLE `USERS_GROUPS`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `USERS_JOB_POSTINGS`
 --
 ALTER TABLE `USERS_JOB_POSTINGS`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `WORK_EXPERIENCE`
