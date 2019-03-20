@@ -176,40 +176,45 @@ class JobPostingsDataService{
                 while ($skill = $skill_stmt->fetch(PDO::FETCH_ASSOC)){
                     array_push($keywords_arr, $skill);
                 }
-            }
-                      
-            //compare the user data to each job posting 
-            $query = "SELECT * FROM `JOB_POSTINGS` WHERE `NAME` LIKE '%" . $keywords_arr[0]['SKILLS_NAME'] . "%' OR `DESCRIPTION` LIKE '%".$keywords_arr[0]['SKILLS_NAME']."%'";
-            
-            for($i = 1; $i < count($keywords_arr); $i++) {
-                if(!empty($keywords_arr[$i])) {
-                    $query .= " OR `NAME` LIKE '%".$keywords_arr[$i]['SKILLS_NAME']."%' OR `DESCRIPTION` LIKE '%".$keywords_arr[$i]['SKILLS_NAME']."%'";
+                
+                //create a new query
+                $query = "SELECT * FROM `JOB_POSTINGS` WHERE `NAME` LIKE '%" . $keywords_arr[0]['SKILLS_NAME'] . "%' OR `DESCRIPTION` LIKE '%".$keywords_arr[0]['SKILLS_NAME']."%'";
+                
+                //update the query for every new keyword
+                for($i = 1; $i < count($keywords_arr); $i++) {
+                    if(!empty($keywords_arr[$i])) {
+                        $query .= " OR `NAME` LIKE '%".$keywords_arr[$i]['SKILLS_NAME']."%' OR `DESCRIPTION` LIKE '%".$keywords_arr[$i]['SKILLS_NAME']."%'";
+                    }
                 }
-            }
-            
-            $job_stmt = $this->conn->prepare($query);
-            
-            $job_stmt->execute();
-            
-            //check is any row was returned
-            if($job_stmt->rowCount() == 0){
-                Log::info("Exiting JobPostingsDataService.readMatches() with returning null");
+                
+                $job_stmt = $this->conn->prepare($query);
+                
+                $job_stmt->execute();
+                
+                //check is any row was returned
+                if($job_stmt->rowCount() == 0){
+                    Log::info("Exiting JobPostingsDataService.readMatches() with returning null");
+                    return null;
+                }
+                else{
+                    //create an jobs array
+                    $jobs_array = array();
+                    
+                    //loop to get all the user data to put into the array
+                    while ($jobs = $job_stmt->fetch(PDO::FETCH_ASSOC)){
+                        
+                        array_push($jobs_array, $jobs);
+                        
+                    }
+                    
+                    Log::info("Exiting JobPostingsDataService.readMatches() with an array of users");
+                    return $jobs_array;
+                }
+            } else { 
                 return null;
             }
-            else{
-                //create an jobs array
-                $jobs_array = array();
-                
-                //loop to get all the user data to put into the array
-                while ($jobs = $job_stmt->fetch(PDO::FETCH_ASSOC)){
-                    
-                    array_push($jobs_array, $jobs);
-                    
-                }
-                
-                Log::info("Exiting JobPostingsDataService.readMatches() with an array of users");
-                return $jobs_array;
-            }
+                      
+            
         }
         catch (PDOException $e){
             Log::error("Exception: ", array("message" => $e->getMessage()));
