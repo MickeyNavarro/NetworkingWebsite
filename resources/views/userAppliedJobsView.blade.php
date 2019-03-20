@@ -17,7 +17,7 @@
     	<tbody>
      		@for ($x = 0; $x < count($appliedjobs); $x++) 
      		<tr>
-     		<td>{{$appliedjobs[$x]['NAME]}}</td>
+     		<td>{{$appliedjobs[$x]['NAME']}}</td>
      		<td>{{$appliedjobs[$x]['COMPANY']}}</td>
      		<td>{{$appliedjobs[$x]['PAY']}}</td>
      		<td>{{$appliedjobs[$x]['DESCRIPTION']}}</td>
