@@ -262,3 +262,9 @@ Route::get('/groupView', 'UsersGroupsController@readByGroupId');
     
 //-------------------------------------------------------------------------------------
 
+//RESOURCE ROUTES
+
+Route::resource('/user', 'UserRestController');
+
+Route::resource('/job', 'JobPostingRestController');
+
