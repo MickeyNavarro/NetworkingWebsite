@@ -6,8 +6,11 @@
 //The controller that handles any actions relating to job posting(s)
 namespace App\Http\Controllers;
 
+use Http\Client\Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\Services\BusinessServices\JobPostingsBusinessService;
+use App\Models\DTO;
 
 class JobPostingRestController extends Controller
 {
@@ -26,7 +29,31 @@ class JobPostingRestController extends Controller
             //Create a new business service
             $jbs = new JobPostingsBusinessService();
             
-            //Use the business service object to show all matched jobs in the database
+            //Use the business service object to show all the jobs in the database
+            $jobs = $jbs->readAll(); 
+            
+            
+            if ($jobs != null) { 
+                //create a DTO
+                $dto = new DTO(0, "OK", $jobs);
+                
+                //serialie the DTO to JSON
+                $json = json_encode($jobs);
+            } 
+            else { 
+                //create a DTO
+                $dto = new DTO(-1, "Jobs Not Found", "");
+                
+                //serialie the DTO to JSON
+                $json = json_encode($dto);
+            }
+            
+            //retun JSON back to caller
+            return $json; 
+            
+            
+            //ALLOWS THE IMPLEMENTATION OF THE WEB API INTO THE WEBSITE
+            /* //Use the business service object to show all matched jobs in the database
             if($jobs = $jbs->readMatches($id)){
                 
                 //compress all the users into a single array
@@ -47,12 +74,12 @@ class JobPostingRestController extends Controller
             }else{
                 //Render a response View with unsuccessful message
                 return view('unsuccessfulView');
-            }
+            } */
         }
         catch (Exception $e){
             Log::error("Exception ", array("message" => $e->getMessage()));
-            $data = ['errorMsg' => $e->getMessage()];
-            return view('exception')->with($data);
+            $dto = new DTO(-2, $e->getMessage(), "");
+            return json_encode($dto);
         }
     }
 
@@ -100,17 +127,30 @@ class JobPostingRestController extends Controller
                 $data = ['job' => $job];
                 
                 //Render a response View with success message
-                return view('jobView')->with($data);
+                //return view('jobView')->with($data);
+                
+                //create a DTO
+                $dto = new DTO(0, "OK", $data);
                 
             }else{
                 //Render a response view with unsuccessful message
-                return view('unsuccessfulView');
+                //return view('unsuccessfulView');
+                
+                //create a DTO
+                $dto = new DTO(-1, "Job Not Found", "");
+                
             }
+            
+            //serialie the DTO to JSON
+            $json = json_encode($dto);
+            
+            //retun JSON back to caller
+            return $json;
         }
         catch (Exception $e){
             Log::error("Exception ", array("message" => $e->getMessage()));
-            $data = ['errorMsg' => $e->getMessage()];
-            return view('exception')->with($data);
+            $dto = new DTO(-2, $e->getMessage(), "");
+            return json_encode($dto);
         }
     }
 

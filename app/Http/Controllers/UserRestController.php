@@ -16,6 +16,7 @@ use App\Services\BusinessServices\SkillsBusinessService;
 use App\Services\BusinessServices\UserBusinessService;
 use App\Services\BusinessServices\UsersGroupsBusinessService;
 use App\Services\BusinessServices\UsersJobPostingsBusinessService;
+use App\Models\DTO;
 
 class UserRestController extends Controller
 {
@@ -126,19 +127,30 @@ class UserRestController extends Controller
                     'appliedjobs' => $appliedjobs
                 ];
                 
+                //create a DTO
+                $dto = new DTO(0, "OK", $Data);
+                
                 //Render a response view of the user profile and pass on the array of user profile data
-                return view('userProfileView')->with($Data);
+                //return view('userProfileView')->with($Data);
+                
             } else { 
+                //create a DTO
+                $dto = new DTO(-1, "User Not Found or User Unauthorized", "");
+                
                 //Render a response View with unsuccessful message
-                return view('unsuccessfulView');
+                //return view('unsuccessfulView');
             }
             
+            //serialie the DTO to JSON
+            $json = json_encode($dto);
             
+            //retun JSON back to caller
+            return $json;
         }
         catch (Exception $e){
             Log::error("Exception ", array("message" => $e->getMessage()));
-            $data = ['errorMsg' => $e->getMessage()];
-            return view('exception')->with($data);
+            $dto = new DTO(-2, $e->getMessage(), "");
+            return json_encode($dto);
         }
     }
 
