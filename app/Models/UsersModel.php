@@ -8,7 +8,7 @@
 
 namespace App\Models;
 
-class UsersModel
+class UsersModel implements \JsonSerializable
 {
     private $id;
     private $firstName;
@@ -93,9 +93,10 @@ class UsersModel
     {
         return $this->suspend;
     }
-
-    
-
-
+    public function jsonSerialize()
+    {
+        return get_object_vars($this);
+        
+    }
 }
     

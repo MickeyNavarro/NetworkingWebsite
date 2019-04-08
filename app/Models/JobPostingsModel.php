@@ -6,7 +6,7 @@
 //Handles all the information taken from the Job Postings class.
 namespace App\Models;
 
-class JobPostingsModel
+class JobPostingsModel implements \JsonSerializable
 {
     private $id; 
     private $name; 
@@ -62,7 +62,13 @@ class JobPostingsModel
     public function getDescription()
     {
         return $this->description;
-    } 
+    }
+    public function jsonSerialize()
+    {
+        return get_object_vars($this);
+        
+    }
+ 
     
 }
 
