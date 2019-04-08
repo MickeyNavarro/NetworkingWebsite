@@ -62,11 +62,6 @@ class UserRestController extends Controller
     public function show($id)
     {
         try{
-            //get the user id from the session variable
-            $userid = session()->get('userid');
-            
-            //check if the session for user id matches the requested user id 
-            if ($userid == $id) { 
                 //find the personal info data to pass onto the views
                 $pbs = new PersonalInformationBusinessService();
                 
@@ -97,10 +92,6 @@ class UserRestController extends Controller
                 //find the user object by its id
                 $user = $ubs->readByUserId($id);
                 
-                //find the user's first and last name
-                $firstname = $user->getFirstName();
-                $lastname = $user->getLastname();
-                
                 //Create a new business service
                 $ugbs = new UsersGroupsBusinessService();
                 
@@ -114,31 +105,35 @@ class UserRestController extends Controller
                 $savedjobs = $ujbs->readSaved($id);
                 $appliedjobs = $ujbs->readApplied($id);
                 
+                
+            //check if the user was found
+            if ($user != null) { 
+                
+                //find the user's first and last name
+                $firstname = $user->getFirstName();
+                $lastname = $user->getLastname();
+                
                 //compress all the user data into a single array
                 $Data = [
-                    'pi' => $pi,
-                    'edu' => $edu,
-                    'work' => $work,
-                    'skills' => $skills,
-                    'firstname' => $firstname,
-                    'lastname' => $lastname,
-                    'usergroups' => $usergroups,
-                    'savedjobs' => $savedjobs,
-                    'appliedjobs' => $appliedjobs
+                    'First_Name' => $firstname,
+                    'Last_Name' => $lastname,
+                    'Personal_Info' => $pi,
+                    'Education' => $edu,
+                    'Work' => $work,
+                    'Skills' => $skills,
+                    'User_Groups' => $usergroups,
+                    'Saved_Jobs' => $savedjobs,
+                    'Applied_Jobs' => $appliedjobs
                 ];
                 
+                    
                 //create a DTO
                 $dto = new DTO(0, "OK", $Data);
                 
-                //Render a response view of the user profile and pass on the array of user profile data
-                //return view('userProfileView')->with($Data);
-                
             } else { 
                 //create a DTO
-                $dto = new DTO(-1, "User Not Found or User Unauthorized", "");
+                $dto = new DTO(-1, "User Not Found", "");
                 
-                //Render a response View with unsuccessful message
-                //return view('unsuccessfulView');
             }
             
             //serialie the DTO to JSON

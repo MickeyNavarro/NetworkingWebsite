@@ -23,9 +23,6 @@ class JobPostingRestController extends Controller
     public function index()
     {
         try{
-            //get the user id from the session variable
-            $id = session()->get('userid');
-            
             //Create a new business service
             $jbs = new JobPostingsBusinessService();
             
@@ -51,30 +48,6 @@ class JobPostingRestController extends Controller
             //retun JSON back to caller
             return $json; 
             
-            
-            //ALLOWS THE IMPLEMENTATION OF THE WEB API INTO THE WEBSITE
-            /* //Use the business service object to show all matched jobs in the database
-            if($jobs = $jbs->readMatches($id)){
-                
-                //compress all the users into a single array
-                $Data = [ 'jobs' => $jobs ];
-                
-                //Render a response view of the admin page of jobs and pass on the array of jobs
-                return view('jobsView')->with($Data);
-                
-            //Use the business service object to show all the jobs in the database
-            }else if($jobs = $jbs->readAll()){
-                
-                //compress all the users into a single array
-                $Data = [ 'jobs' => $jobs ];
-                
-                //Render a response view of the admin page of jobs and pass on the array of jobs
-                return view('jobsView')->with($Data);
-                
-            }else{
-                //Render a response View with unsuccessful message
-                return view('unsuccessfulView');
-            } */
         }
         catch (Exception $e){
             Log::error("Exception ", array("message" => $e->getMessage()));
@@ -126,15 +99,10 @@ class JobPostingRestController extends Controller
                 //compress the job posting array to be sent to the view
                 $data = ['job' => $job];
                 
-                //Render a response View with success message
-                //return view('jobView')->with($data);
-                
                 //create a DTO
                 $dto = new DTO(0, "OK", $data);
                 
             }else{
-                //Render a response view with unsuccessful message
-                //return view('unsuccessfulView');
                 
                 //create a DTO
                 $dto = new DTO(-1, "Job Not Found", "");
