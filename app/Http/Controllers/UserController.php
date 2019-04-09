@@ -11,14 +11,22 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 use App\Services\BusinessServices\UserBusinessService;
+use App\Services\Utility\ILoggerService;
 use App\Models\UsersModel;
+use App\Services\Utility\MyLogger;
 
 class UserController extends Controller
 {
+    public function __construct(MyLogger $logger) {
+        $this->logger = $logger;
+    }
+    
     //accepts a request from the web browser to create a new user
     public function create(Request $request){
         
         try{
+            $this->logger->info("Entering UserController.create()");
+            
             //validate the form data
             $this->validateRegistrationForm($request);
             
@@ -49,6 +57,8 @@ class UserController extends Controller
             throw $e1;
         }
         catch (Exception $e){
+            $this->logger->error("Leaving UserController.create() with Exception Error: ", array("message" => $e->getMessage()));
+            
             Log::error("Exception ", array("message" => $e->getMessage()));
             $data = ['errorMsg' => $e->getMessage()];
             return view('exception')->with($data);
@@ -69,6 +79,8 @@ class UserController extends Controller
     public function readByCredentials(Request $request){
         
         try{
+            $this->logger->info("Entering UserController.readByCredentials()");
+            
             //validate the form data
             $this->validateLoginForm($request);
             
@@ -120,6 +132,9 @@ class UserController extends Controller
             throw $e1;
         }
         catch (Exception $e){
+            
+            $this->logger->error("Leaving UserController.readByCredentials() with Exception Error: ", array("message" => $e->getMessage()));
+            
             Log::error("Exception ", array("message" => $e->getMessage()));
             $data = ['errorMsg' => $e->getMessage()];
             return view('exception')->with($data);
@@ -138,6 +153,9 @@ class UserController extends Controller
     public function readAll(){
         
         try{
+            
+            $this->logger->info("Entering UserController.readAll()");
+            
             //Create a new business service
             $bs = new UserBusinessService(); 
             
@@ -155,6 +173,8 @@ class UserController extends Controller
             }
         }
         catch (Exception $e){
+            $this->logger->error("Leaving UserController.readAll() with Exception Error: ", array("message" => $e->getMessage()));
+            
             Log::error("Exception ", array("message" => $e->getMessage()));
             $data = ['errorMsg' => $e->getMessage()];
             return view('exception')->with($data);
@@ -165,6 +185,9 @@ class UserController extends Controller
     public function suspendById(Request $request){
         
         try{
+            
+            $this->logger->info("Entering UserController.suspendById()");
+            
             //Store the form data
             $id = $request->input('id');
             
@@ -182,6 +205,8 @@ class UserController extends Controller
             }
         }
         catch (Exception $e){
+            $this->logger->error("Leaving UserController.suspendById() with Exception Error: ", array("message" => $e->getMessage()));
+            
             Log::error("Exception ", array("message" => $e->getMessage()));
             $data = ['errorMsg' => $e->getMessage()];
             return view('exception')->with($data);
@@ -192,6 +217,9 @@ class UserController extends Controller
     public function unsuspendById(Request $request){
         
         try{
+            
+            $this->logger->info("Entering UserController.unsuspendById()");
+            
             //Store the form data
             $id = $request->input('id');
             
@@ -209,6 +237,8 @@ class UserController extends Controller
             }
         }
         catch (Exception $e){
+            $this->logger->error("Leaving UserController.unsuspendById() with Exception Error: ", array("message" => $e->getMessage()));
+            
             Log::error("Exception ", array("message" => $e->getMessage()));
             $data = ['errorMsg' => $e->getMessage()];
             return view('exception')->with($data);
@@ -219,6 +249,9 @@ class UserController extends Controller
     public function delete(Request $request){
         
         try{
+            
+            $this->logger->info("Entering UserController.delete()");
+            
             //Store the form data
             $id = $request->input('id');
             
@@ -236,6 +269,8 @@ class UserController extends Controller
             }
         }
         catch (Exception $e){
+            $this->logger->error("Leaving UserController.delete() with Exception Error: ", array("message" => $e->getMessage()));
+            
             Log::error("Exception ", array("message" => $e->getMessage()));
             $data = ['errorMsg' => $e->getMessage()];
             return view('exception')->with($data);
@@ -246,6 +281,9 @@ class UserController extends Controller
     public function logout(Request $request){
         
         try{
+            
+            $this->logger->info("Entering UserController.logout()");
+            
             //destroy the session 
             $request->session()->flush(); 
             $request->session()->save(); 
@@ -261,6 +299,8 @@ class UserController extends Controller
             }
         }
         catch (Exception $e){
+            $this->logger->error("Leaving UserController.logout() with Exception Error: ", array("message" => $e->getMessage()));
+            
             Log::error("Exception ", array("message" => $e->getMessage()));
             $data = ['errorMsg' => $e->getMessage()];
             return view('exception')->with($data);
