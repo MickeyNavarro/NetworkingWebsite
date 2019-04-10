@@ -6,6 +6,7 @@
 //The controller that handles any actions relating to job postings
 namespace App\Http\Controllers;
 
+use Http\Client\Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
@@ -90,6 +91,7 @@ class JobPostingsController extends Controller
     }
     
     //accepts the request from the web browser to show a single existing record of job posting
+    //method is no longer in use due to JobPostingRestController
     public function showIndJob(Request $request){
         
         try{
@@ -152,6 +154,7 @@ class JobPostingsController extends Controller
     }
     
     //simply returns all of the job postings in an array
+    //method is no longer in use due to JobPostingRestController
     public function showAll(){
         
         try{
@@ -265,7 +268,7 @@ class JobPostingsController extends Controller
     //validates the form and its data for consistency
     private function validateForm(Request $request) {
         //setup data validattion rules
-        $rules = ['name' => 'Required | Alpha | Between: 1,30','company' => 'Required | Alpha ', 'pay' => 'Required', 'description' => 'Required'];
+        $rules = ['name' => 'Required | Between: 1,50','company' => 'Required ', 'pay' => 'Required', 'description' => 'Required'];
         
         //run data validation rules
         $this->validate($request, $rules);
