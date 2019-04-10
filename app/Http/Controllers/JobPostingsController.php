@@ -141,6 +141,15 @@ class JobPostingsController extends Controller
                 //Render a response view of the admin page of jobs and pass on the array of jobs
                 return view('adminPageOfJobsView')->with($Data);
                 
+            }else{
+                //create the error message
+                $errorMessage = "Sorry, but there were no jobs found!"; 
+                
+                //send the error message 
+                $Data = ['errorMessage' => $errorMessage]; 
+                
+                //Render a response View with unsuccessful message
+                return view('unsuccessfulView')->with($Data);
             }
         }
         catch (Exception $e){
