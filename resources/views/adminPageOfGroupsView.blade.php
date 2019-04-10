@@ -10,6 +10,7 @@
 @section('title', 'Groups Admin Page')
   
 @section('content')
+@if (session()->get('role') == 1)
    
     <h3 class = "heading1">List of Groups</h3>
     <hr> 
@@ -49,5 +50,7 @@ $(document).ready( function () {
 } );
 </script>
             	
-
+@else 
+<h4>Sorry, you must be an Admin to view this page!</h4>
+@endif 
 @endsection

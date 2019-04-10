@@ -11,6 +11,8 @@
   
 @section('content')
 
+@if (session()->get('role') == 1)
+
     <h3 class = "heading1">List of Users</h3>
     <hr>   
     @if ($users != null)
@@ -53,6 +55,11 @@
 	@else 
 	<h4>Sorry, there are no users to show!</h4>
 	@endif
+	
+@else 
+<h4>Sorry, you must be an Admin to view this page!</h4>
+@endif 
+
 <script type="text/javascript">
 $(document).ready( function () {
     $('#users').DataTable();

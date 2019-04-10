@@ -9,6 +9,7 @@
 @section('title', 'Add Job Posting Page')
   
 @section('content')
+@if (session()->get('role') == 1)
 
     <form action = "addedJobPostingsView" method = "POST">
     	<input type = "hidden" name = "_token" value = "<?php  echo csrf_token()?>">
@@ -40,5 +41,9 @@
 			{{$message}} <br/> 
 		@endforeach 
 	@endif
+	
+@else 
+<h4>Sorry, you must be an Admin to view this page!</h4>
+@endif 
 @endsection
         	
