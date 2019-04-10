@@ -142,8 +142,14 @@ class JobPostingsController extends Controller
                 return view('adminPageOfJobsView')->with($Data);
                 
             }else{
+                //create the error message
+                $errorMessage = "Sorry, but there were no jobs found!"; 
+                
+                //send the error message 
+                $Data = ['errorMessage' => $errorMessage]; 
+                
                 //Render a response View with unsuccessful message
-                return view('unsuccessfulView');
+                return view('unsuccessfulView')->with($Data);
             }
         }
         catch (Exception $e){
@@ -154,7 +160,6 @@ class JobPostingsController extends Controller
     }
     
     //simply returns all of the job postings in an array
-    //method is no longer in use due to JobPostingRestController
     public function showAll(){
         
         try{
@@ -183,8 +188,14 @@ class JobPostingsController extends Controller
                 return view('jobsView')->with($Data);
             
             }else{
+                //create the error message
+                $errorMessage = "Sorry, but there were no jobs found!";
+                
+                //send the error message
+                $Data = ['errorMessage' => $errorMessage];
+                
                 //Render a response View with unsuccessful message
-                return view('unsuccessfulView');
+                return view('unsuccessfulView')->with($Data);
             }
         }
         catch (Exception $e){
