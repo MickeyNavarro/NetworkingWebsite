@@ -11,6 +11,6 @@
   
 @section('content')
 <h3 class = "heading1">Error Page</h3>
-<h4>$errorMessage</h4>
+<h4>{{$errorMessage}}</h4>
 
 @endsection
