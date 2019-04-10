@@ -69,7 +69,7 @@ class UserController extends Controller
     //validates the form and its data for consistency 
     private function validateRegistrationForm(Request $request) {
         //setup data validattion rules
-        $rules = ['firstname' => 'Required | Between: 1,20| alpha ','lastname' => 'Required | Between: 1,20| alpha_dash | regex:/^[\pL\s\-]+$/u', 'email' => 'Required | E-mail', 'username' => 'Required | Between: 1,20| alpha_dash','password' => 'Required | Between: 4,20'];
+        $rules = ['firstname' => 'Required | Between: 1,20| alpha ','lastname' => 'Required | Between: 1,20| alpha_dash', 'email' => 'Required | E-mail', 'username' => 'Required | Between: 1,20| alpha_dash','password' => 'Required | Between: 4,20'];
         
         //run data validation rules
         $this->validate($request, $rules);
@@ -143,7 +143,7 @@ class UserController extends Controller
     
     private function validateLoginForm(Request $request) {
         //setup data validattion rules
-        $rules = ['username' => 'Required | Between: 1,20| Alpha','password' => 'Required | Between: 4,20'];
+        $rules = ['username' => 'Required | Between: 1,20| alpha_dash','password' => 'Required | Between: 4,20'];
         
         //run data validation rules
         $this->validate($request, $rules);
