@@ -145,5 +145,7 @@ return [
     */
 
     'attributes' => [],
+    "alpha_spaces" => "The :attribute may only contain letters and spaces.",
+    "alpha_spaces_dashes" => "The :attribute may only contain letters, spaces, and dashes.",
 
 ];
