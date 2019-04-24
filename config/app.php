@@ -173,6 +173,9 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        
+        //add your new provider
+        App\Providers\LoggingServiceProvider::class,
 
     ],
 
