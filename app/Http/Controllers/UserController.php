@@ -13,11 +13,10 @@ use Illuminate\Validation\ValidationException;
 use App\Services\BusinessServices\UserBusinessService;
 use App\Services\Utility\ILoggerService;
 use App\Models\UsersModel;
-use App\Services\Utility\MyLogger;
 
 class UserController extends Controller
 {
-    public function __construct(MyLogger $logger) {
+    public function __construct(ILoggerService $logger) {
         $this->logger = $logger;
     }
     
