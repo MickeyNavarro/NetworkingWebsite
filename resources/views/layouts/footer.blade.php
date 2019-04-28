@@ -1,3 +1,3 @@
 <div class = "footer">   
-	© 2019 Copyright: Networking.com
+	© 2019 Created by Mickey Navarro
 </div>

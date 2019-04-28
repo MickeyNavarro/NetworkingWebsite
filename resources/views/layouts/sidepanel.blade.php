@@ -68,7 +68,6 @@
             @include('layouts.footer')
 </div>
 
-<button class="openbtn" style = "font-family: 'Fjalla One', sans-serif;" onclick="openNav()">&#9776; Menu</button> 
 
 
 <script>
