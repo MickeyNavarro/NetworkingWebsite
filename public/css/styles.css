@@ -26,11 +26,13 @@ hr {
 }
 
 a {
-    color: #a85a3e;   	
+    color: #ffd400;   	
 }
 
 h1{
 	font-size: 35px;
+	color: white; 
+	
 }
 
 label{
@@ -41,7 +43,7 @@ label{
 /* All forms */
 .form{
     background-color: #e1e8ea; 
-    color: #474d52; 
+    color: #111; 
     width: 500px;  
     margin: auto; 
     padding: 15px; 
@@ -62,16 +64,27 @@ input[type=text]:focus, input[type=password]:focus {
 }
 
 ::placeholder {
-    color: #ca6342;
+    color: #ffd400;
     opacity: 0.5;
     font-size: 15px;
 }
 
 /* Form buttons */
 .loginbtn, .registerbtn {
-    background-color: #ca6342;
+    background-color: #ffd400;
     color: white;
     padding: 16px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+    font-size: 15px;
+}
+.btn {
+    background-color: #ffd400;
+    color: white;
+    padding: 10px 10px;
     margin: 8px 0;
     border: none;
     cursor: pointer;
@@ -91,18 +104,14 @@ input[type=text]:focus, input[type=password]:focus {
 }
 
 /* Navbar */
-.navbar{	
-	background-color:  #626b71 !important;
-	height: 100px;
+navbar navbar-inverse{	
+	color: #111;
+	height: 70px;
 	z-index: 1;
 	position: fixed; /* Set the navbar to fixed position */
   	top: 0; /* Position the navbar at the top of the page */
   	width: 100%; /* Full width */
   	margin-bottom: 50px; 	
-}
-
-.navbar-light .navbar-brand {
-    color: #e1e8ea;
 }
 
 /* Footer */
@@ -189,7 +198,7 @@ input[type=text]:focus, input[type=password]:focus {
 
 /* Add user information form */
 .add-information-form{
-	background-color: #e1e8ea; 
+	background-color: #ffd400; 
     color: #474d52; 
     width: 700px; 
     margin: auto; 
@@ -200,7 +209,7 @@ input[type=text]:focus, input[type=password]:focus {
 }
 
 .submit-info-button{
-	background-color: #ca6342;
+	background-color: #ffd400;
     color: white;
     padding: 16px 20px;
     margin: 8px 0;
@@ -275,4 +284,20 @@ input[type=text]:focus, input[type=password]:focus {
 
 .openbtn:hover {
   background-color: #444;
+}
+
+.top {
+    position: fixed;
+    left:0; 
+    right:0;
+    height: 70px;
+    background-color: #111;
+}
+
+.main {
+    position: absolute;
+    left:0; 
+    top:90px; 
+    right:0; 
+    bottom:0;
 }
