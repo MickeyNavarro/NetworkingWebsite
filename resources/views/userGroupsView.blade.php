@@ -18,7 +18,7 @@
      		@for ($x = 0; $x < count($usergroups); $x++) 
      		<tr>
      		<td>{{$usergroups[$x]['GROUP_NAME']}}</td>
-     		<td><form action = 'leaveGroupView' method = 'GET'><input type = 'hidden' name = 'id' value = {{$usergroups[$x]['ID']}}><input type = 'submit' value = 'Leave'></form> </td>
+     		<td><form action = 'leaveGroupView' method = 'GET'><input type = 'hidden' name = 'id' value = {{$usergroups[$x]['ID']}}><button type="submit" class="btn">Leave</button></form> </td>
      		
      		</tr>
      		@endfor 
