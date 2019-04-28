@@ -18,18 +18,28 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">    
         <!-- My Stylesheet -->
-        <link rel="stylesheet" type="text/css" href="/public/css/styles.css" />    
+        <link rel="stylesheet" type="text/css" href="/NetworkingMilestone/public/css/styles.css" />    
             
 </head> 
   
 <body>
-@include('layouts.sidepanel')
+<div class ="everything">
+    @include('layouts.sidepanel')
 
-<h1>Welcome to Networking.com</h1>
-
-<hr> 
-
-<p>This is some networking site that I will name and fix the CSS on soon.</p>
-
+    <div class = "top">   
+    	<nav class="navbar">
+        	<div>
+			<button class="openbtn" style = "font-family: 'Fjalla One', sans-serif;" onclick="openNav()">&#9776;</button> 
+			
+            </div>
+            <div>
+            	<h1>Welcome to Networking.com</h1>
+            </div>		
+    	</nav>
+    </div>
+    
+    <div class = "main">
+    <p>This is some networking site that I will name soon.</p>
+</div>
 </body>
 </html>
