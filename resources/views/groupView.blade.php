@@ -16,7 +16,7 @@
 <div class = "group-profile">
     <h2 class = "heading1">{{$groupdata->getGroup_name()}}</h2>
    	<h5>Description: {{$groupdata->getDescription()}}</h5>
-   	<td><form action = 'joinGroupView' method = 'GET'><input type = 'hidden' name = 'id' value = {{$groupdata->getId()}}><input type = 'submit' value = 'Join'></form> </td>
+   	<td><form action = 'joinGroupView' method = 'POST'><input type = "hidden" name = "_token" value = "<?php  echo csrf_token()?>"><input type = 'hidden' name = 'id' value = {{$groupdata->getId()}}><button type="submit" class="btn">Join</button></form> </td>
    	
     <hr>
     

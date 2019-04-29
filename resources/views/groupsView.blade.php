@@ -29,8 +29,8 @@
         <tr>
         <td> {{$groups[$x]['GROUP_NAME']}} </td>
         <td> {{$groups[$x]['DESCRIPTION']}} </td>
-        <td><form action = 'joinGroupView' method = 'GET'><input type = 'hidden' name = 'id' value = {{$groups[$x]['ID']}}><input type = 'submit' value = 'Join'></form> </td>
-        <td><form action = 'groupView' method = 'GET'><input type = 'hidden' name = 'id' value = {{$groups[$x]['ID']}}><input type = 'submit' value = 'View Members'></form> </td>
+        <td><form action = 'joinGroupView' method = 'POST'><input type = "hidden" name = "_token" value = "<?php  echo csrf_token()?>"><input type = 'hidden' name = 'id' value = {{$groups[$x]['ID']}}><button type="submit" class="btn">Join</button></form> </td>
+        <td><form action = 'groupView' method = 'POST'><input type = "hidden" name = "_token" value = "<?php  echo csrf_token()?>"><input type = 'hidden' name = 'id' value = {{$groups[$x]['ID']}}><button type="submit" class="btn">View Members</button></form> </td>
         
         </tr>
    

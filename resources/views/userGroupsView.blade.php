@@ -6,7 +6,7 @@
 //displays the groups that the user is apart of 
  -->
    
-<div class = groups>
+
  	<!-- User Groups -->
  	<div id = "user-groups"> 	
  		<h5 class = "heading column">Group(s)</h4>
@@ -28,4 +28,3 @@
         	<p>You are currently not in any groups!</p>
  		@endif 
  	</div>  
- </div>

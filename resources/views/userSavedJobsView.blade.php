@@ -22,7 +22,7 @@
      		<td>{{$savedjobs[$x]['PAY']}}</td>
      		<td>{{$savedjobs[$x]['DESCRIPTION']}}</td>
      		
-     		<td><form action = 'unsaveJobView' method = 'GET'><input type = 'hidden' name = 'id' value = {{$savedjobs[$x]['ID']}}><button type="submit" class="btn">Delete</button></form> </td>
+     		<td><form action = 'unsaveJobView' method = 'POST'><input type = "hidden" name = "_token" value = "<?php  echo csrf_token()?>"><input type = 'hidden' name = 'id' value = {{$savedjobs[$x]['ID']}}><button type="submit" class="btn">Delete</button></form> </td>
      		
      		</tr>
      		@endfor 

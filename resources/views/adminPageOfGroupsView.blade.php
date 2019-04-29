@@ -33,8 +33,8 @@
         <td> {{$groups[$x]['DESCRIPTION']}} </td>
      
         <!-- include buttons for edit and delete a group -->
-        <td><form action = 'updateGroupsView' method = 'GET'><input type = 'hidden' name = 'id' value = {{$groups[$x]['ID']}}><input type = 'submit' value = 'Edit'></form> </td>
-        <td><form action = 'deleteGroupsView' method = 'GET'><input type = 'hidden' name = 'id' value = {{$groups[$x]['ID']}}><input type = 'submit' value = 'Delete'></form> </td>
+        <td><form action = 'updateGroupsView' method = 'POST'><input type = "hidden" name = "_token" value = "<?php  echo csrf_token()?>"><input type = 'hidden' name = 'id' value = {{$groups[$x]['ID']}}><button type="submit" class="btn">Edit</button></form> </td>
+        <td><form action = 'deleteGroupsView' method = 'GET'><input type = 'hidden' name = 'id' value = {{$groups[$x]['ID']}}><button type="submit" class="btn">Delete</button></form> </td>
         
         </tr>
    

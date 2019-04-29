@@ -19,7 +19,7 @@
             
 <p>Description: {{$job->getDescription()}}</p>
 
-<form action = 'saveJobView' method = 'GET'><input type = 'hidden' name = 'id' value = {{$job->getId()}}><input type = 'submit' value = 'Save'></form>
-<form action = 'applyJobView' method = 'GET'><input type = 'hidden' name = 'id' value = {{$job->getId()}}><input type = 'submit' value = 'Apply'></form>
+<form action = 'saveJobView' method = 'POST'><input type = "hidden" name = "_token" value = "<?php  echo csrf_token()?>"><input type = 'hidden' name = 'id' value = {{$job->getId()}}><button type="submit" class="btn">Save</button></form>
+<form action = 'applyJobView' method = 'POST'><input type = "hidden" name = "_token" value = "<?php  echo csrf_token()?>"><input type = 'hidden' name = 'id' value = {{$job->getId()}}><button type="submit" class="btn">Apply</button></form>
 
 @endsection

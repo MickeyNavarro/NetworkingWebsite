@@ -37,8 +37,8 @@
         <td> {{$jobs[$x]['DESCRIPTION']}} </td>
      
         <!-- include buttons for edit and delete a job posting -->
-        <td><form action = 'updateJobPostingsView' method = 'GET'><input type = 'hidden' name = 'id' value = {{$jobs[$x]['ID']}}><input type = 'submit' value = 'Edit'></form> </td>
-        <td><form action = 'deleteJobPostingsView' method = 'GET'><input type = 'hidden' name = 'id' value = {{$jobs[$x]['ID']}}><input type = 'submit' value = 'Delete'></form> </td>
+        <td><form action = 'updateJobPostingsView' method = 'POST'><input type = "hidden" name = "_token" value = "<?php  echo csrf_token()?>"><input type = 'hidden' name = 'id' value = {{$jobs[$x]['ID']}}><button type="submit" class="btn">Edit</button></form> </td>
+        <td><form action = 'deleteJobPostingsView' method = 'GET'><input type = 'hidden' name = 'id' value = {{$jobs[$x]['ID']}}><button type="submit" class="btn">Delete</button></form> </td>
         
         </tr>
    
