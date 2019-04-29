@@ -58,14 +58,13 @@
             	</div>
         </form>
     </div>
-</div>
-<!-- Output list of errors, if any-->
+    <!-- Output list of errors, if any-->
 	@if($errors->count() != 0)
 		@foreach($errors->all() as $message)
 			{{$message}} <br/> 
 		@endforeach 
 	@endif
-	
+</div>
 </div>	
 </body>
 </html>
