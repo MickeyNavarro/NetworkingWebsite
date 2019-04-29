@@ -33,6 +33,8 @@ class WorkExperienceController extends Controller
     public function create(Request $request){
         
         try{
+            $this->logger->info("Entering WorkExperienceController.create()");
+            
             //validate the form data
             $this->validateForm($request);
             
@@ -73,6 +75,8 @@ class WorkExperienceController extends Controller
             throw $e1;
         }
         catch (Exception $e){
+            $this->logger->error("Leaving WorkExperienceController.create() with Exception Error: ", array("message" => $e->getMessage()));
+            
             Log::error("Exception ", array("message" => $e->getMessage()));
             $data = ['errorMsg' => $e->getMessage()];
             return view('exception')->with($data);
@@ -84,6 +88,8 @@ class WorkExperienceController extends Controller
     public function readByWorkID(Request $request){
         
         try{
+            $this->logger->info("Entering WorkExperienceController.readByWorkID()");
+            
             //Store the form data
             $id = $request->input('id');
             
@@ -110,6 +116,8 @@ class WorkExperienceController extends Controller
             }
         }
         catch (Exception $e){
+            $this->logger->error("Leaving WorkExperienceController.readByWorkID() with Exception Error: ", array("message" => $e->getMessage()));
+            
             Log::error("Exception ", array("message" => $e->getMessage()));
             $data = ['errorMsg' => $e->getMessage()];
             return view('exception')->with($data);
@@ -120,6 +128,8 @@ class WorkExperienceController extends Controller
     public function update(Request $request){
         
         try{
+            $this->logger->info("Entering WorkExperienceController.update()");
+            
             //validate the form data
             $this->validateForm($request);
             
@@ -156,6 +166,8 @@ class WorkExperienceController extends Controller
             throw $e1;
         }
         catch (Exception $e){
+            $this->logger->error("Leaving WorkExperienceController.update() with Exception Error: ", array("message" => $e->getMessage()));
+            
             Log::error("Exception ", array("message" => $e->getMessage()));
             $data = ['errorMsg' => $e->getMessage()];
             return view('exception')->with($data);
@@ -166,6 +178,8 @@ class WorkExperienceController extends Controller
     //accepts the request from the web browser to delete an existing record of work experience
     public function delete(Request $request){
         try{
+            $this->logger->info("Entering WorkExperienceController.delete()");
+            
             //Store the form data
             $id = $request->input('id');
             
@@ -188,6 +202,8 @@ class WorkExperienceController extends Controller
             }
         }
         catch (Exception $e){
+            $this->logger->error("Leaving WorkExperienceController.delete() with Exception Error: ", array("message" => $e->getMessage()));
+            
             Log::error("Exception ", array("message" => $e->getMessage()));
             $data = ['errorMsg' => $e->getMessage()];
             return view('exception')->with($data);

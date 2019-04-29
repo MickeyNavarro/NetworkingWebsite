@@ -32,6 +32,8 @@ class PersonalInformationController
     public function create(Request $request){
         
         try{           
+            $this->logger->info("Entering PersonalInformationController.create()");
+            
             //validate the form data
             $this->validateForm($request);
             
@@ -72,6 +74,8 @@ class PersonalInformationController
             throw $e1;
         }
         catch (Exception $e){
+            $this->logger->error("Leaving PersonalInformationController.create() with Exception Error: ", array("message" => $e->getMessage()));
+            
             Log::error("Exception ", array("message" => $e->getMessage()));
             $data = ['errorMsg' => $e->getMessage()];
             return view('exception')->with($data);
@@ -83,6 +87,8 @@ class PersonalInformationController
     public function readByPersonalInfoID(Request $request){
         
         try{
+            $this->logger->info("Entering PersonalInformationController.readByPersonalInfoID()");
+            
             //Store the form data
             $id = $request->input('id');
             
@@ -109,6 +115,8 @@ class PersonalInformationController
             }
         }
         catch (Exception $e){
+            $this->logger->error("Leaving PersonalInformationController.readByPersonalInfoID() with Exception Error: ", array("message" => $e->getMessage()));
+            
             Log::error("Exception ", array("message" => $e->getMessage()));
             $data = ['errorMsg' => $e->getMessage()];
             return view('exception')->with($data);
@@ -118,6 +126,8 @@ class PersonalInformationController
     //accepts the request from the web browser to update an existing record of personal info
     public function update(Request $request){
         try{ 
+            $this->logger->info("Entering PersonalInformationController.update()");
+            
             //validate the form data
             $this->validateForm($request);
             
@@ -144,6 +154,7 @@ class PersonalInformationController
                 return view('userProfileView')->with($Data);
                 
             }else{
+                
                 //Render a response View with unsuccessful message
                 $errorMessage = "Sorry! Something went wrong with updating this record of personal information.";
                 $Data = [ 'errorMessage' => $errorMessage ];
@@ -154,6 +165,8 @@ class PersonalInformationController
              throw $e1;
          }
         catch (Exception $e){
+            $this->logger->error("Leaving PersonalInformationController.update() with Exception Error: ", array("message" => $e->getMessage()));
+            
             Log::error("Exception ", array("message" => $e->getMessage()));
             $data = ['errorMsg' => $e->getMessage()];
             return view('exception')->with($data);
@@ -163,6 +176,8 @@ class PersonalInformationController
     //accepts the request from the web browser to delete an existing record of personal info
     public function delete(Request $request){
         try{
+            $this->logger->info("Entering PersonalInformationController.delete()");
+            
             //Store the form data
             $id = $request->input('id');
             
@@ -185,6 +200,8 @@ class PersonalInformationController
             }
         }
         catch (Exception $e){
+            $this->logger->error("Leaving PersonalInformationController.delete() with Exception Error: ", array("message" => $e->getMessage()));
+            
             Log::error("Exception ", array("message" => $e->getMessage()));
             $data = ['errorMsg' => $e->getMessage()];
             return view('exception')->with($data);

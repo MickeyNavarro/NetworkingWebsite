@@ -32,6 +32,8 @@ class SkillsController extends Controller
     public function create(Request $request){
         
         try{
+            $this->logger->info("Entering SkillsController.create()");
+            
             //validate the form data
             $this->validateForm($request);
             
@@ -68,6 +70,8 @@ class SkillsController extends Controller
             throw $e1;
         }
         catch (Exception $e){
+            $this->logger->error("Leaving SkillsController.create() with Exception Error: ", array("message" => $e->getMessage()));
+            
             Log::error("Exception ", array("message" => $e->getMessage()));
             $data = ['errorMsg' => $e->getMessage()];
             return view('exception')->with($data);
@@ -79,6 +83,8 @@ class SkillsController extends Controller
     public function readBySkillID(Request $request){
         
         try{
+            $this->logger->info("Entering SkillsController.readBySkillID()");
+            
             //Store the form data
             $id = $request->input('id');
             
@@ -105,6 +111,8 @@ class SkillsController extends Controller
             }
         }
         catch (Exception $e){
+            $this->logger->error("Leaving SkillsController.readBySkillID() with Exception Error: ", array("message" => $e->getMessage()));
+            
             Log::error("Exception ", array("message" => $e->getMessage()));
             $data = ['errorMsg' => $e->getMessage()];
             return view('exception')->with($data);
@@ -115,6 +123,8 @@ class SkillsController extends Controller
     public function update(Request $request){
         
         try{
+            $this->logger->info("Entering SkillsController.update()");
+            
             //validate the form data
             $this->validateForm($request);
             
@@ -147,6 +157,8 @@ class SkillsController extends Controller
             throw $e1;
         }
         catch (Exception $e){
+            $this->logger->error("Leaving SkillsController.update() with Exception Error: ", array("message" => $e->getMessage()));
+            
             Log::error("Exception ", array("message" => $e->getMessage()));
             $data = ['errorMsg' => $e->getMessage()];
             return view('exception')->with($data);
@@ -157,6 +169,8 @@ class SkillsController extends Controller
     //accepts the request from the web browser to delete an existing record of skill
     public function delete(Request $request){
         try{
+            $this->logger->info("Entering SkillsController.delete()");
+            
             //Store the form data
             $id = $request->input('id');
             
@@ -179,6 +193,8 @@ class SkillsController extends Controller
             }
         }
         catch (Exception $e){
+            $this->logger->error("Leaving SkillsController.delete() with Exception Error: ", array("message" => $e->getMessage()));
+            
             Log::error("Exception ", array("message" => $e->getMessage()));
             $data = ['errorMsg' => $e->getMessage()];
             return view('exception')->with($data);

@@ -32,6 +32,8 @@ class GroupsController extends Controller
     public function create(Request $request){
         
         try{
+            $this->logger->info("Entering GroupsController.create()");
+            
             //validate the form data
             $this->validateForm($request);
             
@@ -64,6 +66,8 @@ class GroupsController extends Controller
             throw $e1;
         }
         catch (Exception $e){
+            $this->logger->error("Leaving GroupsController.create() with Exception Error: ", array("message" => $e->getMessage()));
+            
             Log::error("Exception ", array("message" => $e->getMessage()));
             $data = ['errorMsg' => $e->getMessage()];
             return view('exception')->with($data);
@@ -75,6 +79,8 @@ class GroupsController extends Controller
     public function readByGroupId(Request $request){
         
         try{
+            $this->logger->info("Entering GroupsController.readByGroupId()");
+            
             //Store the form data
             $id = $request->input('id');
             
@@ -101,6 +107,8 @@ class GroupsController extends Controller
             }
         }
         catch (Exception $e){
+            $this->logger->error("Leaving GroupsController.readByGroupId() with Exception Error: ", array("message" => $e->getMessage()));
+            
             Log::error("Exception ", array("message" => $e->getMessage()));
             $data = ['errorMsg' => $e->getMessage()];
             return view('exception')->with($data);
@@ -112,6 +120,8 @@ class GroupsController extends Controller
     public function readAll(Request $request){
         
         try{            
+            $this->logger->info("Entering GroupsController.readAll()");
+            
             //Create a new business service
             $gbs = new GroupsBusinessService();
             
@@ -135,6 +145,8 @@ class GroupsController extends Controller
             }
         }
         catch (Exception $e){
+            $this->logger->error("Leaving GroupsController.readAll() with Exception Error: ", array("message" => $e->getMessage()));
+            
             Log::error("Exception ", array("message" => $e->getMessage()));
             $data = ['errorMsg' => $e->getMessage()];
             return view('exception')->with($data);
@@ -146,6 +158,8 @@ class GroupsController extends Controller
     public function userReadAll(Request $request){
         
         try{
+            $this->logger->info("Entering GroupsController.userReadAll()");
+            
             //Create a new business service
             $gbs = new GroupsBusinessService();
             
@@ -169,6 +183,8 @@ class GroupsController extends Controller
             }
         }
         catch (Exception $e){
+            $this->logger->error("Leaving GroupsController.userReadAll() with Exception Error: ", array("message" => $e->getMessage()));
+            
             Log::error("Exception ", array("message" => $e->getMessage()));
             $data = ['errorMsg' => $e->getMessage()];
             return view('exception')->with($data);
@@ -180,6 +196,8 @@ class GroupsController extends Controller
     public function update(Request $request){
         
         try{
+            $this->logger->info("Entering GroupsController.update()");
+            
             //validate the form data
             $this->validateForm($request);
             
@@ -221,6 +239,8 @@ class GroupsController extends Controller
             throw $e1;
         }
         catch (Exception $e){
+            $this->logger->error("Leaving GroupsController.update() with Exception Error: ", array("message" => $e->getMessage()));
+            
             Log::error("Exception ", array("message" => $e->getMessage()));
             $data = ['errorMsg' => $e->getMessage()];
             return view('exception')->with($data);
@@ -231,6 +251,8 @@ class GroupsController extends Controller
     //accepts the request from the web browser to delete an existing record of group
     public function delete(Request $request){
         try{
+            $this->logger->info("Entering GroupsController.delete()");
+            
             //Store the form data
             $id = $request->input('id');
             
@@ -261,6 +283,8 @@ class GroupsController extends Controller
             }
         }
         catch (Exception $e){
+            $this->logger->error("Leaving GroupsController.delete() with Exception Error: ", array("message" => $e->getMessage()));
+            
             Log::error("Exception ", array("message" => $e->getMessage()));
             $data = ['errorMsg' => $e->getMessage()];
             return view('exception')->with($data);

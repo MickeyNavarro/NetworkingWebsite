@@ -25,6 +25,8 @@ class JobPostingsController extends Controller
     public function create(Request $request){
         
         try{
+            $this->logger->info("Entering JobPostingsController.create()");
+            
             //validate the form data
             $this->validateForm($request);
             
@@ -65,6 +67,9 @@ class JobPostingsController extends Controller
             throw $e1;
         }
         catch (Exception $e){
+            
+            $this->logger->error("Leaving JobPostingsController.create() with Exception Error: ", array("message" => $e->getMessage()));
+            
             Log::error("Exception ", array("message" => $e->getMessage()));
             $data = ['errorMsg' => $e->getMessage()];
             return view('exception')->with($data);
@@ -76,6 +81,8 @@ class JobPostingsController extends Controller
     public function readByJobID(Request $request){
         
         try{
+            $this->logger->info("Entering JobPostingsController.readByJobID()");
+            
             //Store the form data
             $id = $request->input('id');
             
@@ -102,6 +109,8 @@ class JobPostingsController extends Controller
             }
         }
         catch (Exception $e){
+            $this->logger->error("Leaving JobPostingsController.readByJobID() with Exception Error: ", array("message" => $e->getMessage()));
+            
             Log::error("Exception ", array("message" => $e->getMessage()));
             $data = ['errorMsg' => $e->getMessage()];
             return view('exception')->with($data);
@@ -113,6 +122,8 @@ class JobPostingsController extends Controller
     public function showIndJob(Request $request){
         
         try{
+            $this->logger->info("Entering JobPostingsController.showIndJob()");
+            
             //Store the form data
             $id = $request->input('id');
             
@@ -139,6 +150,8 @@ class JobPostingsController extends Controller
             }
         }
         catch (Exception $e){
+            $this->logger->error("Leaving JobPostingsController.showIndJob() with Exception Error: ", array("message" => $e->getMessage()));
+            
             Log::error("Exception ", array("message" => $e->getMessage()));
             $data = ['errorMsg' => $e->getMessage()];
             return view('exception')->with($data);
@@ -149,6 +162,8 @@ class JobPostingsController extends Controller
     public function readAll(){
         
         try{
+            $this->logger->info("Entering JobPostingsController.readAll()");
+            
             //Create a new business service
             $jbs = new JobPostingsBusinessService();
             
@@ -173,6 +188,8 @@ class JobPostingsController extends Controller
             }
         }
         catch (Exception $e){
+            $this->logger->error("Leaving JobPostingsController.readAll() with Exception Error: ", array("message" => $e->getMessage()));
+            
             Log::error("Exception ", array("message" => $e->getMessage()));
             $data = ['errorMsg' => $e->getMessage()];
             return view('exception')->with($data);
@@ -183,6 +200,8 @@ class JobPostingsController extends Controller
     public function showAll(){
         
         try{
+            $this->logger->info("Entering JobPostingsController.showAll()");
+            
             //get the user id from the session variable
             $id = session()->get('userid');
             
@@ -219,6 +238,8 @@ class JobPostingsController extends Controller
             }
         }
         catch (Exception $e){
+            $this->logger->error("Leaving JobPostingsController.showAll() with Exception Error: ", array("message" => $e->getMessage()));
+            
             Log::error("Exception ", array("message" => $e->getMessage()));
             $data = ['errorMsg' => $e->getMessage()];
             return view('exception')->with($data);
@@ -229,6 +250,8 @@ class JobPostingsController extends Controller
     public function update(Request $request){
         
         try{
+            $this->logger->info("Entering JobPostingsController.update()");
+            
             //validate the form data
             $this->validateForm($request);
             
@@ -270,6 +293,8 @@ class JobPostingsController extends Controller
             throw $e1;
         }
         catch (Exception $e){
+            $this->logger->error("Leaving JobPostingsController.update() with Exception Error: ", array("message" => $e->getMessage()));
+            
             Log::error("Exception ", array("message" => $e->getMessage()));
             $data = ['errorMsg' => $e->getMessage()];
             return view('exception')->with($data);
@@ -280,6 +305,8 @@ class JobPostingsController extends Controller
     //accepts the request from the web browser to delete an existing record of job posting
     public function delete(Request $request){
         try{
+            $this->logger->info("Entering JobPostingsController.delete()");
+            
             //Store the form data
             $id = $request->input('id');
             
@@ -307,6 +334,8 @@ class JobPostingsController extends Controller
             }
         }
         catch (Exception $e){
+            $this->logger->error("Leaving JobPostingsController.delete() with Exception Error: ", array("message" => $e->getMessage()));
+            
             Log::error("Exception ", array("message" => $e->getMessage()));
             $data = ['errorMsg' => $e->getMessage()];
             return view('exception')->with($data);

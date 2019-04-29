@@ -30,6 +30,8 @@ class UsersJobPostingsController extends Controller
     public function save(Request $request){
         
         try{            
+            $this->logger->info("Entering UsersJobPostingsController.save()");
+            
             //Store the form data
             $job_postings_id = $request->input('id');
             $save = 1; 
@@ -64,6 +66,8 @@ class UsersJobPostingsController extends Controller
             throw $e1;
         }
         catch (Exception $e){
+            $this->logger->error("Leaving UsersJobPostingsController.save() with Exception Error: ", array("message" => $e->getMessage()));
+            
             Log::error("Exception ", array("message" => $e->getMessage()));
             $data = ['errorMsg' => $e->getMessage()];
             return view('exception')->with($data);
@@ -74,7 +78,9 @@ class UsersJobPostingsController extends Controller
     //accepts the request from the web browser to create a new record of user job postings by applying for a job post
     public function apply(Request $request){
         
-        try{            
+        try{        
+            $this->logger->info("Entering UsersJobPostingsController.apply()");
+            
             //Store the form data
             $job_postings_id = $request->input('id');
             $apply = 1; 
@@ -109,6 +115,8 @@ class UsersJobPostingsController extends Controller
             throw $e1;
         }
         catch (Exception $e){
+            $this->logger->error("Leaving UsersJobPostingsController.apply() with Exception Error: ", array("message" => $e->getMessage()));
+            
             Log::error("Exception ", array("message" => $e->getMessage()));
             $data = ['errorMsg' => $e->getMessage()];
             return view('exception')->with($data);
@@ -120,6 +128,8 @@ class UsersJobPostingsController extends Controller
     public function showSaved(Request $request){
         
         try{
+            $this->logger->info("Entering UsersJobPostingsController.showSaved()");
+            
             //Store the form data
             $id = $request->input('id');
             
@@ -146,6 +156,8 @@ class UsersJobPostingsController extends Controller
             }
         }
         catch (Exception $e){
+            $this->logger->error("Leaving UsersJobPostingsController.showSaved() with Exception Error: ", array("message" => $e->getMessage()));
+            
             Log::error("Exception ", array("message" => $e->getMessage()));
             $data = ['errorMsg' => $e->getMessage()];
             return view('exception')->with($data);
@@ -157,6 +169,8 @@ class UsersJobPostingsController extends Controller
     public function showApplied(Request $request){
         
         try{
+            $this->logger->info("Entering UsersJobPostingsController.showApplied()");
+            
             //Store the form data
             $id = $request->input('id');
             
@@ -183,6 +197,8 @@ class UsersJobPostingsController extends Controller
             }
         }
         catch (Exception $e){
+            $this->logger->error("Leaving UsersJobPostingsController.showApplied() with Exception Error: ", array("message" => $e->getMessage()));
+            
             Log::error("Exception ", array("message" => $e->getMessage()));
             $data = ['errorMsg' => $e->getMessage()];
             return view('exception')->with($data);
@@ -192,6 +208,8 @@ class UsersJobPostingsController extends Controller
     //accepts the request from the web browser to delete an existing record of user job postings
     public function unsave(Request $request){
         try{
+            $this->logger->info("Entering UsersJobPostingsController.unsave()");
+            
             //Store the form data
             $id = $request->input('id');
             
@@ -214,6 +232,8 @@ class UsersJobPostingsController extends Controller
             }
         }
         catch (Exception $e){
+            $this->logger->error("Leaving UsersJobPostingsController.unsave() with Exception Error: ", array("message" => $e->getMessage()));
+            
             Log::error("Exception ", array("message" => $e->getMessage()));
             $data = ['errorMsg' => $e->getMessage()];
             return view('exception')->with($data);

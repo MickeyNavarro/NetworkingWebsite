@@ -32,6 +32,7 @@ class UsersGroupsController extends Controller
     public function create(Request $request){
         
         try{
+            $this->logger->info("Entering UsersGroupsController.create()");
             
             //Store the form data
             $groups_id = $request->input('id');
@@ -67,6 +68,8 @@ class UsersGroupsController extends Controller
             throw $e1;
         }
         catch (Exception $e){
+            $this->logger->error("Leaving UsersGroupsController.create() with Exception Error: ", array("message" => $e->getMessage()));
+            
             Log::error("Exception ", array("message" => $e->getMessage()));
             $data = ['errorMsg' => $e->getMessage()];
             return view('exception')->with($data);
@@ -78,6 +81,8 @@ class UsersGroupsController extends Controller
     public function readByGroupId(Request $request){
         
         try{
+            $this->logger->info("Entering UsersGroupsController.readByGroupId()");
+            
             //Store the form data
             $groups_id = $request->input('id');
             
@@ -107,6 +112,8 @@ class UsersGroupsController extends Controller
             }
         }
         catch (Exception $e){
+            $this->logger->error("Leaving UsersGroupsController.readByGroupId() with Exception Error: ", array("message" => $e->getMessage()));
+            
             Log::error("Exception ", array("message" => $e->getMessage()));
             $data = ['errorMsg' => $e->getMessage()];
             return view('exception')->with($data);
@@ -118,6 +125,8 @@ class UsersGroupsController extends Controller
     public function readByUserId(Request $request){
         
         try{
+            $this->logger->info("Entering UsersGroupsController.readByUserId()");
+            
             //check if the userid session variable has been set
             if ($request->session()->has('userid')) {
                 $userid = $request->session()->get('userid');
@@ -146,6 +155,8 @@ class UsersGroupsController extends Controller
             }
         }
         catch (Exception $e){
+            $this->logger->error("Leaving UsersGroupsController.readByUserId() with Exception Error: ", array("message" => $e->getMessage()));
+            
             Log::error("Exception ", array("message" => $e->getMessage()));
             $data = ['errorMsg' => $e->getMessage()];
             return view('exception')->with($data);
@@ -156,6 +167,8 @@ class UsersGroupsController extends Controller
     //accepts the request from the web browser to delete an existing record of a user within a group (basically the user leaves the group)
     public function delete(Request $request){
         try{
+            $this->logger->info("Entering UsersGroupsController.delete()");
+            
             //Store the form data
             $id = $request->input('id');
             
@@ -178,6 +191,8 @@ class UsersGroupsController extends Controller
             }
         }
         catch (Exception $e){
+            $this->logger->error("Leaving UsersGroupsController.delete() with Exception Error: ", array("message" => $e->getMessage()));
+            
             Log::error("Exception ", array("message" => $e->getMessage()));
             $data = ['errorMsg' => $e->getMessage()];
             return view('exception')->with($data);
