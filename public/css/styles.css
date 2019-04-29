@@ -122,26 +122,45 @@ navbar navbar-inverse{
 
 /* User profile page */
 .user-profile {
-    background-color: #e1e8ea; 
     color: #474d52; 
     margin: auto; 
-    padding: 30px;   
+    padding: 30px;  
   	overflow: auto;
-  	position: relative;
+  	position: absolute;
   	display: inline-block;
-  	length:100px;
+  	height:700px;
   	width: 800px; 
+  	float:left
 }
 
-.groups {
+.user-groups  {
     background-color: #e1e8ea; 
     color: #474d52; 
-    margin: auto; 
+    margin: 20px; 
+    margin-inline-start: 850px;
     padding: 20px;   
   	overflow: auto;
-  	position: relative;
+  	position: absolute;
   	display: inline-block;
-  	length:100px; 
+  	height:300px;
+  	width: 600px; 
+  	float: right;  
+  	
+}
+
+.user-jobs {
+    background-color: #e1e8ea; 
+    color: #474d52; 
+    margin: 20px; 
+    margin-inline-start: 850px;
+    margin-top: 350px;
+    padding: 20px;   
+  	overflow: auto;
+  	position: absolute;
+  	display: inline-block;
+  	height:300px;
+  	width: 600px; 
+  	float: right;  
   	
 }
 
@@ -153,7 +172,7 @@ navbar navbar-inverse{
   	overflow: auto;
   	position: relative;
   	display: inline-block;
-  	length:90%; 
+  	height:90%; 
 }
 
 #user-photo{
