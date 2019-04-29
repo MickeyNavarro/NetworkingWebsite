@@ -68,7 +68,7 @@ Route::get('/addPersonalInformation', function(){
 Route::post('/addPersonalInformationView', 'PersonalInformationController@create');
 
 //This route is mapped to the '/updatePersonalInformationView' URI and will read the personal info data
-Route::get('/updatePersonalInformationView', 'PersonalInformationController@readByPersonalInfoID');
+Route::post('/updatePersonalInformationView', 'PersonalInformationController@readByPersonalInfoID');
 
 //The route is mapped to the '/updatedPersonalInformationView' and will update the personal info data
 Route::post('/updatedPersonalInformationView', 'PersonalInformationController@update');
@@ -92,7 +92,7 @@ Route::get('/addEducationView', function(){
 Route::post('/addedEducationView', 'EducationController@create'); 
 
 //This route is mapped to the '/updateEducationView' URI and will read the education data
-Route::get('/updateEducationView', 'EducationController@readByEduID');
+Route::post('/updateEducationView', 'EducationController@readByEduID');
 
  //The route is mapped to the '/updatedEducationView' and will update the education data
 Route::post('/updatedEducationView', 'EducationController@update');
@@ -114,7 +114,7 @@ Route::get('/addWorkExperienceView', function(){
 Route::post('/addedWorkExperienceView', 'WorkExperienceController@create');
 
 //This route is mapped to the '/updateWorkExperienceView' URI and will read the work experience data
-Route::get('/updateWorkExperienceView', 'WorkExperienceController@readByWorkID');
+Route::post('/updateWorkExperienceView', 'WorkExperienceController@readByWorkID');
 
 //The route is mapped to the '/updatedWorkExperienceView' and will update the work experience data
 Route::post('/updatedWorkExperienceView', 'WorkExperienceController@update');
@@ -136,7 +136,7 @@ Route::get('/addSkillsView', function(){
 Route::post('/addedSkillsView', 'SkillsController@create');
     
 //This route is mapped to the '/updateSkillsView' URI and will read the skill data
-Route::get('/updateSkillsView', 'SkillsController@readBySkillID');
+Route::post('/updateSkillsView', 'SkillsController@readBySkillID');
     
 //The route is mapped to the '/updatedSkillsView' and will update the skill data
 Route::post('/updatedSkillsView', 'SkillsController@update');
@@ -153,10 +153,10 @@ Route::get('/deleteSkillsView', 'SkillsController@delete');
 Route::get('/adminPageOfUsersView', 'UserController@readAll');
 
 //The route is mapped to the '/suspendView' and will get the user id from the admin view to suspend them
-Route::get('/suspendView', 'UserController@suspendById');
+Route::post('/suspendView', 'UserController@suspendById');
     
 //The route is mapped to the '/suspendView' and will get the user id from the admin view to unsuspend them
-Route::get('/unsuspendView', 'UserController@unsuspendById');
+Route::post('/unsuspendView', 'UserController@unsuspendById');
     
 //The route is mapped to the '/deleteView' and will get the user id from the admin view to delete them
 Route::get('/deleteView', 'UserController@delete'); 
@@ -166,7 +166,7 @@ Route::get('/deleteView', 'UserController@delete');
 //ROUTES RELATED TO THE JOB POSTINGS (ADMIN INTERACTIONS)
 
 //This route is mapped to the '/jobPostingsView' URI and will display the page for a individual job posting
-Route::get('/jobPostingsView','JobPostingsProfileController@index'); 
+Route::post('/jobPostingsView','JobPostingsProfileController@index'); 
     
 //This route is mapped to the '/adminPageOfJobsView' URI and will display the page that allows the admin to perform admin functions
 Route::get('/adminPageOfJobsView', 'JobPostingsController@readAll');
@@ -181,7 +181,7 @@ Route::get('/addJobPostingsView', function(){
 Route::post('/addedJobPostingsView', 'JobPostingsController@create');
     
 //This route is mapped to the '/updateJobPostingsView' URI and will read the job postings data
-Route::get('/updateJobPostingsView', 'JobPostingsController@readByJobID');
+Route::post('/updateJobPostingsView', 'JobPostingsController@readByJobID');
     
 //The route is mapped to the '/updatedSkillsView' and will update the skill data
 Route::post('/updatedJobPostingsView', 'JobPostingsController@update');
@@ -197,16 +197,16 @@ Route::get('/deleteJobPostingsView', 'JobPostingsController@delete');
 Route::get('/allJobsView','JobPostingsController@showAll');
 
 //The route is mapped to the '/applyJobView' and will allow the user to apply to the job
-Route::get('/applyJobView', 'UsersJobPostingsController@apply');
+Route::post('/applyJobView', 'UsersJobPostingsController@apply');
 
 //The route is mapped to the '/saveJobView' and will allow a user to save a job
-Route::get('/saveJobView', 'UsersJobPostingsController@save');
+Route::post('/saveJobView', 'UsersJobPostingsController@save');
 
 //The route is mapped to the '/saveJobView' and will allow a user to save a job
-Route::get('/unsaveJobView', 'UsersJobPostingsController@unsave');
+Route::post('/unsaveJobView', 'UsersJobPostingsController@unsave');
 
 //The route is mapped to the '/jobView' and will display the group page with all the members
-Route::get('/jobView', 'JobPostingsController@showIndJob');
+Route::post('/jobView', 'JobPostingsController@showIndJob');
 
 //-------------------------------------------------------------------------------------
 
@@ -236,7 +236,7 @@ Route::get('/addGroupsView', function(){
 Route::post('/addedGroupsView', 'GroupsController@create');
     
 //This route is mapped to the '/updateGroupsView' URI and will read the job postings data
-Route::get('/updateGroupsView', 'GroupsController@readByGroupId');
+Route::post('/updateGroupsView', 'GroupsController@readByGroupId');
     
 //The route is mapped to the '/updatedGroupsView' and will update the skill data
 Route::post('/updatedGroupsView', 'GroupsController@update');
@@ -252,13 +252,13 @@ Route::get('/deleteGroupsView', 'GroupsController@delete');
 Route::get('/allGroupsView','GroupsController@userReadAll');
     
 //The route is mapped to the '/joinGroupView' and will add a user to a group
-Route::get('/joinGroupView', 'UsersGroupsController@create');
+Route::post('/joinGroupView', 'UsersGroupsController@create');
     
 //The route is mapped to the '/leaveGroupView' and will delete a user from a group 
 Route::get('/leaveGroupView', 'UsersGroupsController@delete');
 
 //The route is mapped to the '/groupMembersView' and will display the group page with all the members
-Route::get('/groupView', 'UsersGroupsController@readByGroupId');
+Route::post('/groupView', 'UsersGroupsController@readByGroupId');
     
 //-------------------------------------------------------------------------------------
 
