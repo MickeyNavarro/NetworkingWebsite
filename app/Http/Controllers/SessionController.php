@@ -20,6 +20,7 @@ class SessionController extends Controller
             echo "User ID:" . $request->session()->get('userid') . "<br>";
             echo "Role: ". $request->session()->get('role'). "<br>";
             
+            
         }
         else {
                 echo 'No data in the session';

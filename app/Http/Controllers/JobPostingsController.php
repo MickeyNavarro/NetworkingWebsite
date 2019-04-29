@@ -10,9 +10,9 @@ use Http\Client\Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
-use App\Services\BusinessServices\JobPostingsBusinessService;
 use App\Services\Utility\ILoggerService;
 use App\Models\JobPostingsModel;
+use App\Services\BusinessServices\JobPostingsBusinessService;
 
 class JobPostingsController extends Controller
 {
@@ -43,12 +43,22 @@ class JobPostingsController extends Controller
             //check if the creation was a success
             if($jbs->create($job)){
                 
-                //Render a response View
-                return redirect('/adminPageOfJobsView');
+                //Use the business service object to show all users in the database
+                if($jobs = $jbs->readAll()){
+                    
+                    //compress all the users into a single array
+                    $Data = [ 'jobs' => $jobs ];
+                    
+                    //Render a response view of the admin page of jobs and pass on the array of jobs
+                    return view('adminPageOfJobsView')->with($Data);
+                    
+                }
                 
             }else{
                 //Render a response View with unsuccessful message
-                return view('unsuccessfulView');
+                $errorMessage = "Sorry! Something went wrong with creating this job.";
+                $Data = [ 'errorMessage' => $errorMessage ];
+                return view('unsuccessfulView')->with($Data);
             }
         }
         catch(ValidationException $e1) {
@@ -86,7 +96,9 @@ class JobPostingsController extends Controller
                 
             }else{
                 //Render a response view with unsuccessful message
-                return view('unsuccessfulView');
+                $errorMessage = "Sorry! Something went wrong with showing this job.";
+                $Data = [ 'errorMessage' => $errorMessage ];
+                return view('unsuccessfulView')->with($Data);
             }
         }
         catch (Exception $e){
@@ -121,7 +133,9 @@ class JobPostingsController extends Controller
                 
             }else{
                 //Render a response view with unsuccessful message
-                return view('unsuccessfulView');
+                $errorMessage = "Sorry! Something went wrong with showing this job.";
+                $Data = [ 'errorMessage' => $errorMessage ];
+                return view('unsuccessfulView')->with($Data);
             }
         }
         catch (Exception $e){
@@ -234,15 +248,22 @@ class JobPostingsController extends Controller
             //check if the method was a success
             if($jbs->update($job)){
                 
-                /* //compress the job posting array to be sent to the view
-                $data = ['id' => $id]; */
+                //Use the business service object to show all users in the database
+            if($jobs = $jbs->readAll()){
                 
-                //Render a response View
-                return redirect('/adminPageOfJobsView');
+                //compress all the users into a single array
+                $Data = [ 'jobs' => $jobs ];
+                
+                //Render a response view of the admin page of jobs and pass on the array of jobs
+                return view('adminPageOfJobsView')->with($Data);
+                
+            }
                                 
             }else{
                 //Render a response View with unsuccessful message
-                return view('unsuccessfulView');
+                $errorMessage = "Sorry! Something went wrong with updating this job.";
+                $Data = [ 'errorMessage' => $errorMessage ];
+                return view('unsuccessfulView')->with($Data);
             }
         }
         catch(ValidationException $e1) {
@@ -267,12 +288,22 @@ class JobPostingsController extends Controller
             
             //Use the business service object to delete a job posting in the database
             if($jbs->delete($id)){
-                //Render a response View
-                return redirect('/adminPageOfJobsView');
+                //Use the business service object to show all users in the database
+                if($jobs = $jbs->readAll()){
+                    
+                    //compress all the users into a single array
+                    $Data = [ 'jobs' => $jobs ];
+                    
+                    //Render a response view of the admin page of jobs and pass on the array of jobs
+                    return view('adminPageOfJobsView')->with($Data);
+                    
+                }
                 
             }else{
                 //Render a response View with unsuccessful message
-                return view('unsuccessfulView');
+                $errorMessage = "Sorry! Something went wrong with deleting this job.";
+                $Data = [ 'errorMessage' => $errorMessage ];
+                return view('unsuccessfulView')->with($Data);
             }
         }
         catch (Exception $e){
@@ -290,4 +321,5 @@ class JobPostingsController extends Controller
         //run data validation rules
         $this->validate($request, $rules);
     }
+    
 }

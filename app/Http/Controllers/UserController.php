@@ -13,6 +13,12 @@ use Illuminate\Validation\ValidationException;
 use App\Services\BusinessServices\UserBusinessService;
 use App\Services\Utility\ILoggerService;
 use App\Models\UsersModel;
+use App\Services\BusinessServices\PersonalInformationBusinessService;
+use App\Services\BusinessServices\EducationBusinessService;
+use App\Services\BusinessServices\WorkExperienceBusinessService;
+use App\Services\BusinessServices\SkillsBusinessService;
+use App\Services\BusinessServices\UsersGroupsBusinessService;
+use App\Services\BusinessServices\UsersJobPostingsBusinessService;
 
 class UserController extends Controller
 {
@@ -49,7 +55,9 @@ class UserController extends Controller
                 
             }else{
                 //Render a response View with unsuccessful message
-                return view('unsuccessfulView');
+                $errorMessage = "Login was unsuccessful. Please try again.";
+                $Data = [ 'errorMessage' => $errorMessage ];
+                return view('unsuccessfulView')->with($Data);
             }
         }
         catch(ValidationException $e1) {
@@ -106,24 +114,27 @@ class UserController extends Controller
                 
                 //check if the user was not suspended
                 if($suspend != 1) {
-                
-                    //set session user id
-                    $request->session()->put('userid', $userId);
-                    
                     //get the role of the user object
                     $role = $user_ob->getRole();
                     
-                    //set the role session
-                    $request->session()->put('role', $role);
+                    //set the session variables
+                    $request->session()->put('userid', $userId);
+                    $request->session()->put('role', $role);  
                     
-                    //Render a response view of the user profile
-                    return redirect()->action('UserProfileController@index');
+                    //compress all the user data into a single array
+                    $Data = $this->getUserProfileData(); 
+                    
+                    //Render a response view of the user profile and pass on the array of user profile data
+                    return view('userProfileView')->with($Data);
+                    
                 }
                 
             }else{
                 
                 //Render a response View with unsuccessful message
-                return view('unsuccessfulView');
+                $errorMessage = "Registration was unsuccessful. Please try again.";
+                $Data = [ 'errorMessage' => $errorMessage ];
+                return view('unsuccessfulView')->with($Data);
             }
         }
         catch(ValidationException $e1) {
@@ -167,7 +178,9 @@ class UserController extends Controller
                 
             }else{
                 //Render a response View with unsuccessful message
-                return view('unsuccessfulView');
+                $errorMessage = "Sorry, there are no users!";
+                $Data = [ 'errorMessage' => $errorMessage ];
+                return view('unsuccessfulView')->with($Data);
             }
         }
         catch (Exception $e){
@@ -258,7 +271,9 @@ class UserController extends Controller
                 
             }else{
                 //Render a response View with unsuccessful message
-                return view('unsuccessfulView');
+                $errorMessage = "User was not successfully unsuspended.";
+                $Data = [ 'errorMessage' => $errorMessage ];
+                return view('unsuccessfulView')->with($Data);
             }
         }
         catch (Exception $e){
@@ -302,7 +317,9 @@ class UserController extends Controller
                 
             }else{
                 //Render a response View with unsuccessful message
-                return view('unsuccessfulView');
+                $errorMessage = "User was not successfully deleted.";
+                $Data = [ 'errorMessage' => $errorMessage ];
+                return view('unsuccessfulView')->with($Data);
             }
         }
         catch (Exception $e){
@@ -332,7 +349,9 @@ class UserController extends Controller
                                 
             }else{
                 //Render a response View with unsuccessful message
-                return view('unsuccessfulView');
+                $errorMessage = "Logout was not successful. Please try again.";
+                $Data = [ 'errorMessage' => $errorMessage ];
+                return view('unsuccessfulView')->with($Data);
             }
         }
         catch (Exception $e){
@@ -342,5 +361,74 @@ class UserController extends Controller
             $data = ['errorMsg' => $e->getMessage()];
             return view('exception')->with($data);
         }
+    }
+    
+    //finds the user profile info
+    private function getUserProfileData() {
+        //get the user id from the session variable
+        $id = session()->get('userid');
+        
+        //find the personal info data to pass onto the views
+        $pbs = new PersonalInformationBusinessService();
+        
+        //find the personal info by the user id
+        $pi = $pbs->readByUserID($id);
+        
+        //create a new instance of the EducationBusinessService
+        $ebs = new EducationBusinessService();
+        
+        //find the education by the user id
+        $edu = $ebs->readByUserID($id);
+        
+        //create a new instance of the WorkExperienceBusinessService
+        $wbs = new WorkExperienceBusinessService();
+        
+        //find the work experience by the user id
+        $work = $wbs->readByUserID($id);
+        
+        //create a new instance of the SkillsBusinessService
+        $sbs = new SkillsBusinessService();
+        
+        //find the skill by the user id
+        $skills = $sbs->readByUserID($id);
+        
+        //create a new instance of the UserBusinessService
+        $ubs = new UserBusinessService();
+        
+        //find the user object by its id
+        $user = $ubs->readByUserId($id);
+        
+        //find the user's first and last name
+        $firstname = $user->getFirstName();
+        $lastname = $user->getLastname();
+        
+        //Create a new business service
+        $ugbs = new UsersGroupsBusinessService();
+        
+        //create a variable to hold the user groups stuff
+        $usergroups = $ugbs->readByUserID($id);
+        
+        //create new jobs business services
+        $ujbs = new UsersJobPostingsBusinessService();
+        
+        //create variables to hold the saved and applied jobs
+        $savedjobs = $ujbs->readSaved($id);
+        $appliedjobs = $ujbs->readApplied($id);
+        
+        //compress all the user data into a single array
+        $Data = [
+            'pi' => $pi,
+            'edu' => $edu,
+            'work' => $work,
+            'skills' => $skills,
+            'firstname' => $firstname,
+            'lastname' => $lastname,
+            'usergroups' => $usergroups,
+            'savedjobs' => $savedjobs,
+            'appliedjobs' => $appliedjobs
+        ];
+        
+        //Render a response view of the user profile and pass on the array of user profile data
+        return $Data;
     }
 }

@@ -5,7 +5,7 @@
 //This is my own work.
 //The controller that handles any actions relating to outputting the user profile
 
-//this controller is no longer in use due to the UserRestController
+//this controller is no longer in use
 namespace App\Http\Controllers;
 
 use Http\Client\Exception;
