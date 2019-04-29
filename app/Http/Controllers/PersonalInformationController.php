@@ -12,10 +12,16 @@ use Illuminate\Validation\ValidationException;
 use App\Models\PersonalInformationModel;
 use PHPUnit\Exception;
 use App\Services\BusinessServices\PersonalInformationBusinessService;
+use App\Services\Utility\ILoggerService;
 
 
 class PersonalInformationController
 {
+    
+    public function __construct(ILoggerService $logger) {
+        $this->logger = $logger;
+    }
+    
     //accepts the request from the web browser to create a new record of personal info 
     public function create(Request $request){
         

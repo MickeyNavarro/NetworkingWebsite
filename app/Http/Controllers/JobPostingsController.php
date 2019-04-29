@@ -11,10 +11,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 use App\Services\BusinessServices\JobPostingsBusinessService;
+use App\Services\Utility\ILoggerService;
 use App\Models\JobPostingsModel;
 
 class JobPostingsController extends Controller
 {
+    
+    public function __construct(ILoggerService $logger) {
+        $this->logger = $logger;
+    }
+    
     //accepts the request from the web browser to create a new record of job posting
     public function create(Request $request){
         

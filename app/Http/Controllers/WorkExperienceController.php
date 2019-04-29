@@ -13,9 +13,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 use App\Services\BusinessServices\WorkExperienceBusinessService;
+use App\Services\Utility\ILoggerService;
+
 
 class WorkExperienceController extends Controller
 {
+    
+    public function __construct(ILoggerService $logger) {
+        $this->logger = $logger;
+    }
+    
     //accepts the request from the web browser to create a new record of work experience
     public function create(Request $request){
         

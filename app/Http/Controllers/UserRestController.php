@@ -16,10 +16,16 @@ use App\Services\BusinessServices\SkillsBusinessService;
 use App\Services\BusinessServices\UserBusinessService;
 use App\Services\BusinessServices\UsersGroupsBusinessService;
 use App\Services\BusinessServices\UsersJobPostingsBusinessService;
+use App\Services\Utility\ILoggerService;
 use App\Models\DTO;
 
 class UserRestController extends Controller
 {
+    
+    public function __construct(ILoggerService $logger) {
+        $this->logger = $logger;
+    }
+    
     /**
      * Display a listing of the resource.
      *

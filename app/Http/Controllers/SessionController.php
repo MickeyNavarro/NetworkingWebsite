@@ -6,10 +6,15 @@
 //The controller that handles the testing of the sessions
 namespace App\Http\Controllers;
 
+use App\Services\Utility\ILoggerService;
 use Illuminate\Http\Request;
 
 class SessionController extends Controller
 {
+    public function __construct(ILoggerService $logger) {
+        $this->logger = $logger;
+    }
+    
     public function accessSessionData(Request $request) {
         if($request->session()->has('userid')) {
             echo "User ID:" . $request->session()->get('userid') . "<br>";

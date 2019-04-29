@@ -37,7 +37,7 @@ class UserController extends Controller
             $password = $request->input('password');
             
             //Create a new business service
-            $bs = new UserBusinessService();
+            $bs = new UserBusinessService(); 
             
             //Create a new user object with the form data
             $user = new UsersModel(0, $first, $last, $email, $username, $password, 0, 0);
@@ -54,8 +54,7 @@ class UserController extends Controller
         }
         catch(ValidationException $e1) {
             throw $e1;
-        }
-        catch (Exception $e){
+        }catch (Exception $e){
             $this->logger->error("Leaving UserController.create() with Exception Error: ", array("message" => $e->getMessage()));
             
             Log::error("Exception ", array("message" => $e->getMessage()));
@@ -193,14 +192,34 @@ class UserController extends Controller
             //Create a new business service
             $bs = new UserBusinessService();
             
-            //Use the business service object to suspend a user in the database
-            if($bs->suspendById($id)){
-                //Render a response View with success message
-                return view('adminPageOfUsersView');
+            //check if admin is trying to suspend themselves 
+            if ($id != session()->get('userid')) { 
+            
+                //Use the business service object to suspend a user in the database
+                if($bs->suspendById($id)){
+                    
+                    //Use the business service object to show all users in the database
+                    if($users = $bs->readAll()){
+                        
+                        //compress all the users into a single array
+                        $Data = [ 'users' => $users ];
+                        
+                        //Render a response view of the admin page of users and pass on the array of users
+                        return view('adminPageOfUsersView')->with($Data);
+                        
+                    }
+                }else{
+                    //Render a response View with unsuccessful message
+                    $errorMessage = "User was not successfully suspended.";
+                    $Data = [ 'errorMessage' => $errorMessage ];
+                    return view('unsuccessfulView')->with($errorMessage);
+                }
                 
             }else{
                 //Render a response View with unsuccessful message
-                return view('unsuccessfulView');
+                $errorMessage = "You cannot suspend yourself."; 
+                $Data = [ 'errorMessage' => $errorMessage ];
+                return view('unsuccessfulView')->with($Data);
             }
         }
         catch (Exception $e){
@@ -227,8 +246,15 @@ class UserController extends Controller
             
             //Use the business service object to suspend a user in the database
             if($bs->unsuspendById($id)){
-                //Render a response View with success message
-                return view('adminPageOfUsersView');
+                //Use the business service object to show all users in the database
+                if($users = $bs->readAll()){
+                    //compress all the users into a single array
+                    $Data = [ 'users' => $users ];
+                    
+                    //Render a response view of the admin page of users and pass on the array of users
+                    return view('adminPageOfUsersView')->with($Data);
+                    
+                }
                 
             }else{
                 //Render a response View with unsuccessful message
@@ -259,8 +285,20 @@ class UserController extends Controller
             
             //Use the business service object to delete a user in the database
             if($bs->delete($id)){
-                //Render a response View with success message
-                return view('adminPageOfUsersView');
+                //Use the business service object to suspend a user in the database
+                if($bs->suspendById($id)){
+                    
+                    //Use the business service object to show all users in the database
+                    if($users = $bs->readAll()){
+                        
+                        //compress all the users into a single array
+                        $Data = [ 'users' => $users ];
+                        
+                        //Render a response view of the admin page of users and pass on the array of users
+                        return view('adminPageOfUsersView')->with($Data);
+                        
+                    }
+                }
                 
             }else{
                 //Render a response View with unsuccessful message

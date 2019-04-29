@@ -10,10 +10,16 @@ use Http\Client\Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Services\BusinessServices\JobPostingsBusinessService;
+use App\Services\Utility\ILoggerService;
 use App\Models\DTO;
 
 class JobPostingRestController extends Controller
 {
+    
+    public function __construct(ILoggerService $logger) {
+        $this->logger = $logger;
+    }
+    
     /**
      * Display a listing of the resource.
      *

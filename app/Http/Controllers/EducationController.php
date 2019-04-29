@@ -12,9 +12,14 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 use App\Models\EducationModel;
 use App\Services\BusinessServices\EducationBusinessService;
+use App\Services\Utility\ILoggerService;
 
 class EducationController extends Controller
 {
+    public function __construct(ILoggerService $logger) {
+        $this->logger = $logger;
+    }
+    
     //accepts the request from the web browser to create a new record of education
     public function create(Request $request){
         

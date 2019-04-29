@@ -4,6 +4,8 @@
 //Networking Milestone
 //This is my own work.
 //The controller that handles any actions relating to outputting the user profile
+
+//this controller is no longer in use due to the UserRestController
 namespace App\Http\Controllers;
 
 use Http\Client\Exception;
@@ -16,9 +18,16 @@ use App\Services\BusinessServices\PersonalInformationBusinessService;
 use App\Services\BusinessServices\UserBusinessService;
 use App\Services\BusinessServices\UsersGroupsBusinessService;
 use App\Services\BusinessServices\UsersJobPostingsBusinessService;
+use App\Services\Utility\ILoggerService;
+
 
 class UserProfileController extends Controller
 {
+    
+    public function __construct(ILoggerService $logger) {
+        $this->logger = $logger;
+    }
+    
     //accepts the request from the web browser to return all the user data needed on the profile page
     public function index(Request $request){
         

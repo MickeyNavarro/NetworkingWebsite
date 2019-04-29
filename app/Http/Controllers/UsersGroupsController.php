@@ -13,9 +13,15 @@ use Illuminate\Validation\ValidationException;
 use App\Services\BusinessServices\UsersGroupsBusinessService;
 use App\Models\UsersGroupsModel;
 use App\Services\BusinessServices\GroupsBusinessService;
+use App\Services\Utility\ILoggerService;
 
 class UsersGroupsController extends Controller
 {
+    
+    public function __construct(ILoggerService $logger) {
+        $this->logger = $logger;
+    }
+    
     //accepts the request from the web browser to create a new record of a user joining a group
     public function create(Request $request){
         
