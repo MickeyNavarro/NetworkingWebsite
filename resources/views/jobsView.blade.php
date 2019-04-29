@@ -21,7 +21,6 @@
         <th>Company</th>
     	<th>Pay</th>
     	<th>Description</th>
-    	<th>Address</th>
     	<th></th>
     	<th></th>
     </thead>
@@ -34,7 +33,6 @@
         <td> {{$jobs[$x]['COMPANY']}} </td>
         <td> {{$jobs[$x]['PAY']}} </td>
         <td> {{$jobs[$x]['DESCRIPTION']}} </td>
-        <td> INSERT ADDRESS </td>
         <td><form action = 'saveJobView' method = 'POST'><input type = "hidden" name = "_token" value = "<?php  echo csrf_token()?>"><input type = 'hidden' name = 'id' value = {{$jobs[$x]['ID']}}><button type="submit" class="btn">Save</button></form> </td>
         <td><form action = 'applyJobView' method = 'POST'><input type = "hidden" name = "_token" value = "<?php  echo csrf_token()?>"><input type = 'hidden' name = 'id' value = {{$jobs[$x]['ID']}}><button type="submit" class="btn">Apply</button></form> </td>
         
