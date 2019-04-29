@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Mar 20, 2019 at 11:38 AM
+-- Generation Time: Apr 29, 2019 at 05:46 AM
 -- Server version: 5.7.23
 -- PHP Version: 7.2.10
 
@@ -13,19 +13,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `NetworkingWebsite`
 --
-
--- --------------------------------------------------------
-
---
--- Table structure for table `ADDRESSES`
---
-
-CREATE TABLE `ADDRESSES` (
-  `ID` int(11) NOT NULL,
-  `CITY` varchar(45) DEFAULT NULL,
-  `STATE` varchar(45) DEFAULT NULL,
-  `COUNTRY` varchar(45) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -48,7 +35,7 @@ CREATE TABLE `EDUCATION` (
 --
 
 INSERT INTO `EDUCATION` (`ID`, `SCHOOL`, `DEGREE`, `START_YEAR`, `END_YEAR`, `ADDITIONAL_INFORMATION`, `USERS_ID`) VALUES
-(1, 'Pinnacle High School', 'High School Degree', '2013', '2017', 'None', 1),
+(1, 'Pinnacle High School', 'High School Degree', '2013', '2017', 'asdasda', 1),
 (2, 'Grand Canyon University', 'Bachelor\'s', '2017', 'Present', 'None', 1);
 
 -- --------------------------------------------------------
@@ -70,8 +57,8 @@ CREATE TABLE `GROUPS` (
 INSERT INTO `GROUPS` (`ID`, `GROUP_NAME`, `DESCRIPTION`) VALUES
 (1, 'Coders', 'Wow you code!!!!!!!'),
 (3, 'Lopes Up', 'Went to GCU!'),
-(4, 'DBAZ', 'You work at Dutch Bros in Arizona'),
-(7, 'Disney', 'You love Disney!!!!');
+(7, 'Disney', 'You love Disney!!!!'),
+(8, 'Coders!!', 'Code and Testing and Others');
 
 -- --------------------------------------------------------
 
@@ -84,21 +71,18 @@ CREATE TABLE `JOB_POSTINGS` (
   `NAME` varchar(45) DEFAULT NULL,
   `COMPANY` varchar(45) DEFAULT NULL,
   `PAY` varchar(45) DEFAULT NULL,
-  `DESCRIPTION` text,
-  `ADDRESSES_ID` int(11) DEFAULT NULL
+  `DESCRIPTION` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `JOB_POSTINGS`
 --
 
-INSERT INTO `JOB_POSTINGS` (`ID`, `NAME`, `COMPANY`, `PAY`, `DESCRIPTION`, `ADDRESSES_ID`) VALUES
-(1, 'Barista', 'Ducth Bros', '$11/hr', 'Make coffee', 0),
-(8, 'Cashier', 'Target', '$11/hr', 'Must have basic math skills and experience in customer service', 0),
-(9, 'Performer', 'Disneyland', '$15/hr', 'Must be able to sing and dance', NULL),
-(10, 'Programmer', 'Soundcloud', '$15/hr', 'Must be able to code in PHP, C#, or Java', NULL),
-(11, 'Programmer', 'Flo', '$14/hr', 'Must be able to code in PHP, C#, or Java', NULL),
-(12, 'Something', 'Something', '$11/hr', 'Something', NULL);
+INSERT INTO `JOB_POSTINGS` (`ID`, `NAME`, `COMPANY`, `PAY`, `DESCRIPTION`) VALUES
+(1, 'Barista', 'Ducth Bros', '$11/hr', 'Make coffee'),
+(8, 'Cashier', 'Target', '$11/hr', 'Must have basic math skills and experience in customer service'),
+(9, 'Performer', 'Disneyland', '$15/hr', 'Must be able to sing and dance'),
+(10, 'Programmer', 'Soundcloud', '$15/hr', 'Must be able to code in PHP, C#, or Java');
 
 -- --------------------------------------------------------
 
@@ -113,16 +97,8 @@ CREATE TABLE `PERSONAL_INFORMATION` (
   `CONTACT_EMAIL` varchar(45) DEFAULT NULL,
   `PHONE_NUMBER` varchar(45) DEFAULT NULL,
   `PHOTO` varchar(45) DEFAULT NULL,
-  `USERS_ID` int(11) NOT NULL,
-  `ADDRESSES_ID` int(11) NOT NULL
+  `USERS_ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `PERSONAL_INFORMATION`
---
-
-INSERT INTO `PERSONAL_INFORMATION` (`ID`, `BIOGRAPHY`, `CURRENT_POSITION`, `CONTACT_EMAIL`, `PHONE_NUMBER`, `PHOTO`, `USERS_ID`, `ADDRESSES_ID`) VALUES
-(3, 'None', 'Student', 'almicke@yahoo.com', '123123123', 'IMG_9622.JPG', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -142,8 +118,7 @@ CREATE TABLE `SKILLS` (
 
 INSERT INTO `SKILLS` (`ID`, `SKILLS_NAME`, `USERS_ID`) VALUES
 (3, 'Sing', 1),
-(4, 'Coding', 1),
-(5, 'Something', 1);
+(4, 'Coding', 1);
 
 -- --------------------------------------------------------
 
@@ -167,12 +142,12 @@ CREATE TABLE `USERS` (
 --
 
 INSERT INTO `USERS` (`ID`, `FIRSTNAME`, `LASTNAME`, `EMAIL`, `USERNAME`, `PASSWORD`, `ROLE`, `SUSPEND`) VALUES
-(1, 'Mickey', 'Navarro', 'almicke@yahoo.com', 'Mick', 'mick', 1, 0),
+(1, 'Mickey', 'Navarro', 'almicke@yahoo.com', 'Mick', 'mickmick', 1, 0),
 (2, 'Mickey', 'Mouse', 'Mickey@disney.com', 'Mickey', 'mickey101', 0, 0),
-(15, 'Minnie', 'Mouse', 'minnie@disney.com', 'Minnie', 'minnie', 0, 0),
-(16, 'Finn', 'theHuman', 'finn@adventuretime.com', 'Finn', 'mathematical', 0, 0),
-(17, 'Donald', 'Duck', 'donald@duck.com', 'Donald', 'duck', 0, 0),
-(18, 'Chael', 'Navarro', 'chael@yahoo.com', 'chael', 'chael', 0, 0);
+(15, 'Minnie', 'Mouse', 'minnie@disney.com', 'Minnie', 'minnie101', 0, 0),
+(16, 'Finn', 'theHuman', 'finn@adventuretime.com', 'Finn', 'mathematical', 0, 1),
+(17, 'Donald', 'Duck', 'donald@duck.com', 'Donald', 'donaldduck', 0, 0),
+(19, 'Jane', 'Doe', 'janedoe@yahoo.com', 'jane-doe1', 'jane-doe1', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -191,9 +166,8 @@ CREATE TABLE `USERS_GROUPS` (
 --
 
 INSERT INTO `USERS_GROUPS` (`ID`, `USERS_ID`, `GROUPS_ID`) VALUES
-(2, 1, 3),
-(10, 16, 3),
-(8, 1, 4);
+(12, 1, 1),
+(10, 16, 3);
 
 -- --------------------------------------------------------
 
@@ -214,8 +188,7 @@ CREATE TABLE `USERS_JOB_POSTINGS` (
 --
 
 INSERT INTO `USERS_JOB_POSTINGS` (`ID`, `SAVE`, `APPLY`, `USERS_ID`, `JOB_POSTINGS_ID`) VALUES
-(4, 1, NULL, 1, 9),
-(5, NULL, 1, 1, 12);
+(7, 1, NULL, 1, 9);
 
 -- --------------------------------------------------------
 
@@ -230,26 +203,19 @@ CREATE TABLE `WORK_EXPERIENCE` (
   `START_YEAR` varchar(45) DEFAULT NULL,
   `END_YEAR` varchar(45) DEFAULT NULL,
   `ADDITIONAL_INFORMATION` varchar(45) DEFAULT NULL,
-  `USERS_ID` int(11) NOT NULL,
-  `ADDRESSES_ID` int(11) NOT NULL
+  `USERS_ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `WORK_EXPERIENCE`
 --
 
-INSERT INTO `WORK_EXPERIENCE` (`ID`, `POSITION`, `COMPANY`, `START_YEAR`, `END_YEAR`, `ADDITIONAL_INFORMATION`, `USERS_ID`, `ADDRESSES_ID`) VALUES
-(1, 'Brosita', 'Dutch Bros', '2017', '2019', 'none', 1, 0);
+INSERT INTO `WORK_EXPERIENCE` (`ID`, `POSITION`, `COMPANY`, `START_YEAR`, `END_YEAR`, `ADDITIONAL_INFORMATION`, `USERS_ID`) VALUES
+(1, 'Brosita', 'Dutch Bros', '2017', '2019', 'none', 1);
 
 --
 -- Indexes for dumped tables
 --
-
---
--- Indexes for table `ADDRESSES`
---
-ALTER TABLE `ADDRESSES`
-  ADD PRIMARY KEY (`ID`);
 
 --
 -- Indexes for table `EDUCATION`
@@ -268,16 +234,14 @@ ALTER TABLE `GROUPS`
 -- Indexes for table `JOB_POSTINGS`
 --
 ALTER TABLE `JOB_POSTINGS`
-  ADD PRIMARY KEY (`ID`),
-  ADD KEY `fk_JOB_POSTINGS_ADDRESSES1_idx` (`ADDRESSES_ID`);
+  ADD PRIMARY KEY (`ID`);
 
 --
 -- Indexes for table `PERSONAL_INFORMATION`
 --
 ALTER TABLE `PERSONAL_INFORMATION`
   ADD PRIMARY KEY (`ID`,`USERS_ID`),
-  ADD KEY `fk_PERSONAL_INFORMATION_USERS1_idx` (`USERS_ID`),
-  ADD KEY `fk_PERSONAL_INFORMATION_ADDRESSES1_idx` (`ADDRESSES_ID`);
+  ADD KEY `fk_PERSONAL_INFORMATION_USERS1_idx` (`USERS_ID`);
 
 --
 -- Indexes for table `SKILLS`
@@ -313,30 +277,23 @@ ALTER TABLE `USERS_JOB_POSTINGS`
 --
 ALTER TABLE `WORK_EXPERIENCE`
   ADD PRIMARY KEY (`ID`,`USERS_ID`),
-  ADD KEY `fk_WORK_EXPERIENCE_USERS1_idx` (`USERS_ID`),
-  ADD KEY `fk_WORK_EXPERIENCE_ADDRESSES1_idx` (`ADDRESSES_ID`);
+  ADD KEY `fk_WORK_EXPERIENCE_USERS1_idx` (`USERS_ID`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `ADDRESSES`
---
-ALTER TABLE `ADDRESSES`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `EDUCATION`
 --
 ALTER TABLE `EDUCATION`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `GROUPS`
 --
 ALTER TABLE `GROUPS`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `JOB_POSTINGS`
@@ -348,31 +305,31 @@ ALTER TABLE `JOB_POSTINGS`
 -- AUTO_INCREMENT for table `PERSONAL_INFORMATION`
 --
 ALTER TABLE `PERSONAL_INFORMATION`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `SKILLS`
 --
 ALTER TABLE `SKILLS`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `USERS`
 --
 ALTER TABLE `USERS`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `USERS_GROUPS`
 --
 ALTER TABLE `USERS_GROUPS`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `USERS_JOB_POSTINGS`
 --
 ALTER TABLE `USERS_JOB_POSTINGS`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `WORK_EXPERIENCE`
@@ -391,16 +348,9 @@ ALTER TABLE `EDUCATION`
   ADD CONSTRAINT `fk_EDUCATION_USERS` FOREIGN KEY (`USERS_ID`) REFERENCES `USERS` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `JOB_POSTINGS`
---
-ALTER TABLE `JOB_POSTINGS`
-  ADD CONSTRAINT `fk_JOB_POSTINGS_ADDRESSES1` FOREIGN KEY (`ADDRESSES_ID`) REFERENCES `ADDRESSES` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
 -- Constraints for table `PERSONAL_INFORMATION`
 --
 ALTER TABLE `PERSONAL_INFORMATION`
-  ADD CONSTRAINT `fk_PERSONAL_INFORMATION_ADDRESSES1` FOREIGN KEY (`ADDRESSES_ID`) REFERENCES `ADDRESSES` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_PERSONAL_INFORMATION_USERS1` FOREIGN KEY (`USERS_ID`) REFERENCES `USERS` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
@@ -427,5 +377,4 @@ ALTER TABLE `USERS_JOB_POSTINGS`
 -- Constraints for table `WORK_EXPERIENCE`
 --
 ALTER TABLE `WORK_EXPERIENCE`
-  ADD CONSTRAINT `fk_WORK_EXPERIENCE_ADDRESSES1` FOREIGN KEY (`ADDRESSES_ID`) REFERENCES `ADDRESSES` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_WORK_EXPERIENCE_USERS1` FOREIGN KEY (`USERS_ID`) REFERENCES `USERS` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
